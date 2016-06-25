@@ -1,0 +1,79 @@
+<!--
+(c) Open Book Publishers 2013-2016
+Use of this software is governed by the terms of the GPLv3 -- see LICENSE.
+-->
+		<link rel="stylesheet" type="text/css" href="css/html-style.css" /><!-- link to new CSS -->
+		<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script><!-- new script -->
+		<script type="text/javascript" src="jquery-cookie.js"></script><!-- new script -->
+		<script type="text/javascript" src="highlight.js"></script><!-- new script -->
+		<script type="text/javascript">
+		// Window resizing code.
+		function loader() {
+			document.getElementById('mainwin').style.height = (window.innerHeight - 120) + "px";
+		}
+
+		window.onload = loader;
+		window.onresize = loader;
+
+		// Analytics.
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-322127-44']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
+		<script type="text/javascript">
+        function addMargin() {
+			window.scrollTo(0, window.pageYOffset - 85);
+		}
+		window.addEventListener('hashchange', addMargin);
+        </script>
+		<script type="text/javascript">
+		function scrollToAnchor(anchor) {
+            $("html, body").animate({ scrollTop: $(anchor).position().top - 146 }, 'slow');
+		}
+		$(document).ready(function() {
+			$('.testlink').bind('click', function(e) {
+				e.preventDefault(); 
+				var sHref = this.href.split("#"); 
+				scrollToAnchor("#"+sHref[1]);
+				return false;           
+			});
+        //now scroll to the anchor when loading page - this was missing
+        if(window.location.hash != ''){ scrollToAnchor(window.location.hash); } 
+		});</script>
+		<script type="text/javascript">
+		$(function() {
+			$('#text-search').bind('keyup change', function(ev) {
+				// pull in the new value
+				var searchTerm = $(this).val();
+
+				// remove any old highlighted terms
+				$('body').removeHighlight();
+
+				// disable highlighting if empty
+				if ( searchTerm ) {
+					// highlight the new term
+					$('body').highlight( searchTerm );
+				}
+			});
+		});
+		</script>
+		<!--SCRIPT FOR FUNCTIONALITY THAT HAS NOT BEEN IMPLEMENTED - DELETE?
+		<script type="text/javascript">
+			$(document).ready(function() {
+				if($.cookie('TEXT_SIZE')) {
+					$('body>div[id!="right-side-bar"]').addClass($.cookie('TEXT_SIZE'));	
+				}
+				$('.resizer a').click(function() {
+					var textSize = $(this).parent().attr('class');
+					$('body>div[id!="right-side-bar"]').removeClass('small medium large').addClass(textSize);
+					$.cookie('TEXT_SIZE',textSize, { path: '/', expires: 10000 });
+					return false;
+				});
+			});
+		</script>-->
