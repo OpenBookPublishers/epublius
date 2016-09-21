@@ -190,7 +190,9 @@ def process_file(filename):
     page_suffix = re.sub("%PREV%", pagecycle[filename][0], page_suffix)
     page_suffix = re.sub("%NEXT%", pagecycle[filename][1], page_suffix)
   else:
-    print "No PREV/NEXT for " + filename
+    print "No PREV/NEXT for " + filename + ", defaulting to " + toc_file
+    page_suffix = re.sub("%PREV%", toc_file, page_suffix)
+    page_suffix = re.sub("%NEXT%", toc_file, page_suffix)
 
   page_prefix = prefix
   # used for searching within the book
