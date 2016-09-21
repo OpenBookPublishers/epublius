@@ -196,10 +196,14 @@ def process_file(filename):
 
   page_prefix = prefix
   # used for searching within the book
-  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%", url_prefix + "/*", page_prefix)
+  if url_prefix.endswith("/"):
+    slashed_url_prefix = url_prefix
+  else:
+    slashed_url_prefix = url_prefix + "/"
+  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%", slashed_url_prefix + "*", page_prefix)
   # used for translating this page
-  page_prefix = re.sub("%THIS_PAGE_URL%", url_prefix + "/" + filename, page_prefix)
-  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%", urllib.quote(url_prefix + "/" + filename, safe=''), page_prefix)
+  page_prefix = re.sub("%THIS_PAGE_URL%", slashed_url_prefix + filename, page_prefix)
+  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%", urllib.quote(slashed_url_prefix + filename, safe=''), page_prefix)
 
   links_to = set([])
   fd = open(directory_prefix + filename)
