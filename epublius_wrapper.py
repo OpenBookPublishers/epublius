@@ -219,13 +219,6 @@ if book_title <> None:
 if donation_link == None: donation_link = ""
 else: donation_link = " -a '" + donation_link + "'"
 
-cmd = ("cp " + template_dir + "/html-style.css" +
-       " " + path + "/css/ && " +
-       "cp " + template_dir + "/JS/*" +
-       " " + path + "/")
-print "Copying JS and CSS via command: " + cmd
-_, output = commands.getstatusoutput(cmd)
-
 cmd = (ePublius_path + "/epublius.py -p " + prefix_file + " -s " + suffix_file +
        " -h " + headeradd_file + " -b " + book_page + " -f " + title_file +
        " -k " + copyright_file +
@@ -244,6 +237,13 @@ print output
 # We recopy the file, since when we earlier copied the file it had not yet been
 # processed by epublius, but now it has.
 commands.getstatusoutput("cp " + target_directory + "/" + toc_file + " " + target_directory + "/" + "main.html")
+
+cmd = ("cp " + template_dir + "/html-style.css" +
+       " " + target_directory + "/css/ && " +
+       "cp " + template_dir + "/JS/*" +
+       " " + target_directory + "/")
+print "Copying JS and CSS via command: " + cmd
+_, output = commands.getstatusoutput(cmd)
 
 ## Append left and right padding requirement to CSS file.
 #cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> " + path + "/css/idGeneratedStyles_0.css")
