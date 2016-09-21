@@ -187,7 +187,7 @@ for content_file in content_files:
   else:
     colophon_files.append(content_file)
 
-  match_copyright = re.search('(copyright.xhtml)', content_file)
+  match_copyright = re.search('(copyright.xhtml|copyright.html)', content_file)
   if match_copyright and copyright_file == None:
     copyright_file = content_file
 
