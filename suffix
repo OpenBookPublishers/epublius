@@ -1,0 +1,25 @@
+<!--
+(c) Open Book Publishers 2013-2016
+Use of this software is governed by the terms of the GPLv3 - see LICENSE.
+-->
+<!-- closes 'mainwin' -->
+					</div>
+				</td>
+			</tr>
+			<!-- bottom banner, navigation -->	
+			<tr id="last-row">
+				<td class="first-column"></td>
+				<td class="second-column">
+					<div id="bottom-navigation">
+						<!-- Go to the previous chapter buttons -->
+						<div id="prev-button">
+							<a href="%PREV%" title="Go to the previous chapter">Previous Chapter  </a><a href="%PREV%" title="Go to the previous chapter"><img src="https://www.openbookpublishers.com/images/prev-reader.png" alt="Click to go to the next chapter"/></a>
+						</div>	
+						<!-- Go to the next chapter buttons -->
+						<div id="next-button">
+							<a href="%NEXT%" title="Go to the next chapter">  Next Chapter</a><a href="%NEXT%" title="Go to the next chapter"><img src="https://www.openbookpublishers.com/images/next-reader.png" alt=""/></a>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>

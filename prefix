@@ -1,0 +1,80 @@
+<!--
+(c) Open Book Publishers 2013-2016
+Use of this software is governed by the terms of the GPLv3 - see LICENSE.
+-->
+		<table class="OBPHTMLReader">
+			<tr id="first-row">
+				<td class="first-column">
+				<!-- OBP and OA logos -->
+					<a href="https://www.openbookpublishers.com" title="Go to the home page"><img style="width:70%;float:left;" src="https://www.openbookpublishers.com/images/logo.png" alt="Open Book Publishers logo"/></a>
+					<a href="#" title="All our titles are published in Open Access"><img style="width:20%; float:right;" src="https://www.openbookpublishers.com/images/open_access.png" alt="Open Access logo"/></a>
+				</td>
+				<!-- Book title and link -->
+				<td class="second-column">
+					<div id="book-title"><a href="%BOOKPAGE%" title="Go to the book page" style="color:#074A7F">%BOOKTITLE%</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+			<td></td>
+				<td>
+				<!-- resize buttons-->
+					<div id="button-container">
+						<ul class="resizer">
+							<li class="small"><a href="#" title="Text Size: Normal"><img src="https://www.openbookpublishers.com/images/text-button-small.png" alt="button" /></a></li>
+							<li class="medium"><a href="#" title="Text Size: Large"><img src="https://www.openbookpublishers.com/images/text-button-medium.png" alt="button" /></a></li>
+							<li class="large"><a href="#" title="Text Size: Very Large"><img src="https://www.openbookpublishers.com/images/text-button-large.png" alt="button" /></a></li>
+						</ul>
+					</div>
+					<!-- Search box -->
+					<div id="searchbox">
+						<form id="google-search" action="https://www.google.co.uk/search" method="get">
+						  <fieldset>
+							<input accesskey="4" id="search-term" name="q" type="text" value="Search this book" />
+							<input alt="Search" id="search-button" title="Search" type="hidden" value="Search" />
+							<input name="sitesearch" type="hidden" value="%THIS_PAGE_URL_PREFIX%" />
+						  </fieldset>
+						</form>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="first-column">
+					<!-- Mini-TOC -->
+					<table id="left-nav">
+						<tr>
+							<td id="header-row">GO TO...</td>
+						</tr>
+						<tr>
+							<td class="toc"><a href="%TOC%" title="Go to the table of contents">Contents</a></td>
+						</tr>
+						<tr>
+							<td class="toc"><a href="%COPYRIGHT%" title="Go to the copyright page">Copyright</a></td>
+						</tr>
+						<tr><!-- Cover Image -->
+							<td class="white"><div id="cover"><a href="%BOOKPAGE%" title="Visit the book page"><img src="image/1.png" alt="book cover" /></a></div></td>
+						</tr><!-- Buy the book button -->
+						<tr>
+							<td class="color"><a href="%BOOKPAGE%" title="Go to the book page to buy printed and digital editions">BUY THE BOOK</a></td>
+						</tr>
+						<tr>
+							<td class="color">
+							<!-- Translate button -->
+							<div id="translate">
+								<a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=%THIS_PAGE_URL_ENCODED%&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
+							</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="diff-color">
+							<!-- Donate button-->
+							<div id="donate">
+								<a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">DONATE £1</a>
+							</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<!-- Beginning of the main text window-->
+				<td class="second-column">
+					<div id="mainwin" class="main">
