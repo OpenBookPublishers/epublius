@@ -2,6 +2,7 @@
 (c) Open Book Publishers 2013-2016
 Use of this software is governed by the terms of the GPLv3 - see LICENSE.
 -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 		<link rel="stylesheet" type="text/css" href="css/html-style.css" /><!-- link to new CSS -->
 		<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="jquery-cookie.js"></script>
