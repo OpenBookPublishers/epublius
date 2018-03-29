@@ -9,7 +9,7 @@
 # (c) Nik Sultana, Open Book Publishers, September 2013
 # Use of this software is governed by the terms of the GPLv3 -- see LICENSE.
 #
-# Example usage: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/97 -f 9781906924737_Oral_Literature_in_Africa.epub -o test
+# Example usage: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/97 -f /home/nik/OBP/code/epub/9781906924737_Oral_Literature_in_Africa.epub -o test
 # or: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/98/women-in-nineteenth-century-russia--lives-and-culture -f testfiles/Women_in_Russia.epub -o WIR2 -n "Women in Russia"
 # or, with variable image resizing: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/215/ -f 9781783740031_Tacitus_Annals.epub -o TA -n "Tacitus, Annals, 15.20-23, 33-45. Latin Text, Study Aids with Vocabulary, and Commentary" -r 80
 #
@@ -177,7 +177,7 @@ for content_file in content_files:
     title_file = content_file
 
   #FIXME could put these heuristics into a config file, or given them at the command line.
-  match_toc = re.search('(_toc.html|toc.html|_Contents.html|_Content.html|_Tableofcontent.html|Contents-digital.xhtml|contents.xhtml|Contents.xhtml|Main-text-1.xhtml)', content_file)
+  match_toc = re.search('(_toc.html|toc.html|_Contents.html|_Content.html|_Tableofcontent.html|Contents-digital.xhtml|contents.xhtml|Contents.xhtml|Main-text-1.xhtml|Resemblance-and-Representation.xhtml)', content_file)
   #NOTE sometimes the files might be contained within a subdirectory -- e.g., 'Text/toc.html' in the case of Yates Annual.
   #     this is considered as a special case and handled manually, to avoid complicated this code.
   if match_toc and toc_file == None:
@@ -187,7 +187,7 @@ for content_file in content_files:
   else:
     colophon_files.append(content_file)
 
-  match_copyright = re.search('(copyright.xhtml|Copyright.xhtml|copyright.html)', content_file)
+  match_copyright = re.search('(copyright.xhtml|Copyright.xhtml|copyright.html)', content_file) #Copyright.xhtml added by Bianca on 2016-10-18
   if match_copyright and copyright_file == None:
     copyright_file = content_file
 
