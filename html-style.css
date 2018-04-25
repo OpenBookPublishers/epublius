@@ -206,7 +206,7 @@ span.bolditalic{
 }
 span.superscript, .endnote_marker{
     font-size:80%;
-    /*font-weight:bold; Disabled for this book only */
+    font-weight:bold;
     vertical-align:baseline !important;
     position:relative;
     top:-0.4em !important;
@@ -341,11 +341,10 @@ p.dedication{
 	text-align:center;
 	margin-bottom:50px;
 }
-/*Modified for this book only */
 p.signature, p.short-ref{
 	margin-top:20px;
 	text-align:right;
-	font-size: 100%;
+	margin-right:5%;
 }
 p.heading0{
     font-size:200%;
@@ -387,7 +386,7 @@ p.heading2, h2{
 	margin-top:5% !important;
 	text-indent:0px;
 	hyphens:none;
-	/*text-align:left; Modified for this book only*/
+	text-align:center;
 }
 p.heading3, h3{
     font-size:135% !important;
@@ -463,7 +462,7 @@ p.endnote-other-para, li.endnote-other-para{
 	margin-bottom:0px;
 }
 p.quote-first-para{
-    width:100%; /* Modified for this book only */
+    width:90%;
     font-size:90%;
     margin-left:auto;
     margin-right:auto;
@@ -474,8 +473,8 @@ p.quote-first-para{
 	text-align:justify;
 }
 p.quote-other-para{
-    width:100%; /* Modified for this book only */
-	font-size:90%;
+    width:90%;
+    font-size:90%;
     margin-left:auto;
     margin-right:auto;
 	margin-bottom:0px;
@@ -539,34 +538,34 @@ p.table-text-centered {
 	text-align:center;
 }
 p.poem-first-para{
-	font-size:90%;
-	/*text-align:left;
+	text-align:left;
 	margin-left:7%;
 	text-indent:-2%;
 	margin-top:2%;
-	margin-bottom:0;*/
+	font-size:90%;
+	margin-bottom:0;
 }
 p.poem-other-para{
-	font-size:90%;
-	/*text-align:left;
+	text-align:left;
 	margin-left:7%;
 	text-indent:-2%;
+	font-size:90%;
 	margin-top:0;
-	margin-bottom:0;*/
+	margin-bottom:0;
 }
 p.poem-first-para-indented{
-	font-size:90%;
-	/*text-align:left;
+	text-align:left;
 	margin-top:2%;
 	margin-left:7%;
-	margin-bottom:0;*/
+	font-size:90%;
+	margin-bottom:0;
 }
 p.poem-other-para-indented{
-	font-size:90%;
-	/* text-align:left;
+	text-align:left;
 	margin-left:7%;
+	font-size:90%;
 	margin-top:0;
-	margin-bottom:0;*/
+	margin-bottom:0;
 }
 p.poem-in-footnote{
 	text-align:left;
@@ -576,7 +575,7 @@ p.poem-in-footnote{
 	margin-bottom:0;
 }
 p.stage-directions{
-	/*text-align:center; Modified for this book only */
+	text-align:center;
 	font-size:90%;
 	font-style:italic;
 	text-indent:0px;
@@ -687,9 +686,6 @@ p.code-first-para{
 p.code-other-para{
 	font-family: monospace;
 	margin-top:0;
-}
-p.opener, p.closer {
-	font-size:100%;
 }
 p.back-page-title{
 	font-family:'Calibri', sans-serif;
