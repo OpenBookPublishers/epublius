@@ -237,6 +237,10 @@ print output
 # We recopy the file, since when we earlier copied the file it had not yet been
 # processed by epublius, but now it has.
 commands.getstatusoutput("cp " + target_directory + "/" + toc_file + " " + target_directory + "/" + "main.html")
+# add html charset meta tag based on original encoding
+cmd = "sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " + target_directory + "/" + toc_file + " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " + target_directory + "/main.html"
+print "Adding charset to main.html: " + cmd
+commands.getstatusoutput(cmd)
 
 cmd = ("cp " + template_dir + "/html-style.css" +
        " " + target_directory + "/css/ && " +
