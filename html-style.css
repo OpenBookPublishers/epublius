@@ -1,3 +1,8 @@
+.Image-vertical, 
+.Image-horizontal {
+    cursor: pointer;
+}
+
 /*HEADER AND LEFT COLUMN STYLE*/
 table.OBPHTMLReader{
     border:none;
