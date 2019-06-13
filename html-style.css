@@ -1,6 +1,30 @@
+/* Images flush right */
+div.flush_right {
+    float:right; 
+    margin:2em; 
+    max-width:200px
+}
+
+/* BOOTSTRAP MODAL */
+/* Enlarge modal frame */ 
+.modal-dialog {
+/*
+    max-width:70%;
+*/
+}
+
 .Image-vertical, 
 .Image-horizontal {
     cursor: pointer;
+}
+
+img.imagepreview {
+    width:100%;
+    max-width: none !important;
+    max-height: none !important;
+    height: auto;
+    margin: 1em auto 2em !important;
+    display:block;
 }
 
 /*HEADER AND LEFT COLUMN STYLE*/

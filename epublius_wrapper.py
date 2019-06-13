@@ -34,7 +34,8 @@ import argparse
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
 
-parser = argparse.ArgumentParser(description='ePublius wrapper')
+parser = argparse.ArgumentParser(description='ePublius wrapper',
+                                 add_help=False)
 
 parser.add_argument('-p', '--prefix',
 					help = 'file containing prefix',
@@ -44,7 +45,12 @@ parser.add_argument('-s', '--suffix',
 					help = 'file containing suffix',
 					required = True)
 
-parser.add_argument('-H', '--header',
+parser.add_argument('--help',
+                    action='help',
+                    default=argparse.SUPPRESS,
+                    help=argparse._('show this help message and exit'))
+
+parser.add_argument('-h', '--header',
 					help = 'file containing HTML to inject into header',
 					required = True)
 
@@ -107,7 +113,7 @@ parser.add_argument('-t', '--template',
 args = parser.parse_args()
 
 ## TODO We should use a dictionary instead of so many variables. 
-## Keeping the original notation as 'legacy' code. 
+## Keeping the original notation as legacy code. 
 prefix_file = args.prefix
 suffix_file = args.suffix
 headeradd_file = args.header
