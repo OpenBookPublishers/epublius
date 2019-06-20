@@ -1,80 +1,201 @@
-<!--
-(c) Open Book Publishers 2013-2016
-Use of this software is governed by the terms of the GPLv3 - see LICENSE.
--->
-    <table class="OBPHTMLReader">
-      <tr id="first-row">
-        <td class="first-column">
-        <!-- OBP and OA logos -->
-          <a href="https://www.openbookpublishers.com" title="Go to the home page"><img style="width:70%;float:left;" src="https://www.openbookpublishers.com/images/logo.png" alt="Open Book Publishers logo"/></a>
-          <a href="#" title="All our titles are published in Open Access"><img style="width:20%; float:right;" src="https://www.openbookpublishers.com/images/open_access.png" alt="Open Access logo"/></a>
-        </td>
-        <!-- Book title and link -->
-        <td class="second-column">
-          <div id="book-title"><a href="%BOOKPAGE%" title="Go to the book page" style="color:#074A7F">%BOOKTITLE%</a>
-          </div>
-        </td>
-      </tr>
-      <tr>
-      <td></td>
-        <td>
-        <!-- resize buttons-->
-          <div id="button-container">
-            <ul class="resizer">
-              <li class="small"><a href="#" title="Text Size: Normal"><img src="https://www.openbookpublishers.com/images/text-button-small.png" alt="button" /></a></li>
-              <li class="medium"><a href="#" title="Text Size: Large"><img src="https://www.openbookpublishers.com/images/text-button-medium.png" alt="button" /></a></li>
-              <li class="large"><a href="#" title="Text Size: Very Large"><img src="https://www.openbookpublishers.com/images/text-button-large.png" alt="button" /></a></li>
-            </ul>
-          </div>
-          <!-- Search box -->
-          <div id="searchbox">
-            <form id="google-search" action="https://www.google.co.uk/search" method="get">
-              <fieldset>
-              <input accesskey="4" id="search-term" name="q" type="text" value="Search this book" />
-              <input alt="Search" id="search-button" title="Search" type="hidden" value="Search" />
-              <input name="sitesearch" type="hidden" value="%THIS_PAGE_URL_PREFIX%" />
-              </fieldset>
-            </form>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="first-column">
-          <!-- Mini-TOC -->
-          <table id="left-nav">
-            <tr>
-              <td id="header-row">GO TO...</td>
-            </tr>
-            <tr>
-              <td class="toc"><a href="%TOC%" title="Go to the table of contents">Contents</a></td>
-            </tr>
-            <tr>
-              <td class="toc"><a href="%COPYRIGHT%" title="Go to the copyright page">Copyright</a></td>
-            </tr>
-            <tr><!-- Cover Image -->
-              <td class="white"><div id="cover"><a href="%BOOKPAGE%" title="Visit the book page"><img src="image/1.png" alt="book cover" /></a></div></td>
-            </tr><!-- Buy the book button -->
-            <tr>
-              <td class="color"><a href="%BOOKPAGE%" title="Go to the book page to buy printed and digital editions">BUY THE BOOK</a></td>
-            </tr>
-            <tr>
-              <td class="color">
-              <!-- Translate button -->
-              <div id="translate">
-                <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=%THIS_PAGE_URL_ENCODED%&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
-              </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="diff-color">
-              <!-- Donate button-->
-              <div id="donate">
-                <a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">DONATE £1</a>
-              </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-        <!-- Beginning of the main text window-->
-        <td class="second-column">
-          <div id="mainwin" class="main">
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" id="reader-nav">
+		<a class="navbar-brand" href="https://www.openbookpublishers.com/">
+			<img src="logo/logo.png" id="OBP-logo" class="d-inline-block align-top" alt="OPB logo" />
+			<img src="logo/open_access.png" id="OA-logo" alt="OA logo" />
+		</a>
+
+		<!-- Buttons on Navbar -->
+		<span>
+			<!-- Search button -->
+			<button class="navbar-toggler mr-2" type="button" data-toggle="collapse"
+					data-target="#nav-search-bar" aria-controls="nav-search-bar"
+					aria-expanded="false" aria-label="Toggle the search field">
+				<span class="nav-button-icon"><i class="fas fa-search"></i></span>
+			</button>
+
+			<!-- Bars button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarToggler" aria-controls="navbarToggler"
+					aria-expanded="false" aria-label="Toggle navigation">
+				<span class="nav-button-icon"><i class="fas fa-bars"></i></span>
+			</button>
+		</span>
+
+		<!-- Menu toggled by the "bars button" -->
+		<div class="collapse navbar-collapse" id="navbarToggler">
+			<ul class="navbar-nav d-lg-none">
+
+				<li class="nav-item">
+					<a href="%BOOKPAGE%">
+						<img id="nav-book-cover" class="rounded" src="image/1.png" alt="Book cover" />
+					</a>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						<span class="fas fa-book-open mr-2"></span>Go to
+					</a>
+
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="%TOC%">Contents</a>
+						<a class="dropdown-item" href="%COPYRIGHT%">Copyright</a>
+					</div>
+
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="%BOOKPAGE%">
+						<span class="fas fa-shopping-cart mr-2"></span>Buy the book
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=%THIS_PAGE_URL_ENCODED%&amp;sandbox=1" title="Click to translate this page">
+						<span class="fas fa-language mr-2"></span>Translate this page
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="https://www.openbookpublishers.com/donate.html" title="Click to donate">
+						<span class="fas fa-donate mr-2"></span>Donate 1£
+					</a>
+				</li>
+
+			</ul>
+		</div>
+
+		<!-- Search bar toggled by the "Search button"-->
+		<div class="collapse navbar-collapse" id="nav-search-bar">
+			<div class="d-lg-none">
+				<form id="google-search" action="https://www.google.co.uk/search" method="get">
+					<div class="form-group">
+						<input  accesskey="4" id="search-term" name="q" 
+								class="form-control" type="text" placeholder="Search this book" 
+								aria-label="Search this book" />
+						<input id="search-button" title="Search" type="hidden" value="Search" />
+						<input name="sitesearch" type="hidden" value="%THIS_PAGE_URL_PREFIX%" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</nav>
+
+
+	<!-- Main container -->
+	<div class="container-fluid mt-3">
+
+		<div class="row">
+
+			<!-- Legacy sidebar-->
+			<div class="col-md-2 d-print-none d-none d-lg-block">
+				<div class="row">
+
+					<div class="col-12 sidebar-button blue-bg" style="text-align: inherit;">
+						Go to
+					</div>
+
+					<div class="col-12 sidebar-link">
+						<a href="%TOC%">Contents</a>
+					</div>
+
+					<div class="col-12 sidebar-link">
+						<a href="%COPYRIGHT%">Copyright</a>
+					</div>
+
+					<div class="col-12 mt-5 mb-3">
+						<a href="%BOOKPAGE%">
+							<img src="image/1.png" id="book-cover" alt="Book cover" />
+						</a>
+					</div>
+
+					<div class="col-12 mt-1 sidebar-button blue-bg">
+						<a href="%BOOKPAGE%">Buy the book</a>
+					</div>
+					<div class="col-12 mt-1 sidebar-button blue-bg">
+						<a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=%THIS_PAGE_URL_ENCODED%&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
+					</div>
+					<div class="col-12 mt-1 sidebar-button orange-bg">
+						<a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">Donate 1£</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Content -->
+			<div class="col">
+
+			<!-- Breadcrumb menu -->
+				<div class="row">
+					<div class="col">
+
+						<nav class="d-print-none" aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="%TOC%">%BOOKTITLE%</a></li>
+								<li class="breadcrumb-item active" aria-current="page">[chapter name]</li>
+							</ol>
+						</nav>
+
+					</div>
+				</div>
+
+				<!-- Text size and search box -->
+				<div class="row justify-content-between d-print-none d-none d-lg-flex">
+					<div class="col col-md-2">
+						<span class="zoom-selector small">
+							<a href="#">A</a>
+						</span>
+						<span class="zoom-selector medium">
+							<a href="#">A</a>
+						</span>
+						<span class="zoom-selector large">
+							<a href="#">A</a>
+						</span>
+					</div>
+					<div class="col col-md-3">
+						<form id="google-search-lg" action="https://www.google.co.uk/search" method="get">
+							<div class="form-group">
+								<input  accesskey="4" id="search-term-lg" name="q" 
+										class="form-control" type="text" placeholder="Search this book" 
+										aria-label="Search this book" />
+								<input id="search-button-lg" title="Search" type="hidden" value="Search" />
+								<input name="sitesearch" type="hidden" value="%THIS_PAGE_URL_PREFIX%" />
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<!-- Book header for print media -->
+				<div class="row d-print-flex d-none">
+					<div class="col">
+						<div class="row">
+							<div class="col-2">
+								<img src="logo/logo.png" id="OBP-logo-jumbotron" style="width: 100%" alt="OPB logo" />
+							</div>
+							<div class="col-9">
+								<p><strong>%BOOKTITLE%</strong><br />More info and resources at: %BOOKPAGE%</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Book content -->
+				<div class="row">
+					<div class="col" id="mainwin">
+
+                    <!-- Frame for click-to-enlarge (modal) plug-in-->                        
+                    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">              
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true" style="font-family: sans-serif">x</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <img src="" class="imagepreview"/> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
