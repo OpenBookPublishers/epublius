@@ -24,91 +24,111 @@ import random
 import time
 import os
 import sys
-import getopt
 import glob
 import commands
 import shutil
 import re
 import string
+import argparse
 
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
 
-opts, args = getopt.getopt(sys.argv[1:], "p:s:h:b:f:o:n:z:cr:e:i:u:a:t:", [])
+parser = argparse.ArgumentParser(description='ePublius wrapper',
+                                 add_help=False)
 
-def usage():
-  print "-p: file containing prefix"
-  print "-s: file containing suffix"
-  print "-h: file containing HTML to inject into header"
-  print "-b: URL of book's page"
-  print "-f: ePub file (or contents, if -z is used)"
-  print "-o: Target directory"
-  print "-n: Book name"
-  print "-z: Target of -f parameter is an unzipped ePub file"
-  print "-c: Book doesn't have a cover"
-  print "-r: How much to resize the images (as percentage; default is 50)."
-  print "-e: Location of the ePublius script."
-  print "-i: Force the use of a particular index file. This parameter will simply be passed on to the epublius script."
-  print "-u: URL path of this book"
-  print "-a: Donation link"
-  print "-t: Directory containing the template files (CSS and JS)"
+parser.add_argument('-p', '--prefix',
+					help = 'file containing prefix',
+					required = True)
 
-prefix_file = None
-suffix_file = None
-headeradd_file = None
-book_page = None
-epub_file = None
-target_directory = None
-book_title = None
-unzipped_ePub = False
-no_cover = False
-resize_percent = None
-ePublius_path = "."
-index_to_use = None
-url_prefix = None
-donation_link = None
-template_dir = "."
+parser.add_argument('-s', '--suffix',
+					help = 'file containing suffix',
+					required = True)
 
-for o, a in opts:
-  if o == "-p":
-    prefix_file = a
-  elif o == "-s":
-    suffix_file = a
-  elif o == "-h":
-    headeradd_file = a
-  elif o == "-b":
-    book_page = a
-  elif o == "-f":
-    epub_file = a
-  elif o == "-o":
-    target_directory = a
-  elif o == "-n":
-    book_title = a
-  elif o == "-z":
-    unzipped_ePub = True
-  elif o == "-c":
-    no_cover = True
-  elif o == "-r":
-    resize_percent = int(a)
-  elif o == "-e":
-    ePublius_path = a
-  elif o == "-i":
-    index_to_use = a
-  elif o == "-u":
-    url_prefix = a
-  elif o == "-a":
-    donation_link = a
-  elif o == "-t":
-    template_dir = a
-  else:
-    usage()
-    raise Exception('Unknown argument: ' + o + ':' + a)
+parser.add_argument('--help',
+                    action='help',
+                    default=argparse.SUPPRESS,
+                    help=argparse._('show this help message and exit'))
 
-if (prefix_file == None or suffix_file == None or headeradd_file == None or
-    book_page == None or epub_file == None or target_directory == None or
-    url_prefix == None):
-  usage()
-  raise Exception('Incomplete parameter list')
+parser.add_argument('-h', '--header',
+					help = 'file containing HTML to inject into header',
+					required = True)
+
+parser.add_argument('-b', '--book',
+					help = 'URL of book\'s page',
+					required = True)
+
+parser.add_argument('-f', '--file',
+					help = 'ePub file (or contents, if -z is used)',
+					required = True)
+
+parser.add_argument('-o', '--output',
+					help = 'Target directory',
+					required = True)
+
+parser.add_argument('-n', '--name',
+                    default = None,
+					help = 'Book name')
+
+parser.add_argument('-z', '--zip',
+					help = 'Target of -f parameter is an unzipped ' \
+                           'ePub file',
+                    default = False,
+                    action = "store_true")
+
+parser.add_argument('-c', '--cover',
+					help = 'Book doesn\'t have a cover',
+                    default = False,
+                    action="store_true")
+
+parser.add_argument('-r', '--resample',
+					help = 'Resample image (as percentage; ' \
+                           'default is 50, no resampling is 100).',
+                    default = None,
+                    type = int)
+
+parser.add_argument('-e', '--epublish',
+					help = 'Location of the ePublius script.',
+                    default = '.')
+
+parser.add_argument('-i', '--index',
+					help = 'Force the use of a particular index ' \
+                           'file. This parameter will simply be ' \
+                           'passed on to the epublius script.',
+                    default = None)
+
+parser.add_argument('-u', '--url',
+					help = 'URL path of this book',
+					required = None)
+
+parser.add_argument('-a', '--donation',
+					help = 'Donation link',
+                    default = None)
+
+parser.add_argument('-t', '--template',
+					help = 'Directory containing the template ' \
+                           'files (CSS and JS)',
+                    default = '.')
+                            
+args = parser.parse_args()
+
+## TODO We should use a dictionary instead of so many variables. 
+## Keeping the original notation as legacy code. 
+prefix_file = args.prefix
+suffix_file = args.suffix
+headeradd_file = args.header
+book_page = args.book
+epub_file = args.file
+target_directory = args.output
+book_title = args.name
+unzipped_ePub = args.zip
+no_cover = args.cover
+resize_percent = args.resample
+ePublius_path = args.epublish
+index_to_use = args.index
+url_prefix = args.url
+donation_link = args.donation
+template_dir = args.template
 
 #Transform index_to_use into a parameter for the epublius script.
 if index_to_use == None:
