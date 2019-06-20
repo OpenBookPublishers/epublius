@@ -269,6 +269,12 @@ cmd = ("cp " + template_dir + "/html-style.css" +
 print "Copying JS and CSS via command: " + cmd
 _, output = commands.getstatusoutput(cmd)
 
+cmd = ("cp -r " + template_dir + "/logo" +
+       " " + target_directory + "/")
+       
+print "Copying logo folder via command: " + cmd
+_, output = commands.getstatusoutput(cmd)
+
 ## Append left and right padding requirement to CSS file.
 #cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> " + path + "/css/idGeneratedStyles_0.css")
 #print "Appending CSS info via command: " + cmd
