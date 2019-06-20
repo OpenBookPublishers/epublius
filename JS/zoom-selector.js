@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	if($.cookie('TEXT_SIZE')) {
-		$('div[id="mainwin"]').addClass($.cookie('TEXT_SIZE'));	
+		$('div[id="mainwin"]').addClass($.cookie('TEXT_SIZE'));
 	}
 	$('.zoom-selector').click(function() {
 		var textSize = $(this).attr('class');

@@ -109,11 +109,11 @@ parser.add_argument('-t', '--template',
 					help = 'Directory containing the template ' \
                            'files (CSS and JS)',
                     default = '.')
-                            
+
 args = parser.parse_args()
 
-## TODO We should use a dictionary instead of so many variables. 
-## Keeping the original notation as legacy code. 
+## TODO We should use a dictionary instead of so many variables.
+## Keeping the original notation as legacy code.
 prefix_file = args.prefix
 suffix_file = args.suffix
 headeradd_file = args.header
@@ -271,7 +271,7 @@ _, output = commands.getstatusoutput(cmd)
 
 cmd = ("cp -r " + template_dir + "/logo" +
        " " + target_directory + "/")
-       
+
 print "Copying logo folder via command: " + cmd
 _, output = commands.getstatusoutput(cmd)
 

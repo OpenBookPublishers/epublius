@@ -1,19 +1,19 @@
 /* Images flush right */
 div.flush_right {
-    float:right; 
-    margin:2em; 
+    float:right;
+    margin:2em;
     max-width:200px
 }
 
 /* BOOTSTRAP MODAL */
-/* Enlarge modal frame */ 
+/* Enlarge modal frame */
 .modal-dialog {
 /*
     max-width:70%;
 */
 }
 
-.Image-vertical, 
+.Image-vertical,
 .Image-horizontal {
     cursor: pointer;
 }
@@ -81,7 +81,7 @@ div#button-container {
 	float:left;
 	min-width:150px;
 }
-#button-container li {  
+#button-container li {
     display:inline-block;
 }
 .resizer > li > a > img {
@@ -216,7 +216,7 @@ table[class^='visible-table']{
 table[class^='visible-table'] td {
 	border:1px solid black !important;
 	padding:0.5% !important;
-	vertical-align:middle !important;	
+	vertical-align:middle !important;
 }
 td[class*='invisible-cell']{
 	border:none !important;
@@ -452,7 +452,7 @@ p.first-para, div.first-para{
 	margin-bottom:0px;
 	padding-top:0px;
 	padding-bottom:0px;
-	
+
 }
 p.other-para, p.normal-para {
 /* the second style name is obsolete, kept for backward compatibility */
@@ -637,7 +637,7 @@ p.bibliography-first-para{
 	margin-left:20px;
 	margin-bottom:3px;
 	text-align:left;
-	
+
 }
 p.bibliography-other-para, .bibliography{
 /* the second style name is obsolete, kept for backward compatibility */
@@ -647,7 +647,7 @@ p.bibliography-other-para, .bibliography{
 	margin-bottom:3px;
 	text-align:left;
 	margin-top:1%;
-	
+
 }
 p.index-lev1{
 	text-indent:0px;
@@ -657,7 +657,7 @@ p.index-lev1{
 	margin-bottom:0px;
 	padding-top:0px;
 	padding-bottom:0px;
-	
+
 }
 p.index-lev2{
 	text-indent:10px;
@@ -667,7 +667,7 @@ p.index-lev2{
 	margin-bottom:0px;
 	padding-top:0px;
 	padding-bottom:0px;
-	
+
 }
 p.index-lev3{
 	text-indent:20px;
@@ -677,7 +677,7 @@ p.index-lev3{
 	margin-bottom:0px;
 	padding-top:0px;
 	padding-bottom:0px;
-	
+
 }
 p.index-lev4{
 	text-indent:30px;
@@ -687,7 +687,7 @@ p.index-lev4{
 	margin-bottom:0px;
 	padding-top:0px;
 	padding-bottom:0px;
-	
+
 }
 p.index-lev1-spaced{
 	text-indent:0px;
@@ -826,7 +826,7 @@ div#next-button > a > img{
 }
 
 /* LEGACY SIDEBAR */
-/* TODO make it more 21 century*/	
+/* TODO make it more 21 century*/
 .blue-bg {
 	background-color: var(--blue);
 }
