@@ -1,25 +1,31 @@
-<!--
-(c) Open Book Publishers 2013-2016
-Use of this software is governed by the terms of the GPLv3 - see LICENSE.
--->
-<!-- closes 'mainwin' -->
+          <!-- This closes the book content col-->
           </div>
-        </td>
-      </tr>
-      <!-- bottom banner, navigation -->
-      <tr id="last-row">
-        <td class="first-column"></td>
-        <td class="second-column">
-          <div id="bottom-navigation">
-            <!-- Go to the previous chapter buttons -->
-            <div id="prev-button">
-              <a href="%PREV%" title="Go to the previous chapter">Previous Chapter  </a><a href="%PREV%" title="Go to the previous chapter"><img src="https://www.openbookpublishers.com/images/prev-reader.png" alt="Click to go to the next chapter"/></a>
-            </div>
-            <!-- Go to the next chapter buttons -->
-            <div id="next-button">
-              <a href="%NEXT%" title="Go to the next chapter">  Next Chapter</a><a href="%NEXT%" title="Go to the next chapter"><img src="https://www.openbookpublishers.com/images/next-reader.png" alt=""/></a>
-            </div>
+        <!-- This closes the book content row-->
+        </div>
+
+
+        <!-- Navigation buttons -->
+        <div class="row mt-2 mb-3 d-print-none">
+          <div class="col-6 text-right">
+            <a href="%PREV%" title="Go to the previous chapter">
+              <span class="mr-1">
+                <i class="fas fa-caret-left"></i>
+              </span>
+              <span>Previous Chapter</span>
+            </a>
           </div>
-        </td>
-      </tr>
-    </table>
+          <div class="col-6 text-left">
+            <a href="%NEXT%" title="Go to the next chapter">
+              <span>Next Chapter</span>
+              <span class="ml-1">
+                <i class="fas fa-caret-right"></i>
+              </span>
+            </a>
+          </div>
+
+        </div>
+
+  <!-- Close content divs-->
+      </div>
+    </div>
+  </div>
