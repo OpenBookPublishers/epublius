@@ -1,8 +1,8 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="reader-nav">
     <a class="navbar-brand" href="https://www.openbookpublishers.com/">
-      <img src="logo/logo.png" id="OBP-logo" class="d-inline-block align-top" alt="OPB logo" />
-      <img src="logo/open_access.png" id="OA-logo" alt="OA logo" />
+      <img src="logo/OBP_logo_color.svg" id="OBP-logo" class="d-inline-block align-top" alt="OPB logo" />
+      <img src="logo/OA_circle_and_text.svg" id="OA-logo" alt="OA logo" />
     </a>
 
     <!-- Buttons on Navbar -->
