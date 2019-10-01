@@ -5,14 +5,6 @@ div.flush_right {
     max-width:200px
 }
 
-/* BOOTSTRAP MODAL */
-/* Enlarge modal frame */
-.modal-dialog {
-/*
-    max-width:70%;
-*/
-}
-
 .Image-vertical,
 .Image-horizontal {
     cursor: pointer;
