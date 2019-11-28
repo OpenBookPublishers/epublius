@@ -282,9 +282,11 @@ def main():
     match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
     if match and match.group(2) <> None:
       #FIXME hardcoded formatting
-      colophon_links.append('<a href="' + colo_file + '">' + match.group(2).title() + '</a>')
+      colophon_links.append('<a href="' + colo_file + '">' +
+                            match.group(2).title() + '</a>')
     else:
-      raise Exception('The colophon file ' + colo_file + ' does not match the expected pattern.')
+      raise Exception('The colophon file ' + colo_file +
+                      ' does not match the expected pattern.')
 
   extract_pagecycle(directory_prefix)
 
@@ -360,12 +362,16 @@ def main():
 
     return directory
 
-  images_directory = get_directory('Images', directory_prefix, ['images', 'Images', 'image'])
+  images_directory = get_directory('Images', directory_prefix,
+                                   ['images', 'Images', 'image'])
   process_images(directory_prefix, target_directory, images_directory + "/")
 
   css_directory = get_directory('CSS', directory_prefix, ['css'])
-  result = commands.getstatusoutput("cp -r " + directory_prefix + "/" + css_directory +
-                                    " " + target_directory + "/" + css_directory)
+  result = commands.getstatusoutput("cp -r " + directory_prefix + "/" +
+                                    css_directory +
+                                    " " + target_directory + "/" +
+                                    css_directory)
+
   print "copying CSS directory (" + css_directory + "):" + str(result)
 
 if __name__ == '__main__':
