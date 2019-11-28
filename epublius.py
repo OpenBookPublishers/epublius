@@ -297,13 +297,13 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
   colophon_links = []
   for colo_file in colophon_files:
     match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
-    if match and match.group(2) <> None:
-      # FIXME hardcoded formatting
-      colophon_links.append('<a href="' + colo_file + '">' +
-                            match.group(2).title() + '</a>')
-    else:
+    if not (match and match.group(2) <> None):
       raise Exception('The colophon file ' + colo_file +
                       ' does not match the expected pattern.')
+
+    # FIXME hardcoded formatting
+    colophon_links.append('<a href="' + colo_file + '">' +
+                          match.group(2).title() + '</a>')
 
   pagecycle = extract_pagecycle(directory_prefix)
 
