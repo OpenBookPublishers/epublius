@@ -298,7 +298,7 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
   for colo_file in colophon_files:
     match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
     if match and match.group(2) <> None:
-      #FIXME hardcoded formatting
+      # FIXME hardcoded formatting
       colophon_links.append('<a href="' + colo_file + '">' +
                             match.group(2).title() + '</a>')
     else:
