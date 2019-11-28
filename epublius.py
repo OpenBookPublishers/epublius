@@ -41,19 +41,24 @@ import urllib
 import breadcrumbs
 
 #include both HTML and CSS files
-matcher_link = re.compile("^.* href=\"([a-zA-Z0-9_.-]+?\.(html|css|xhtml))(#.+)?\".*$")
+matcher_link = re.compile(
+  "^.* href=\"([a-zA-Z0-9_.-]+?\.(html|css|xhtml))(#.+)?\".*$")
 
 title_matcher = re.compile("^.*<title>(.+)</title>.*$")
 
 #filter out the "part" pages
-ignore_link = re.compile("^(.*)<a.+href=\"\d+_part\d+\.x?html\".*?>(.+)</a>(.*)$")
+ignore_link = re.compile(
+  "^(.*)<a.+href=\"\d+_part\d+\.x?html\".*?>(.+)</a>(.*)$")
 
 body_start = re.compile("^.*<body ?.*>.*$") #FIXME dangerous
 body_end = re.compile("^.*</body>.*$")
 header_end = re.compile("^.*</head>.*$")
-index_link = re.compile("^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
+index_link = re.compile(
+  "^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
 
-stylesheet_line = '''<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>'''
+stylesheet_line = ('''<link rel="stylesheet" ''' +
+                   '''type="application/vnd.adobe-page-template+xml"''' +
+                   ''' href="page-template.xpgt"/>''')
 
 def process_file(filename, book_title, prefix, suffix, pagecycle,
                  toc_file, url_prefix,
