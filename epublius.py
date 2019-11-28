@@ -62,7 +62,7 @@ stylesheet_line = ('''<link rel="stylesheet" ''' +
 
 def process_file(filename, book_title, pagecycle, fragments,
                  toc_file, url_prefix,
-                 directory_prefix, write_mode,
+                 directory_prefix,
                  target_directory,
                  index_file):
   page_suffix = fragments["suffix"]
@@ -97,6 +97,12 @@ def process_file(filename, book_title, pagecycle, fragments,
   links_to = set([])
   fd = open(directory_prefix + filename)
   new_contents = []
+
+  if target_directory == None:
+    write_mode = False
+  else:
+    write_mode = True
+
   for line in fd.readlines():
     if line == stylesheet_line:
       continue
@@ -321,11 +327,6 @@ def main():
     usage()
     raise Exception('Incomplete parameter list')
 
-  if target_directory == None:
-    write_mode = False
-  else:
-    write_mode = True
-
   fragments = {}
   for filename, key in [
       (prefix_file, "prefix"),
@@ -336,14 +337,14 @@ def main():
       fragments[key] = "\n".join(f.readlines())
 
   process_pages(colophon_files, directory_prefix, toc_file, book_title,
-                fragments, url_prefix, write_mode, target_directory,
+                fragments, url_prefix, target_directory,
                 index_file, front_file, book_page, copyright_file,
                 donation_link)
   process_images_and_css(directory_prefix, resize_percent, target_directory)
 
 
 def process_pages(colophon_files, directory_prefix, toc_file, book_title,
-                  fragments, url_prefix, write_mode, target_directory,
+                  fragments, url_prefix, target_directory,
                   index_file, front_file, book_page,
                   copyright_file, donation_link):
   files_done = 0
@@ -363,7 +364,6 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
       filename, book_title,
       pagecycle, fragments, toc_file, url_prefix,
       directory_prefix,
-      write_mode,
       target_directory, index_file)
 
     # the first file is processed twice.
