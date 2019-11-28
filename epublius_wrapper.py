@@ -124,7 +124,7 @@ def main():
 
   parser.add_argument('-u', '--url',
                       help = 'URL path of this book',
-                      required = None)
+                      required = True)
 
   parser.add_argument('-a', '--donation',
                       help = 'Donation link',
