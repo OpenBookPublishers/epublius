@@ -157,18 +157,36 @@ def process_file(filename, book_title, pagecycle, fragments,
 
 def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
                     front_file, colophon_links, copyright_file, donation_link):
-  prefix = re.sub("%BOOKTITLE%", book_title, prefix)
-  prefix = re.sub("%TOC%", toc_file, prefix)
-  prefix = re.sub("%BOOKPAGE%", book_page, prefix)
-  prefix = re.sub("%INDEX%", index_file, prefix)
-  prefix = re.sub("%FRONTPAGE%", front_file, prefix)
-  prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
-                  ', '.join(colophon_links), prefix)
+  config = {
+    "booktitle": book_title,
+    "toc": toc_file,
+    "bookpage": book_page,
+    "index": index_file,
+    "frontpage": front_file,
+    "copyright": copyright_file,
+    "colophon_links": 'Colophon: ' + ', '.join(colophon_links),
+    "donate": donation_link
+  }
 
-  prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
-  if donation_link != None:
-    prefix = re.sub("%DONATE%", donation_link, prefix)
-  return prefix
+  return render_template(prefix, config)
+
+
+def render_template(template, config):
+  """
+  Take some text like `Dear %FIRSTNAME% %SURNAME%, ...' and
+  a dictionary of the form:
+  {
+    "firstname": "John",
+    "surname": "Smith"
+  }
+  and interpolate the relevant items (capitalising the keyword).
+  """
+  working_text = template
+  for key, value in config.iteritems():
+    anchor = "%" + key.upper() + "%"
+    if value is not None:
+      working_text = re.sub(anchor, value, working_text)
+  return working_text
 
 
 # populates pagecycle, based on info in toc.ncx
