@@ -284,8 +284,8 @@ def main():
                       ', '.join(colophon_links), prefix)
 
       prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
-      if donation_link != None: prefix = re.sub("%DONATE%",
-                                                donation_link, prefix)
+      if donation_link != None:
+        prefix = re.sub("%DONATE%", donation_link, prefix)
 
     else:
       processed_pages.add(filename)
