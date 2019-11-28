@@ -1,17 +1,33 @@
 #!/usr/bin/python2
 #
 # ePublius wrapper
+
 # Discovers the values of parameters to be given to epublius.py.
+
 # Currently works for -f, -t and -l.
 # Uses toc.ncx to get these values. I also rely on matching
-# filenames, but these often vary wildly. FIXME change the process to rely solely on toc.ncx
+
+# filenames, but these often vary wildly.
+# FIXME change the process to rely solely on toc.ncx
 #
 # (c) Nik Sultana, Open Book Publishers, September 2013
 # Use of this software is governed by the terms of the GPLv3 -- see LICENSE.
 #
-# Example usage: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/97 -f /home/nik/OBP/code/epub/9781906924737_Oral_Literature_in_Africa.epub -o test
-# or: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/98/women-in-nineteenth-century-russia--lives-and-culture -f testfiles/Women_in_Russia.epub -o WIR2 -n "Women in Russia"
-# or, with variable image resizing: ./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/215/ -f 9781783740031_Tacitus_Annals.epub -o TA -n "Tacitus, Annals, 15.20-23, 33-45. Latin Text, Study Aids with Vocabulary, and Commentary" -r 80
+# Example usage: ./epublius_wrapper.py -p prefix -s suffix \
+#   -h header_add -b https://www.openbookpublishers.com/product/97 \
+#   -f /home/nik/OBP/code/epub/9781906924737_Oral_Literature_in_Africa.epub \
+#   -o test
+#
+# or: ./epublius_wrapper.py -p prefix -s suffix -h header_add \
+#   -b https://www.openbookpublishers.com/product/98/women-in-nineteenth-century-russia--lives-and-culture \
+#   -f testfiles/Women_in_Russia.epub -o WIR2 -n "Women in Russia"
+#
+# or, with variable image resizing:
+#    ./epublius_wrapper.py -p prefix -s suffix -h header_add \
+#    -b https://www.openbookpublishers.com/product/215/ \
+#    -f 9781783740031_Tacitus_Annals.epub -o TA \
+#    -n "Tacitus, Annals, 15.20-23, 33-45. Latin Text, Study Aids with Vocabulary, and Commentary" \
+#    -r 80
 #
 # What it does:
 # - create temp directory
@@ -159,7 +175,9 @@ def main():
     print output
 
   _, path = commands.getstatusoutput("find " + tmpdir + " -name toc.ncx")
-  path = (string.split(path, '\n'))[0] #In case there were multiple finds, we use the first
+
+  # In case there were multiple finds, we use the first:
+  path = (string.split(path, '\n'))[0]
   print "Temporary directory: " + tmpdir
   path = os.path.dirname(path) + "/"
   print "Expecting to find cover file at: " + path
@@ -175,7 +193,8 @@ def main():
         break
       elif len(file_attempt) > 1:
         #This is suspicious, since there should be only one match.
-        print "Possible problem: detected " + file_kind + " files:" + str(file_attempt) + " using glob " + file_heuristic
+        print ("Possible problem: detected " + file_kind + " files:" + 
+               str(file_attempt) + " using glob " + file_heuristic)
 
     if file == None:
       if not unzipped_ePub:
