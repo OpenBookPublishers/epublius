@@ -89,33 +89,35 @@ def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_
       if match <> None:
         links_to.add(match.group(1))
 
-      if write_mode:
-        bodystart_match = body_start.match(line)
-        bodyend_match = body_end.match(line)
-        headerend_match = header_end.match(line)
-        title_match = title_matcher.match(line)
-        index_match = index_link.match(line)
-        if bodystart_match <> None:
-          new_contents.append(line)
-          new_contents.append(page_prefix)
-        elif bodyend_match <> None:
-          new_contents.append(page_suffix)
-          new_contents.append(line)
-        elif headerend_match <> None:
-          new_contents = new_contents + header_add
-          new_contents.append(line)
-        elif title_match <> None:
-          new_contents.append(line)
-          if book_title == "":
-            book_title = title_match.group(1)
-            print "Detected book title:" + book_title
-        elif index_match <> None:
-          new_contents.append(line)
-          if index_file == "":
-            index_file = index_match.group(1)
-            print "Detected index file:" + index_file
-        else:
-          new_contents.append(line)
+      if not write_mode:
+        continue
+
+      bodystart_match = body_start.match(line)
+      bodyend_match = body_end.match(line)
+      headerend_match = header_end.match(line)
+      title_match = title_matcher.match(line)
+      index_match = index_link.match(line)
+      if bodystart_match <> None:
+        new_contents.append(line)
+        new_contents.append(page_prefix)
+      elif bodyend_match <> None:
+        new_contents.append(page_suffix)
+        new_contents.append(line)
+      elif headerend_match <> None:
+        new_contents = new_contents + header_add
+        new_contents.append(line)
+      elif title_match <> None:
+        new_contents.append(line)
+        if book_title == "":
+          book_title = title_match.group(1)
+          print "Detected book title:" + book_title
+      elif index_match <> None:
+        new_contents.append(line)
+        if index_file == "":
+          index_file = index_match.group(1)
+          print "Detected index file:" + index_file
+      else:
+        new_contents.append(line)
 
   fd.close()
 
