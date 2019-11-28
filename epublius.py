@@ -51,7 +51,7 @@ ignore_link = re.compile(
   "^(.*)<a.+href=\"\d+_part\d+\.x?html\".*?>(.+)</a>(.*)$")
 
 body_start = re.compile("^.*<body ?.*>.*$") #FIXME dangerous
-body_end = re.compile("^.*</body>.*$")
+body_end   = re.compile("^.*</body>.*$")
 header_end = re.compile("^.*</head>.*$")
 index_link = re.compile(
   "^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
