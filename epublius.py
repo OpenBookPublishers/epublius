@@ -35,16 +35,22 @@ import string
 import urllib
 import breadcrumbs
 
-# assumes:
-#  suffix
-#  pagecycle
-#  page_suffix
-#  toc_file
-#  url_prefix
+#include both HTML and CSS files
+matcher_link = re.compile("^.* href=\"([a-zA-Z0-9_.-]+?\.(html|css|xhtml))(#.+)?\".*$")
+
+title_matcher = re.compile("^.*<title>(.+)</title>.*$")
+
+#filter out the "part" pages
+ignore_link = re.compile("^(.*)<a.+href=\"\d+_part\d+\.x?html\".*?>(.+)</a>(.*)$")
+
+body_start = re.compile("^.*<body ?.*>.*$") #FIXME dangerous
+body_end = re.compile("^.*</body>.*$")
+header_end = re.compile("^.*</head>.*$")
+index_link = re.compile("^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
 
 def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_prefix,
-                 directory_prefix, ignore_link, matcher_link, write_mode, body_start,
-                 body_end, header_end, title_matcher, index_link, target_directory,
+                 directory_prefix, write_mode,
+                 target_directory,
                  header_add, index_file):
   page_suffix = suffix
   # These re.subs are page-specific.
@@ -235,19 +241,6 @@ def main():
   header_add = headeradd_fd.readlines()
   headeradd_fd.close()
 
-  #include both HTML and CSS files
-  matcher_link = re.compile("^.* href=\"([a-zA-Z0-9_.-]+?\.(html|css|xhtml))(#.+)?\".*$")
-
-  title_matcher = re.compile("^.*<title>(.+)</title>.*$")
-
-  #filter out the "part" pages
-  ignore_link = re.compile("^(.*)<a.+href=\"\d+_part\d+\.x?html\".*?>(.+)</a>(.*)$")
-
-  body_start = re.compile("^.*<body ?.*>.*$") #FIXME dangerous
-  body_end = re.compile("^.*</body>.*$")
-  header_end = re.compile("^.*</head>.*$")
-  index_link = re.compile("^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
-
   files_done = 0
 
   #maps a page of the book to its previous and next pages. we wrap around: so the
@@ -292,12 +285,12 @@ def main():
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
     print "processing " + filename
-    new_links, book_title, index_file = process_file(filename, book_title, prefix,
-                                         suffix, pagecycle, toc_file, url_prefix,
-                                         directory_prefix, ignore_link, matcher_link,
-                                         write_mode, body_start, body_end,
-                                         header_end, title_matcher, index_link,
-                                                     target_directory, header_add, index_file)
+    new_links, book_title, index_file = process_file(
+      filename, book_title, prefix,
+      suffix, pagecycle, toc_file, url_prefix,
+      directory_prefix,
+      write_mode,
+      target_directory, header_add, index_file)
 
     # the first file is processed twice.
     # first time is to extract values, and the second time is to use them.
