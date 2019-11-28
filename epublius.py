@@ -69,10 +69,17 @@ def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_
     slashed_url_prefix = url_prefix
   else:
     slashed_url_prefix = url_prefix + "/"
-  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%", slashed_url_prefix + "*", page_prefix)
+
+  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%",
+                       slashed_url_prefix + "*",
+                       page_prefix)
   # used for translating this page
-  page_prefix = re.sub("%THIS_PAGE_URL%", slashed_url_prefix + filename, page_prefix)
-  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%", urllib.quote(slashed_url_prefix + filename, safe=''), page_prefix)
+  page_prefix = re.sub("%THIS_PAGE_URL%",
+                       slashed_url_prefix + filename,
+                       page_prefix)
+  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%",
+                       urllib.quote(slashed_url_prefix + filename, safe=''),
+                       page_prefix)
 
   links_to = set([])
   fd = open(directory_prefix + filename)
