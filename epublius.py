@@ -277,10 +277,14 @@ def main():
     filename = pages_to_process.pop()
     print "processing " + filename
     new_links, book_title = process_file(filename, book_title)
-    if (files_done == 0): #the first file is processed twice. first time is to extract values, and the second time is to use them.
+
+    # the first file is processed twice.
+    # first time is to extract values, and the second time is to use them.
+    if (files_done == 0):
       pages_to_process.add(filename)
 
-      #Process files which aren't linked-to by the TOC, such as the Cover and the Colophon.
+      # Process files which aren't linked-to by the TOC,
+      # such as the Cover and the Colophon.
       pages_to_process.add(front_file)
       for colo_file in colophon_files:
         pages_to_process.add(colo_file)
@@ -289,10 +293,12 @@ def main():
       prefix = re.sub("%BOOKPAGE%", book_page, prefix)
       prefix = re.sub("%INDEX%", index_file, prefix)
       prefix = re.sub("%FRONTPAGE%", front_file, prefix)
-      prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' + ', '.join(colophon_links), prefix)
+      prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
+                      ', '.join(colophon_links), prefix)
 
       prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
-      if donation_link != None: prefix = re.sub("%DONATE%", donation_link, prefix)
+      if donation_link != None: prefix = re.sub("%DONATE%",
+                                                donation_link, prefix)
 
     else:
       processed_pages.add(filename)
