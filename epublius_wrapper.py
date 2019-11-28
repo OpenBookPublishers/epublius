@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 #
 # ePublius wrapper
 # Discovers the values of parameters to be given to epublius.py.
