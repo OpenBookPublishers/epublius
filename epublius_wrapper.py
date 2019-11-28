@@ -306,14 +306,14 @@ def main():
          " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " +
          target_directory + "/main.html")
   print "Adding charset to main.html: " + cmd
-  fake_command(cmd)
+  commands.getoutput(cmd)
 
   cmd = ("cp " + template_dir + "/html-style.css" +
          " " + target_directory + "/css/ && " +
          "cp " + template_dir + "/JS/*" +
          " " + target_directory + "/")
   print "Copying JS and CSS via command: " + cmd
-  _, output = fake_command(cmd)
+  _, output = commands.getstatusoutput(cmd)
 
   cmd = ("cp -r " + template_dir + "/logo" +
          " " + target_directory + "/")
