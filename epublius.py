@@ -333,16 +333,16 @@ def main():
   header_add = headeradd_fd.readlines()
   headeradd_fd.close()
 
-  process(colophon_files, directory_prefix, toc_file, book_title, prefix,
+  process_pages(colophon_files, directory_prefix, toc_file, book_title, prefix,
           suffix, url_prefix, write_mode, target_directory, header_add,
-          index_file, front_file, book_page, copyright_file, donation_link,
-          resize_percent
-  )
+          index_file, front_file, book_page, copyright_file, donation_link)
+  process_images_and_css(directory_prefix, resize_percent, target_directory)
 
-def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
-            suffix, url_prefix, write_mode, target_directory, header_add,
-            index_file, front_file, book_page, copyright_file, donation_link,
-            resize_percent):
+
+def process_pages(colophon_files, directory_prefix, toc_file, book_title, 
+                  prefix, suffix, url_prefix, write_mode, target_directory,
+                  header_add, index_file, front_file, book_page,
+                  copyright_file, donation_link):
   files_done = 0
 
   colophon_links = [ extract_colophon_links(colo_file)
@@ -387,7 +387,6 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
 
   print "processed " + str(files_done) + " files"
 
-  process_images_and_css(directory_prefix, resize_percent, target_directory)
 
 if __name__ == '__main__':
   main()
