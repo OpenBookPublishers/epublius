@@ -251,6 +251,56 @@ def process_images_and_css(directory_prefix, resize_percent, target_directory):
   print "copying CSS directory (" + css_directory + "):" + str(result)
 
 
+def process_pages(colophon_files, directory_prefix, toc_file, book_title,
+                  fragments, url_prefix, target_directory,
+                  index_file, front_file, book_page,
+                  copyright_file, donation_link):
+  files_done = 0
+
+  colophon_links = [ extract_colophon_links(colo_file)
+                     for colo_file in colophon_files ]
+  pagecycle = extract_pagecycle(directory_prefix)
+
+  # List of HTML files
+  processed_pages = set([])
+  pages_to_process = set([toc_file, os.path.dirname(toc_file) + 'content.opf'])
+
+  while len(pages_to_process) > 0:
+    filename = pages_to_process.pop()
+    print "processing " + filename
+    new_links, book_title, index_file = process_file(
+      filename, book_title,
+      pagecycle, fragments, toc_file, url_prefix,
+      directory_prefix,
+      target_directory, index_file)
+
+    # the first file is processed twice.
+    # first time is to extract values, and the second time is to use them.
+    if (files_done == 0):
+      pages_to_process.add(filename)
+
+      # Process files which aren't linked-to by the TOC,
+      # such as the Cover and the Colophon.
+      pages_to_process.add(front_file)
+      for colo_file in colophon_files:
+        pages_to_process.add(colo_file)
+      fragments["prefix"] = generate_prefix(
+        fragments["prefix"], book_title, toc_file, book_page,
+        index_file, front_file, colophon_links,
+        copyright_file, donation_link)
+
+    else:
+      processed_pages.add(filename)
+      pages_to_process = pages_to_process.union(new_links)
+      pages_to_process.difference_update(processed_pages)
+
+    files_done += 1
+    breadcrumbs.process_file(filename)
+
+  print "processed " + str(files_done) + " files"
+
+
+
 def main():
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
 
@@ -341,55 +391,6 @@ def main():
                 index_file, front_file, book_page, copyright_file,
                 donation_link)
   process_images_and_css(directory_prefix, resize_percent, target_directory)
-
-
-def process_pages(colophon_files, directory_prefix, toc_file, book_title,
-                  fragments, url_prefix, target_directory,
-                  index_file, front_file, book_page,
-                  copyright_file, donation_link):
-  files_done = 0
-
-  colophon_links = [ extract_colophon_links(colo_file)
-                     for colo_file in colophon_files ]
-  pagecycle = extract_pagecycle(directory_prefix)
-
-  # List of HTML files
-  processed_pages = set([])
-  pages_to_process = set([toc_file, os.path.dirname(toc_file) + 'content.opf'])
-
-  while len(pages_to_process) > 0:
-    filename = pages_to_process.pop()
-    print "processing " + filename
-    new_links, book_title, index_file = process_file(
-      filename, book_title,
-      pagecycle, fragments, toc_file, url_prefix,
-      directory_prefix,
-      target_directory, index_file)
-
-    # the first file is processed twice.
-    # first time is to extract values, and the second time is to use them.
-    if (files_done == 0):
-      pages_to_process.add(filename)
-
-      # Process files which aren't linked-to by the TOC,
-      # such as the Cover and the Colophon.
-      pages_to_process.add(front_file)
-      for colo_file in colophon_files:
-        pages_to_process.add(colo_file)
-      fragments["prefix"] = generate_prefix(
-        fragments["prefix"], book_title, toc_file, book_page,
-        index_file, front_file, colophon_links,
-        copyright_file, donation_link)
-
-    else:
-      processed_pages.add(filename)
-      pages_to_process = pages_to_process.union(new_links)
-      pages_to_process.difference_update(processed_pages)
-
-    files_done += 1
-    breadcrumbs.process_file(filename)
-
-  print "processed " + str(files_done) + " files"
 
 
 if __name__ == '__main__':
