@@ -197,17 +197,13 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
   return prefix
 
 def get_directory(directory_kind, directory_prefix, directory_heuristics):
-  directory = None
   for directory_heuristic in directory_heuristics:
     if os.path.exists(directory_prefix + directory_heuristic):
-      directory = directory_heuristic
-      print "Detected " + directory_kind + " directory: " + directory
-      break
+      print "Detected " + directory_kind + " directory: " + directory_heuristic
+      return directory_heuristic
 
-  if directory == None:
-    raise Exception('Could not find ' + directory_kind + ' directory')
+  raise Exception('Could not find ' + directory_kind + ' directory')
 
-  return directory
 
 def main():
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
