@@ -41,6 +41,7 @@ import time
 import os
 import sys
 import glob
+import subprocess
 import commands
 import shutil
 import re
@@ -49,6 +50,11 @@ import argparse
 
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
+
+def fake_command(s):
+  args = s.split(" ")
+  output = subprocess.check_output(args)
+  return 0, output
 
 
 def main():
@@ -171,10 +177,10 @@ def main():
     tmpdir = epub_file
   else:
     tmpdir = create_tmpdir()
-    _, output = commands.getstatusoutput("unzip " + epub_file + " -d " + tmpdir)
+    _, output = fake_command("unzip " + epub_file + " -d " + tmpdir)
     print output
 
-  _, path = commands.getstatusoutput("find " + tmpdir + " -name toc.ncx")
+  _, path = fake_command("find " + tmpdir + " -name toc.ncx")
 
   # In case there were multiple finds, we use the first:
   path = (string.split(path, '\n'))[0]
@@ -262,7 +268,7 @@ def main():
   # We previously used title_file as the main page, but switched to
   # toc_file in 2016.
 
-  commands.getstatusoutput("cp " + path + "/" + toc_file +
+  fake_command("cp " + path + "/" + toc_file +
                            " " + path + "/" + "main.html")
   title_file = "main.html"
 
@@ -286,12 +292,12 @@ def main():
   if resize_percent <> None:
    cmd += ' -r ' + str(resize_percent)
 
-  _, output = commands.getstatusoutput(cmd + ' ' + book_title_arg)
+  _, output = fake_command(cmd + ' ' + book_title_arg)
   print output
 
   # We recopy the file, since when we earlier copied the file it had
   # not yet been processed by epublius, but now it has.
-  commands.getstatusoutput("cp " + target_directory + "/" + toc_file
+  fake_command("cp " + target_directory + "/" + toc_file
                            + " " + target_directory + "/" + "main.html")
   # add html charset meta tag based on original encoding
   cmd = ("sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " +
@@ -299,26 +305,26 @@ def main():
          " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " +
          target_directory + "/main.html")
   print "Adding charset to main.html: " + cmd
-  commands.getstatusoutput(cmd)
+  fake_command(cmd)
 
   cmd = ("cp " + template_dir + "/html-style.css" +
          " " + target_directory + "/css/ && " +
          "cp " + template_dir + "/JS/*" +
          " " + target_directory + "/")
   print "Copying JS and CSS via command: " + cmd
-  _, output = commands.getstatusoutput(cmd)
+  _, output = fake_command(cmd)
 
   cmd = ("cp -r " + template_dir + "/logo" +
          " " + target_directory + "/")
 
   print "Copying logo folder via command: " + cmd
-  _, output = commands.getstatusoutput(cmd)
+  _, output = fake_command(cmd)
 
   ## Append left and right padding requirement to CSS file.
   # cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> "
   #          + path + "/css/idGeneratedStyles_0.css")
   #print "Appending CSS info via command: " + cmd
-  #_, output = commands.getstatusoutput(cmd)
+  #_, output = fake_command(cmd)
   ##
 
   if not unzipped_ePub:
