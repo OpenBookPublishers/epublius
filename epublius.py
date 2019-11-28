@@ -196,6 +196,24 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
     prefix = re.sub("%DONATE%", donation_link, prefix)
   return prefix
 
+
+def process_images(directory_prefix, target_directory, path, resize_percent):
+  image_filenames = (
+    map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
+    map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
+  )
+  if target_directory <> None:
+    try: os.makedirs(target_directory + path)
+    except: pass
+    for filename in image_filenames:
+      result = commands.getstatusoutput(
+        "convert -resize " + str(resize_percent) + "% -quality 80 " +
+        "'" + directory_prefix + path + filename + "'" +
+        " '" + target_directory + path + filename + "'"
+      )
+      print "converting " + filename + ":" + str(result)
+
+
 def get_directory(directory_kind, directory_prefix, directory_heuristics):
   for directory_heuristic in directory_heuristics:
     if os.path.exists(directory_prefix + directory_heuristic):
@@ -353,28 +371,13 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
   print "processed " + str(files_done) + " files"
 
 
-  def process_images(directory_prefix, target_directory, path):
-    image_filenames = (
-      map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
-      map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
-    )
-    if target_directory <> None:
-      try: os.makedirs(target_directory + path)
-      except: pass
-      for filename in image_filenames:
-        result = commands.getstatusoutput(
-          "convert -resize " + str(resize_percent) + "% -quality 80 " +
-          "'" + directory_prefix + path + filename + "'" +
-          " '" + target_directory + path + filename + "'"
-        )
-        print "converting " + filename + ":" + str(result)
-
 
   images_directory = get_directory('Images', directory_prefix,
                                    ['images', 'Images', 'image'])
   print
   print "Now converting images. Resize is " + str(resize_percent) + "%"
-  process_images(directory_prefix, target_directory, images_directory + "/")
+  process_images(directory_prefix, target_directory, images_directory + "/",
+                 resize_percent)
 
   css_directory = get_directory('CSS', directory_prefix, ['css'])
   result = commands.getstatusoutput("cp -r " + directory_prefix + "/" +
