@@ -35,6 +35,22 @@ import string
 import urllib
 import breadcrumbs
 
+def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
+                    front_file, colophon_links, copyright_file, donation_link):
+  prefix = re.sub("%BOOKTITLE%", book_title, prefix)
+  prefix = re.sub("%TOC%", toc_file, prefix)
+  prefix = re.sub("%BOOKPAGE%", book_page, prefix)
+  prefix = re.sub("%INDEX%", index_file, prefix)
+  prefix = re.sub("%FRONTPAGE%", front_file, prefix)
+  prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
+                  ', '.join(colophon_links), prefix)
+
+  prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
+  if donation_link != None:
+    prefix = re.sub("%DONATE%", donation_link, prefix)
+  return prefix
+
+
 def main():
 
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
@@ -167,7 +183,7 @@ def main():
 
     print ("pagecycle = " + str(pagecycle))
 
-  def process_file(filename, book_title):
+  def process_file(filename, book_title, prefix):
     page_suffix = suffix
     # These re.subs are page-specific.
     #if filename <> "content.opf":
@@ -263,7 +279,7 @@ def main():
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
     print "processing " + filename
-    new_links, book_title = process_file(filename, book_title)
+    new_links, book_title = process_file(filename, book_title, prefix)
 
     # the first file is processed twice.
     # first time is to extract values, and the second time is to use them.
@@ -275,17 +291,9 @@ def main():
       pages_to_process.add(front_file)
       for colo_file in colophon_files:
         pages_to_process.add(colo_file)
-      prefix = re.sub("%BOOKTITLE%", book_title, prefix)
-      prefix = re.sub("%TOC%", toc_file, prefix)
-      prefix = re.sub("%BOOKPAGE%", book_page, prefix)
-      prefix = re.sub("%INDEX%", index_file, prefix)
-      prefix = re.sub("%FRONTPAGE%", front_file, prefix)
-      prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
-                      ', '.join(colophon_links), prefix)
-
-      prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
-      if donation_link != None:
-        prefix = re.sub("%DONATE%", donation_link, prefix)
+      prefix = generate_prefix(prefix, book_title, toc_file, book_page,
+                               index_file, front_file, colophon_links,
+                               copyright_file, donation_link)
 
     else:
       processed_pages.add(filename)
