@@ -60,12 +60,12 @@ stylesheet_line = ('''<link rel="stylesheet" ''' +
                    '''type="application/vnd.adobe-page-template+xml"''' +
                    ''' href="page-template.xpgt"/>''')
 
-def process_file(filename, book_title, prefix, suffix, pagecycle,
+def process_file(filename, book_title, pagecycle, fragments,
                  toc_file, url_prefix,
                  directory_prefix, write_mode,
                  target_directory,
-                 header_add, index_file):
-  page_suffix = suffix
+                 index_file):
+  page_suffix = fragments["suffix"]
   # These re.subs are page-specific.
   #if filename <> "content.opf":
   if filename in pagecycle.keys():
@@ -76,7 +76,7 @@ def process_file(filename, book_title, prefix, suffix, pagecycle,
     page_suffix = re.sub("%PREV%", toc_file, page_suffix)
     page_suffix = re.sub("%NEXT%", toc_file, page_suffix)
 
-  page_prefix = prefix
+  page_prefix = fragments["prefix"]
   # used for searching within the book
   if url_prefix.endswith("/"):
     slashed_url_prefix = url_prefix
@@ -124,7 +124,7 @@ def process_file(filename, book_title, prefix, suffix, pagecycle,
         new_contents.append(page_suffix)
         new_contents.append(line)
       elif headerend_match <> None:
-        new_contents.append(header_add)
+        new_contents.append(fragments["header_add"])
         new_contents.append(line)
       elif title_match <> None:
         new_contents.append(line)
@@ -360,11 +360,11 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
     filename = pages_to_process.pop()
     print "processing " + filename
     new_links, book_title, index_file = process_file(
-      filename, book_title, fragments["prefix"],
-      fragments["suffix"], pagecycle, toc_file, url_prefix,
+      filename, book_title,
+      pagecycle, fragments, toc_file, url_prefix,
       directory_prefix,
       write_mode,
-      target_directory, fragments["header_add"], index_file)
+      target_directory, index_file)
 
     # the first file is processed twice.
     # first time is to extract values, and the second time is to use them.
