@@ -35,6 +35,96 @@ import string
 import urllib
 import breadcrumbs
 
+# assumes:
+#  suffix
+#  pagecycle
+#  page_suffix
+#  toc_file
+#  url_prefix
+
+def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_prefix,
+                 directory_prefix, ignore_link, matcher_link, write_mode, body_start,
+                 body_end, header_end, title_matcher, index_link, target_directory,
+                 header_add, index_file):
+  page_suffix = suffix
+  # These re.subs are page-specific.
+  #if filename <> "content.opf":
+  if filename in pagecycle.keys():
+    page_suffix = re.sub("%PREV%", pagecycle[filename][0], page_suffix)
+    page_suffix = re.sub("%NEXT%", pagecycle[filename][1], page_suffix)
+  else:
+    print "No PREV/NEXT for " + filename + ", defaulting to " + toc_file
+    page_suffix = re.sub("%PREV%", toc_file, page_suffix)
+    page_suffix = re.sub("%NEXT%", toc_file, page_suffix)
+
+  page_prefix = prefix
+  # used for searching within the book
+  if url_prefix.endswith("/"):
+    slashed_url_prefix = url_prefix
+  else:
+    slashed_url_prefix = url_prefix + "/"
+  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%", slashed_url_prefix + "*", page_prefix)
+  # used for translating this page
+  page_prefix = re.sub("%THIS_PAGE_URL%", slashed_url_prefix + filename, page_prefix)
+  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%", urllib.quote(slashed_url_prefix + filename, safe=''), page_prefix)
+
+  links_to = set([])
+  fd = open(directory_prefix + filename)
+  new_contents = []
+  for line in fd.readlines():
+    if line <> '<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>':
+      match = ignore_link.match(line)
+      if match <> None:
+        if write_mode:
+          new_contents.append(match.group(1) + match.group(2) + match.group(3))
+      else:
+        match = matcher_link.match(line)
+        if match <> None:
+          links_to.add(match.group(1))
+
+        if write_mode:
+          bodystart_match = body_start.match(line)
+          bodyend_match = body_end.match(line)
+          headerend_match = header_end.match(line)
+          title_match = title_matcher.match(line)
+          index_match = index_link.match(line)
+          if bodystart_match <> None:
+            new_contents.append(line)
+            # new_contents.append('<body onload="loader();">\n')
+
+            # new_contents = new_contents + page_prefix
+            new_contents.append(page_prefix)
+          elif bodyend_match <> None:
+            # new_contents = new_contents + page_suffix
+            new_contents.append(page_suffix)
+            new_contents.append(line)
+          elif headerend_match <> None:
+            new_contents = new_contents + header_add
+            new_contents.append(line)
+          elif title_match <> None:
+            new_contents.append(line)
+            if book_title == "":
+              book_title = title_match.group(1)
+              print "Detected book title:" + book_title
+          elif index_match <> None:
+            new_contents.append(line)
+            if index_file == "":
+              index_file = index_match.group(1)
+              print "Detected index file:" + index_file
+          else:
+            new_contents.append(line)
+
+  fd.close()
+
+  if write_mode:
+    fd = open(target_directory + filename, 'w')
+    fd.writelines(new_contents)
+    fd.close()
+
+  return links_to, book_title, index_file
+
+
+
 def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
                     front_file, colophon_links, copyright_file, donation_link):
   prefix = re.sub("%BOOKTITLE%", book_title, prefix)
@@ -183,83 +273,6 @@ def main():
 
     print ("pagecycle = " + str(pagecycle))
 
-  def process_file(filename, book_title, prefix):
-    page_suffix = suffix
-    # These re.subs are page-specific.
-    #if filename <> "content.opf":
-    if filename in pagecycle.keys():
-      page_suffix = re.sub("%PREV%", pagecycle[filename][0], page_suffix)
-      page_suffix = re.sub("%NEXT%", pagecycle[filename][1], page_suffix)
-    else:
-      print "No PREV/NEXT for " + filename + ", defaulting to " + toc_file
-      page_suffix = re.sub("%PREV%", toc_file, page_suffix)
-      page_suffix = re.sub("%NEXT%", toc_file, page_suffix)
-
-    page_prefix = prefix
-    # used for searching within the book
-    if url_prefix.endswith("/"):
-      slashed_url_prefix = url_prefix
-    else:
-      slashed_url_prefix = url_prefix + "/"
-    page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%", slashed_url_prefix + "*", page_prefix)
-    # used for translating this page
-    page_prefix = re.sub("%THIS_PAGE_URL%", slashed_url_prefix + filename, page_prefix)
-    page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%", urllib.quote(slashed_url_prefix + filename, safe=''), page_prefix)
-
-    links_to = set([])
-    fd = open(directory_prefix + filename)
-    new_contents = []
-    for line in fd.readlines():
-      if line <> '<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>':
-        match = ignore_link.match(line)
-        if match <> None:
-          if write_mode:
-            new_contents.append(match.group(1) + match.group(2) + match.group(3))
-        else:
-          match = matcher_link.match(line)
-          if match <> None:
-            links_to.add(match.group(1))
-
-          if write_mode:
-            bodystart_match = body_start.match(line)
-            bodyend_match = body_end.match(line)
-            headerend_match = header_end.match(line)
-            title_match = title_matcher.match(line)
-            index_match = index_link.match(line)
-            if bodystart_match <> None:
-              new_contents.append(line)
-              # new_contents.append('<body onload="loader();">\n')
-
-              # new_contents = new_contents + page_prefix
-              new_contents.append(page_prefix)
-            elif bodyend_match <> None:
-              # new_contents = new_contents + page_suffix
-              new_contents.append(page_suffix)
-              new_contents.append(line)
-            elif headerend_match <> None:
-              new_contents = new_contents + header_add
-              new_contents.append(line)
-            elif title_match <> None:
-              new_contents.append(line)
-              if book_title == "":
-                book_title = title_match.group(1)
-                print "Detected book title:" + book_title
-            elif index_match <> None:
-              new_contents.append(line)
-              if index_file == "":
-                index_file = index_match.group(1)
-                print "Detected index file:" + index_file
-            else:
-              new_contents.append(line)
-
-    fd.close()
-
-    if write_mode:
-      fd = open(target_directory + filename, 'w')
-      fd.writelines(new_contents)
-      fd.close()
-
-    return links_to, book_title
 
   colophon_links = []
   for colo_file in colophon_files:
@@ -279,7 +292,12 @@ def main():
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
     print "processing " + filename
-    new_links, book_title = process_file(filename, book_title, prefix)
+    new_links, book_title, index_file = process_file(filename, book_title, prefix,
+                                         suffix, pagecycle, toc_file, url_prefix,
+                                         directory_prefix, ignore_link, matcher_link,
+                                         write_mode, body_start, body_end,
+                                         header_end, title_matcher, index_link,
+                                                     target_directory, header_add, index_file)
 
     # the first file is processed twice.
     # first time is to extract values, and the second time is to use them.
