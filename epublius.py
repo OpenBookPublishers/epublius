@@ -157,7 +157,6 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
 
 
 def main():
-
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
 
   def usage():
@@ -250,6 +249,16 @@ def main():
   header_add = headeradd_fd.readlines()
   headeradd_fd.close()
 
+  process(colophon_files, directory_prefix, toc_file, book_title, prefix,
+          suffix, url_prefix, write_mode, target_directory, header_add,
+          index_file, front_file, book_page, copyright_file, donation_link,
+          resize_percent
+  )
+
+def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
+            suffix, url_prefix, write_mode, target_directory, header_add,
+            index_file, front_file, book_page, copyright_file, donation_link,
+            resize_percent):
   files_done = 0
 
   # maps a page of the book to its previous and next pages.
