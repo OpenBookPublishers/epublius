@@ -152,9 +152,8 @@ def process_file(filename, book_title, pagecycle, fragments,
   fd.close()
 
   if write_mode:
-    fd = open(target_directory + filename, 'w')
-    fd.writelines(new_contents)
-    fd.close()
+    with file(target_directory + filename, 'w') as f:
+      f.writelines(new_contents)
 
   return links_to, book_title, index_file
 
