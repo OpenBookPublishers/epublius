@@ -328,15 +328,19 @@ def main():
 
 
   def process_images(directory_prefix, target_directory, path):
-    image_filenames = (map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
-                       map(os.path.basename, glob.glob(directory_prefix + path + '*.png')))
+    image_filenames = (
+      map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
+      map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
+    )
     if target_directory <> None:
       try: os.makedirs(target_directory + path)
       except: pass
       for filename in image_filenames:
-        result = commands.getstatusoutput("convert -resize " + str(resize_percent) + "% -quality 80 " +
-                                          "'" + directory_prefix + path + filename + "'" +
-                                          " '" + target_directory + path + filename + "'")
+        result = commands.getstatusoutput(
+          "convert -resize " + str(resize_percent) + "% -quality 80 " +
+          "'" + directory_prefix + path + filename + "'" +
+          " '" + target_directory + path + filename + "'"
+        )
         print "converting " + filename + ":" + str(result)
 
   print
