@@ -33,6 +33,7 @@ import commands
 #import subprocess
 import string
 import urllib
+import breadcrumbs
 
 def main():
 
@@ -292,6 +293,7 @@ def main():
       pages_to_process.difference_update(processed_pages)
 
     files_done += 1
+    breadcrumbs.process_file(filename)
 
   print "processed " + str(files_done) + " files"
 
