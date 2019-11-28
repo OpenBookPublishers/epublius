@@ -294,8 +294,6 @@ def main():
     files_done += 1
 
   print "processed " + str(files_done) + " files"
-  #print "processed_pages=" + str(processed_pages)
-  #print "pages_to_process=" + str(pages_to_process)
 
   def process_images(directory_prefix, target_directory, path):
     image_filenames = (map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
