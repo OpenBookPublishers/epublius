@@ -38,12 +38,12 @@ parser = argparse.ArgumentParser(description='ePublius wrapper',
                                  add_help=False)
 
 parser.add_argument('-p', '--prefix',
-					help = 'file containing prefix',
-					required = True)
+                    help = 'file containing prefix',
+                    required = True)
 
 parser.add_argument('-s', '--suffix',
-					help = 'file containing suffix',
-					required = True)
+                    help = 'file containing suffix',
+                    required = True)
 
 parser.add_argument('--help',
                     action='help',
@@ -51,62 +51,62 @@ parser.add_argument('--help',
                     help=argparse._('show this help message and exit'))
 
 parser.add_argument('-h', '--header',
-					help = 'file containing HTML to inject into header',
-					required = True)
+                    help = 'file containing HTML to inject into header',
+                    required = True)
 
 parser.add_argument('-b', '--book',
-					help = 'URL of book\'s page',
-					required = True)
+                    help = 'URL of book\'s page',
+                    required = True)
 
 parser.add_argument('-f', '--file',
-					help = 'ePub file (or contents, if -z is used)',
-					required = True)
+                    help = 'ePub file (or contents, if -z is used)',
+                    required = True)
 
 parser.add_argument('-o', '--output',
-					help = 'Target directory',
-					required = True)
+                    help = 'Target directory',
+                    required = True)
 
 parser.add_argument('-n', '--name',
                     default = None,
-					help = 'Book name')
+                    help = 'Book name')
 
 parser.add_argument('-z', '--zip',
-					help = 'Target of -f parameter is an unzipped ' \
+                    help = 'Target of -f parameter is an unzipped ' \
                            'ePub file',
                     default = False,
                     action = "store_true")
 
 parser.add_argument('-c', '--cover',
-					help = 'Book doesn\'t have a cover',
+                    help = 'Book doesn\'t have a cover',
                     default = False,
                     action="store_true")
 
 parser.add_argument('-r', '--resample',
-					help = 'Resample image (as percentage; ' \
+                    help = 'Resample image (as percentage; ' \
                            'default is 50, no resampling is 100).',
                     default = None,
                     type = int)
 
 parser.add_argument('-e', '--epublish',
-					help = 'Location of the ePublius script.',
+                    help = 'Location of the ePublius script.',
                     default = '.')
 
 parser.add_argument('-i', '--index',
-					help = 'Force the use of a particular index ' \
+                    help = 'Force the use of a particular index ' \
                            'file. This parameter will simply be ' \
                            'passed on to the epublius script.',
                     default = None)
 
 parser.add_argument('-u', '--url',
-					help = 'URL path of this book',
-					required = None)
+                    help = 'URL path of this book',
+                    required = None)
 
 parser.add_argument('-a', '--donation',
-					help = 'Donation link',
+                    help = 'Donation link',
                     default = None)
 
 parser.add_argument('-t', '--template',
-					help = 'Directory containing the template ' \
+                    help = 'Directory containing the template ' \
                            'files (CSS and JS)',
                     default = '.')
 
