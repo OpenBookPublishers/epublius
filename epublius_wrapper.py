@@ -193,7 +193,7 @@ def main():
         break
       elif len(file_attempt) > 1:
         #This is suspicious, since there should be only one match.
-        print ("Possible problem: detected " + file_kind + " files:" + 
+        print ("Possible problem: detected " + file_kind + " files:" +
                str(file_attempt) + " using glob " + file_heuristic)
 
     if file == None:
@@ -204,24 +204,33 @@ def main():
     return file
 
 
-  content_files = string.split(commands.getoutput("grep \"<item id=\" " + path + "content.opf " +
-                                                  "| grep 'media-type=\"application/xhtml+xml\"'" +
-                                                  "| perl -pe 's/^.+href=\"(.+?)\".+$/$1/'"),
+  content_files = string.split(commands.getoutput(
+    "grep \"<item id=\" " + path + "content.opf " +
+    "| grep 'media-type=\"application/xhtml+xml\"'" +
+    "| perl -pe 's/^.+href=\"(.+?)\".+$/$1/'"),
                                '\n')
   colophon_files = []
   toc_file = None
   title_file = None
   copyright_file = None
   for content_file in content_files:
-    #FIXME could put these heuristics into a config file, or given them at the command line.
+    # FIXME:
+    # could put these heuristics into a config file, or given them
+    # at the command line.
     match_cover = re.search('(_cover.html|cover.html|_Cover.html|Front-cover.xhtml|front-cover.xhtml|00-cover.xhtml)', content_file)
     if match_cover and title_file == None:
       title_file = content_file
 
-    #FIXME could put these heuristics into a config file, or given them at the command line.
+    # FIXME:
+    # could put these heuristics into a config file, or given them
+    # at the command line.
     match_toc = re.search('(_toc.html|toc.html|_Contents.html|_Content.html|_Tableofcontent.html|Contents-digital.xhtml|contents.xhtml|Contents.xhtml|Main-text-1.xhtml|Resemblance-and-Representation.xhtml)', content_file)
-    #NOTE sometimes the files might be contained within a subdirectory -- e.g., 'Text/toc.html' in the case of Yates Annual.
-    #     this is considered as a special case and handled manually, to avoid complicated this code.
+
+    # NOTE
+    # sometimes the files might be contained within a subdirectory
+    #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
+    #     this is considered as a special case and handled manually, 
+    #     to avoid complicated this code.
     if match_toc and toc_file == None:
       toc_file = content_file
       #Cover should always precede the TOC, so once we find the TOC we can break out of the loop.
@@ -250,8 +259,11 @@ def main():
   if not unzipped_ePub:
     os.makedirs(target_directory)
 
-  # We previously used title_file as the main page, but switched to toc_file in 2016.
-  commands.getstatusoutput("cp " + path + "/" + toc_file + " " + path + "/" + "main.html")
+  # We previously used title_file as the main page, but switched to
+  # toc_file in 2016.
+
+  commands.getstatusoutput("cp " + path + "/" + toc_file +
+                           " " + path + "/" + "main.html")
   title_file = "main.html"
 
   book_title_arg = ""
@@ -261,7 +273,8 @@ def main():
   if donation_link == None: donation_link = ""
   else: donation_link = " -a '" + donation_link + "'"
 
-  cmd = (ePublius_path + "/epublius.py -p " + prefix_file + " -s " + suffix_file +
+  cmd = (ePublius_path + "/epublius.py -p " + prefix_file +
+         " -s " + suffix_file +
          " -h " + headeradd_file + " -b " + book_page + " -f " + title_file +
          " -k " + copyright_file +
          index_to_use +
@@ -276,11 +289,15 @@ def main():
   _, output = commands.getstatusoutput(cmd + ' ' + book_title_arg)
   print output
 
-  # We recopy the file, since when we earlier copied the file it had not yet been
-  # processed by epublius, but now it has.
-  commands.getstatusoutput("cp " + target_directory + "/" + toc_file + " " + target_directory + "/" + "main.html")
+  # We recopy the file, since when we earlier copied the file it had
+  # not yet been processed by epublius, but now it has.
+  commands.getstatusoutput("cp " + target_directory + "/" + toc_file
+                           + " " + target_directory + "/" + "main.html")
   # add html charset meta tag based on original encoding
-  cmd = "sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " + target_directory + "/" + toc_file + " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " + target_directory + "/main.html"
+  cmd = ("sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " +
+         target_directory + "/" + toc_file +
+         " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " +
+         target_directory + "/main.html")
   print "Adding charset to main.html: " + cmd
   commands.getstatusoutput(cmd)
 
@@ -298,7 +315,8 @@ def main():
   _, output = commands.getstatusoutput(cmd)
 
   ## Append left and right padding requirement to CSS file.
-  #cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> " + path + "/css/idGeneratedStyles_0.css")
+  # cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> "
+  #          + path + "/css/idGeneratedStyles_0.css")
   #print "Appending CSS info via command: " + cmd
   #_, output = commands.getstatusoutput(cmd)
   ##
