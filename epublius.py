@@ -245,10 +245,6 @@ def main():
 
     return links_to, book_title
 
-  # List of HTML files
-  processed_pages = set([])
-  pages_to_process = set([toc_file, os.path.dirname(toc_file) + 'content.opf'])
-
   colophon_links = []
   for colo_file in colophon_files:
     match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
@@ -259,6 +255,10 @@ def main():
       raise Exception('The colophon file ' + colo_file + ' does not match the expected pattern.')
 
   extract_pagecycle(directory_prefix)
+
+  # List of HTML files
+  processed_pages = set([])
+  pages_to_process = set([toc_file, os.path.dirname(toc_file) + 'content.opf'])
 
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
