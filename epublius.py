@@ -48,6 +48,8 @@ body_end = re.compile("^.*</body>.*$")
 header_end = re.compile("^.*</head>.*$")
 index_link = re.compile("^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Index)</a>.*$")
 
+stylesheet_line = '''<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>'''
+
 def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_prefix,
                  directory_prefix, write_mode,
                  target_directory,
@@ -85,7 +87,7 @@ def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_
   fd = open(directory_prefix + filename)
   new_contents = []
   for line in fd.readlines():
-    if line == '<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>':
+    if line == stylesheet_line:
       continue
     match = ignore_link.match(line)
     if match <> None:
