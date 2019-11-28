@@ -16,7 +16,8 @@
 # Example usage: ./epublius_wrapper.py -p prefix -s suffix \
 #   -h header_add -b https://www.openbookpublishers.com/product/97 \
 #   -f /home/nik/OBP/code/epub/9781906924737_Oral_Literature_in_Africa.epub \
-#   -o test
+#   -o test \
+#   -u https://www.openbookpublishers.com/product/000
 #
 # or: ./epublius_wrapper.py -p prefix -s suffix -h header_add \
 #   -b https://www.openbookpublishers.com/product/98/women-in-nineteenth-century-russia--lives-and-culture \
