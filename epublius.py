@@ -68,31 +68,35 @@ def process_file(filename, book_title, pagecycle, fragments,
   page_suffix = fragments["suffix"]
   # These re.subs are page-specific.
   #if filename <> "content.opf":
+
   if filename in pagecycle.keys():
-    page_suffix = re.sub("%PREV%", pagecycle[filename][0], page_suffix)
-    page_suffix = re.sub("%NEXT%", pagecycle[filename][1], page_suffix)
+    config_ps = {
+      "prev": pagecycle[filename][0],
+      "next": pagecycle[filename][1]
+    }
   else:
     print "No PREV/NEXT for " + filename + ", defaulting to " + toc_file
-    page_suffix = re.sub("%PREV%", toc_file, page_suffix)
-    page_suffix = re.sub("%NEXT%", toc_file, page_suffix)
+    config_ps = {
+      "prev": toc_file,
+      "next": toc_file
+    }
+  page_suffix = render_template(page_suffix, config_ps)
 
   page_prefix = fragments["prefix"]
+
   # used for searching within the book
   if url_prefix.endswith("/"):
     slashed_url_prefix = url_prefix
   else:
     slashed_url_prefix = url_prefix + "/"
 
-  page_prefix = re.sub("%THIS_PAGE_URL_PREFIX%",
-                       slashed_url_prefix + "*",
-                       page_prefix)
-  # used for translating this page
-  page_prefix = re.sub("%THIS_PAGE_URL%",
-                       slashed_url_prefix + filename,
-                       page_prefix)
-  page_prefix = re.sub("%THIS_PAGE_URL_ENCODED%",
-                       urllib.quote(slashed_url_prefix + filename, safe=''),
-                       page_prefix)
+  config_pp = {
+    "this_page_url_prefix": slashed_url_prefix + "*",
+    "this_page_url": slashed_url_prefix + filename,
+    "this_page_url_encoded": urllib.quote(slashed_url_prefix + filename,
+                                          safe='')
+  }
+  page_prefix = render_template(page_prefix, config_pp)
 
   links_to = set([])
   fd = open(directory_prefix + filename)
