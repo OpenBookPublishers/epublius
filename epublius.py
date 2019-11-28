@@ -8,13 +8,18 @@
 # (c) Nik Sultana, Open Book Publishers, September 2013
 # Use of this software is governed by the terms of the GPLv3 -- see LICENSE.
 #
-# Example usage: ./epublius.py -p prefix -s suffix -f 02_title.html -t 06_toc.html -b https://www.openbookpublishers.com/product/97 -d ../epub/OEBPS/ -o ../epub/new/ -h header_add
+# Example usage:
+#    ./epublius.py -p prefix -s suffix -f 02_title.html -t 06_toc.html \
+#        -b https://www.openbookpublishers.com/product/97 -d ../epub/OEBPS/ \
+#        -o ../epub/new/ -h header_add
 #
 # What it does:
 # 1) Unzip epub into directory
 # 2) Shrink images
 # 3) Scrub extra data
-#      remove <link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>
+#      remove <link rel="stylesheet"
+#                   type="application/vnd.adobe-page-template+xml"
+#                   href="page-template.xpgt"/>
 #      TODO remove font?
 #      TODO rename files
 #
