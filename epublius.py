@@ -323,6 +323,7 @@ def main():
 
   print "processed " + str(files_done) + " files"
 
+
   def process_images(directory_prefix, target_directory, path):
     image_filenames = (map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
                        map(os.path.basename, glob.glob(directory_prefix + path + '*.png')))
