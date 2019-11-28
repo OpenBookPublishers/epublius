@@ -253,7 +253,7 @@ def main():
     print "-o: Target directory"
     print "-h: file containing HTML to inject into header"
     print "-n: Title name"
-    print "-c: A colophon file (e.g., the license). There may be multiple -c parameters."
+    print "-c: A colophon file (e.g., the license). Multiple -c permitted."
     print "-r: How much to resize the images (as percentage; default is 50)."
     print "-i: Index file to use."
     print "-u: URL path of this book"
