@@ -50,7 +50,8 @@ index_link = re.compile("^.*<a.+href=\"((\d+_)?[Ii]ndex\.x?html)\".*?>(INDEX|Ind
 
 stylesheet_line = '''<link rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>'''
 
-def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_prefix,
+def process_file(filename, book_title, prefix, suffix, pagecycle,
+                 toc_file, url_prefix,
                  directory_prefix, write_mode,
                  target_directory,
                  header_add, index_file):
