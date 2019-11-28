@@ -345,9 +345,6 @@ def main():
         )
         print "converting " + filename + ":" + str(result)
 
-  print
-  print "Now converting images. Resize is " + str(resize_percent) + "%"
-
   #This follows the style of get_file in epublius_wrapper.py
   def get_directory (directory_kind, directory_prefix, directory_heuristics):
     directory = None
@@ -364,6 +361,8 @@ def main():
 
   images_directory = get_directory('Images', directory_prefix,
                                    ['images', 'Images', 'image'])
+  print
+  print "Now converting images. Resize is " + str(resize_percent) + "%"
   process_images(directory_prefix, target_directory, images_directory + "/")
 
   css_directory = get_directory('CSS', directory_prefix, ['css'])
