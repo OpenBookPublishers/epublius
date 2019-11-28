@@ -326,27 +326,25 @@ def main():
   else:
     write_mode = True
 
-  prefix_fd = open(prefix_file)
-  prefix = "\n".join(prefix_fd.readlines())
-  prefix_fd.close()
+  fragments = {}
+  for filename, key in [
+      (prefix_file, "prefix"),
+      (suffix_file, "suffix"),
+      (headeradd_file, "header_add")
+  ]:
+    with file(filename) as f:
+      fragments[key] = "\n".join(f.readlines())
 
-  suffix_fd = open(suffix_file)
-  suffix = "\n".join(suffix_fd.readlines())
-  suffix_fd.close()
-
-  headeradd_fd = open(headeradd_file)
-  header_add = "\n".join(headeradd_fd.readlines())
-  headeradd_fd.close()
-
-  process_pages(colophon_files, directory_prefix, toc_file, book_title, prefix,
-          suffix, url_prefix, write_mode, target_directory, header_add,
-          index_file, front_file, book_page, copyright_file, donation_link)
+  process_pages(colophon_files, directory_prefix, toc_file, book_title,
+                fragments, url_prefix, write_mode, target_directory,
+                index_file, front_file, book_page, copyright_file,
+                donation_link)
   process_images_and_css(directory_prefix, resize_percent, target_directory)
 
 
 def process_pages(colophon_files, directory_prefix, toc_file, book_title,
-                  prefix, suffix, url_prefix, write_mode, target_directory,
-                  header_add, index_file, front_file, book_page,
+                  fragments, url_prefix, write_mode, target_directory,
+                  index_file, front_file, book_page,
                   copyright_file, donation_link):
   files_done = 0
 
@@ -362,11 +360,11 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
     filename = pages_to_process.pop()
     print "processing " + filename
     new_links, book_title, index_file = process_file(
-      filename, book_title, prefix,
-      suffix, pagecycle, toc_file, url_prefix,
+      filename, book_title, fragments["prefix"],
+      fragments["suffix"], pagecycle, toc_file, url_prefix,
       directory_prefix,
       write_mode,
-      target_directory, header_add, index_file)
+      target_directory, fragments["header_add"], index_file)
 
     # the first file is processed twice.
     # first time is to extract values, and the second time is to use them.
@@ -378,9 +376,10 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
       pages_to_process.add(front_file)
       for colo_file in colophon_files:
         pages_to_process.add(colo_file)
-      prefix = generate_prefix(prefix, book_title, toc_file, book_page,
-                               index_file, front_file, colophon_links,
-                               copyright_file, donation_link)
+      fragments["prefix"] = generate_prefix(
+        fragments["prefix"], book_title, toc_file, book_page,
+        index_file, front_file, colophon_links,
+        copyright_file, donation_link)
 
     else:
       processed_pages.add(filename)
