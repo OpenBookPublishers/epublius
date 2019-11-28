@@ -96,12 +96,8 @@ def process_file(filename, book_title, prefix, suffix, pagecycle, toc_file, url_
           index_match = index_link.match(line)
           if bodystart_match <> None:
             new_contents.append(line)
-            # new_contents.append('<body onload="loader();">\n')
-
-            # new_contents = new_contents + page_prefix
             new_contents.append(page_prefix)
           elif bodyend_match <> None:
-            # new_contents = new_contents + page_suffix
             new_contents.append(page_suffix)
             new_contents.append(line)
           elif headerend_match <> None:
