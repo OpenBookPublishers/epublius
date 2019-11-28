@@ -339,7 +339,7 @@ def main():
   process_images_and_css(directory_prefix, resize_percent, target_directory)
 
 
-def process_pages(colophon_files, directory_prefix, toc_file, book_title, 
+def process_pages(colophon_files, directory_prefix, toc_file, book_title,
                   prefix, suffix, url_prefix, write_mode, target_directory,
                   header_add, index_file, front_file, book_page,
                   copyright_file, donation_link):
