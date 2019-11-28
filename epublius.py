@@ -124,7 +124,7 @@ def process_file(filename, book_title, prefix, suffix, pagecycle,
         new_contents.append(page_suffix)
         new_contents.append(line)
       elif headerend_match <> None:
-        new_contents = new_contents + header_add
+        new_contents.append(header_add)
         new_contents.append(line)
       elif title_match <> None:
         new_contents.append(line)
@@ -335,7 +335,7 @@ def main():
   suffix_fd.close()
 
   headeradd_fd = open(headeradd_file)
-  header_add = headeradd_fd.readlines()
+  header_add = "\n".join(headeradd_fd.readlines())
   headeradd_fd.close()
 
   process_pages(colophon_files, directory_prefix, toc_file, book_title, prefix,
