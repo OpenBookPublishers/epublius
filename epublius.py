@@ -155,6 +155,21 @@ def process_file(filename, book_title, pagecycle, fragments,
   return links_to, book_title, index_file
 
 
+def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
+                    front_file, colophon_links, copyright_file, donation_link):
+  prefix = re.sub("%BOOKTITLE%", book_title, prefix)
+  prefix = re.sub("%TOC%", toc_file, prefix)
+  prefix = re.sub("%BOOKPAGE%", book_page, prefix)
+  prefix = re.sub("%INDEX%", index_file, prefix)
+  prefix = re.sub("%FRONTPAGE%", front_file, prefix)
+  prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
+                  ', '.join(colophon_links), prefix)
+
+  prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
+  if donation_link != None:
+    prefix = re.sub("%DONATE%", donation_link, prefix)
+  return prefix
+
 
 # populates pagecycle, based on info in toc.ncx
 def extract_pagecycle(path):
@@ -191,21 +206,6 @@ def extract_colophon_links(colo_file):
 
   # FIXME hardcoded formatting
   return '<a href="' + colo_file + '">' + match.group(2).title() + '</a>'
-
-def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
-                    front_file, colophon_links, copyright_file, donation_link):
-  prefix = re.sub("%BOOKTITLE%", book_title, prefix)
-  prefix = re.sub("%TOC%", toc_file, prefix)
-  prefix = re.sub("%BOOKPAGE%", book_page, prefix)
-  prefix = re.sub("%INDEX%", index_file, prefix)
-  prefix = re.sub("%FRONTPAGE%", front_file, prefix)
-  prefix = re.sub("%COLOPHON_LINKS%", 'Colophon: ' +
-                  ', '.join(colophon_links), prefix)
-
-  prefix = re.sub("%COPYRIGHT%", copyright_file, prefix)
-  if donation_link != None:
-    prefix = re.sub("%DONATE%", donation_link, prefix)
-  return prefix
 
 
 def process_images(directory_prefix, target_directory, path, resize_percent):
