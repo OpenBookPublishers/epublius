@@ -251,16 +251,18 @@ def main():
 
   files_done = 0
 
-  #maps a page of the book to its previous and next pages. we wrap around: so the
-  #last page maps to the contents next, and the contents maps to the last page
-  #previous.
+  # maps a page of the book to its previous and next pages.
+  # we wrap around: so the last page maps to the contents next, and the
+  # contents maps to the last page previous.
   pagecycle = dict()
 
   #populates pagecycle, based on info in toc.ncx
   def extract_pagecycle(path):
-    files = string.split(commands.getoutput("grep 'content src' " + path + "toc.ncx " +
-                                             "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
-                                             "| uniq"), '\n')
+    files = string.split(commands.getoutput(
+      "grep 'content src' " + path + "toc.ncx " +
+      "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
+      "| uniq"), '\n'
+    )
 
     print ("extracted files = " + str(files))
 
