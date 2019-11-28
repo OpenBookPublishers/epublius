@@ -223,6 +223,23 @@ def get_directory(directory_kind, directory_prefix, directory_heuristics):
   raise Exception('Could not find ' + directory_kind + ' directory')
 
 
+def process_images_and_css(directory_prefix, resize_percent, target_directory):
+  images_directory = get_directory('Images', directory_prefix,
+                                   ['images', 'Images', 'image'])
+  print
+  print "Now converting images. Resize is " + str(resize_percent) + "%"
+  process_images(directory_prefix, target_directory, images_directory + "/",
+                 resize_percent)
+
+  css_directory = get_directory('CSS', directory_prefix, ['css'])
+  result = commands.getstatusoutput("cp -r " + directory_prefix + "/" +
+                                    css_directory +
+                                    " " + target_directory + "/" +
+                                    css_directory)
+
+  print "copying CSS directory (" + css_directory + "):" + str(result)
+
+
 def main():
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
 
@@ -370,22 +387,7 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
 
   print "processed " + str(files_done) + " files"
 
-
-
-  images_directory = get_directory('Images', directory_prefix,
-                                   ['images', 'Images', 'image'])
-  print
-  print "Now converting images. Resize is " + str(resize_percent) + "%"
-  process_images(directory_prefix, target_directory, images_directory + "/",
-                 resize_percent)
-
-  css_directory = get_directory('CSS', directory_prefix, ['css'])
-  result = commands.getstatusoutput("cp -r " + directory_prefix + "/" +
-                                    css_directory +
-                                    " " + target_directory + "/" +
-                                    css_directory)
-
-  print "copying CSS directory (" + css_directory + "):" + str(result)
+  process_images_and_css(directory_prefix, resize_percent, target_directory)
 
 if __name__ == '__main__':
   main()
