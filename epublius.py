@@ -140,6 +140,34 @@ def process_file(filename, book_title, prefix, suffix, pagecycle,
 
 
 
+# populates pagecycle, based on info in toc.ncx
+def extract_pagecycle(path):
+  # maps a page of the book to its previous and next pages.
+  # we wrap around: so the last page maps to the contents next, and the
+  # contents maps to the last page previous.
+  pagecycle = dict()
+
+  files = string.split(commands.getoutput(
+    "grep 'content src' " + path + "toc.ncx " +
+    "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
+    "| uniq"), '\n'
+  )
+
+  print ("extracted files = " + str(files))
+
+  #store as tuples in pagecycle: page |-> (prev, next)
+  for i in range(len(files)):
+    print "doing " + str(i) + ": " + files[i]
+    page = files[i]
+    prev = files[i - 1]
+    next_ = files[(i + 1) % len(files)]
+    pagecycle[page] = (prev, next_)
+
+  print ("pagecycle = " + str(pagecycle))
+
+  return pagecycle
+
+
 def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
                     front_file, colophon_links, copyright_file, donation_link):
   prefix = re.sub("%BOOKTITLE%", book_title, prefix)
@@ -261,32 +289,6 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
             resize_percent):
   files_done = 0
 
-  # maps a page of the book to its previous and next pages.
-  # we wrap around: so the last page maps to the contents next, and the
-  # contents maps to the last page previous.
-  pagecycle = dict()
-
-  #populates pagecycle, based on info in toc.ncx
-  def extract_pagecycle(path):
-    files = string.split(commands.getoutput(
-      "grep 'content src' " + path + "toc.ncx " +
-      "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
-      "| uniq"), '\n'
-    )
-
-    print ("extracted files = " + str(files))
-
-    #store as tuples in pagecycle: page |-> (prev, next)
-    for i in range(len(files)):
-      print "doing " + str(i) + ": " + files[i]
-      page = files[i]
-      prev = files[i - 1]
-      next_ = files[(i + 1) % len(files)]
-      pagecycle[page] = (prev, next_)
-
-    print ("pagecycle = " + str(pagecycle))
-
-
   colophon_links = []
   for colo_file in colophon_files:
     match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
@@ -298,7 +300,7 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
       raise Exception('The colophon file ' + colo_file +
                       ' does not match the expected pattern.')
 
-  extract_pagecycle(directory_prefix)
+  pagecycle = extract_pagecycle(directory_prefix)
 
   # List of HTML files
   processed_pages = set([])
