@@ -150,20 +150,6 @@ def main():
 
   #populates pagecycle, based on info in toc.ncx
   def extract_pagecycle(path):
-    # from http://stackoverflow.com/questions/19243020/in-python-get-the-output-of-system-command-as-a-string?lq=1
-    #cmd = "grep 'content src' OEBPS/toc.ncx | perl -pe 's/^.+<text>(.+?)<\/text>.+content src="(.+?)(#.*?)?".+$/$1\t$2/'"
-    #cmd = ("/usr/bin/grep 'content src' " + path + "toc.ncx | " +
-    #       "/usr/bin/perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' | " +
-    #       "/usr/bin/uniq")
-
-    #print ("cmd = " + cmd)
-
-    #proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-    #files_str = proc.stdout.read()
-
-    #factor out unique html files into a list
-    #files = files_str.split()
-
     files = string.split(commands.getoutput("grep 'content src' " + path + "toc.ncx " +
                                              "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
                                              "| uniq"), '\n')
