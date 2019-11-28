@@ -16,8 +16,6 @@ def process_file(path):
 
     modified = False
 
-    print "WOULD modify file"
-
     if False:
 
         with file(path, 'w') as f:
