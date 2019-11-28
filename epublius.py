@@ -172,6 +172,14 @@ def extract_pagecycle(path):
 
   return pagecycle
 
+def extract_colophon_links(colo_file):
+  match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
+  if not (match and match.group(2) <> None):
+    raise Exception('The colophon file ' + colo_file +
+                      ' does not match the expected pattern.')
+
+  # FIXME hardcoded formatting
+  return '<a href="' + colo_file + '">' + match.group(2).title() + '</a>'
 
 def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
                     front_file, colophon_links, copyright_file, donation_link):
@@ -294,17 +302,8 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
             resize_percent):
   files_done = 0
 
-  colophon_links = []
-  for colo_file in colophon_files:
-    match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
-    if not (match and match.group(2) <> None):
-      raise Exception('The colophon file ' + colo_file +
-                      ' does not match the expected pattern.')
-
-    # FIXME hardcoded formatting
-    colophon_links.append('<a href="' + colo_file + '">' +
-                          match.group(2).title() + '</a>')
-
+  colophon_links = [ extract_colophon_links(colo_file)
+                     for colo_file in colophon_files ]
   pagecycle = extract_pagecycle(directory_prefix)
 
   # List of HTML files
