@@ -281,8 +281,8 @@ def process(colophon_files, directory_prefix, toc_file, book_title, prefix,
       print "doing " + str(i) + ": " + files[i]
       page = files[i]
       prev = files[i - 1]
-      next = files[(i + 1) % len(files)]
-      pagecycle[page] = (prev, next)
+      next_ = files[(i + 1) % len(files)]
+      pagecycle[page] = (prev, next_)
 
     print ("pagecycle = " + str(pagecycle))
 
