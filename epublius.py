@@ -106,8 +106,11 @@ def main():
       usage()
       raise Exception('Unknown argument: ' + o + ':' + a)
 
-  if (prefix_file == None or suffix_file == None or book_page == None or
-      toc_file == None or front_file == None):
+  if (prefix_file == None or
+      suffix_file == None or
+      book_page   == None or
+      toc_file    == None or
+      front_file  == None):
     usage()
     raise Exception('Incomplete parameter list')
 
