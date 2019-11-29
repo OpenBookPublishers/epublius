@@ -75,7 +75,7 @@ def process_file(filename, book_title, pagecycle, fragments,
       "next": pagecycle[filename][1]
     }
   else:
-    print "No PREV/NEXT for " + filename + ", defaulting to " + toc_file
+    print("No PREV/NEXT for {}, defaulting to {}".format(filename, toc_file))
     config_ps = {
       "prev": toc_file,
       "next": toc_file
@@ -140,12 +140,12 @@ def process_file(filename, book_title, pagecycle, fragments,
         new_contents.append(line)
         if book_title == "":
           book_title = title_match.group(1)
-          print "Detected book title:" + book_title
+          print("Detected book title: {}".format(book_title))
       elif index_match <> None:
         new_contents.append(line)
         if index_file == "":
           index_file = index_match.group(1)
-          print "Detected index file:" + index_file
+          print("Detected index file: {}".format(index_file))
       else:
         new_contents.append(line)
 
