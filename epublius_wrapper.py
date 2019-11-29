@@ -277,8 +277,10 @@ def main():
   if book_title <> None:
     book_title_arg = "-n \"" + book_title + "\""
 
-  if donation_link == None: donation_link = ""
-  else: donation_link = " -a '" + donation_link + "'"
+  if donation_link == None:
+    donation_link = ""
+  else:
+    donation_link = " -a '" + donation_link + "'"
 
   copyright_arg = copyright_file + index_to_use
   url_arg = url_prefix + donation_link
