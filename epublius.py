@@ -249,7 +249,7 @@ def extract_colophon_links(colo_file):
                       ' does not match the expected pattern.')
 
   # FIXME hardcoded formatting
-  return '<a href="' + colo_file + '">' + match.group(2).title() + '</a>'
+  return '<a href="{}">{}</a>'.format(colo_file, match.group(2).title())
 
 
 def process_images(directory_prefix, target_directory, path, resize_percent):
