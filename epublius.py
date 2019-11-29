@@ -103,11 +103,16 @@ def process_file(filename, book_title, pagecycle, fragments,
   else:
     write_mode = True
 
+  def all_lines():
+    with file(directory_prefix + filename) as fd:
+      for line in fd.readlines():
+        yield line
+
   links_to = set([])
   new_contents = []
 
-  with file(directory_prefix + filename) as fd:
-    for line in fd.readlines():
+  if True:
+    for line in all_lines():
       if line == stylesheet_line:
         continue
       match = ignore_link.match(line)
