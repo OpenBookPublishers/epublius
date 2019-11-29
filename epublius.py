@@ -290,7 +290,7 @@ def get_directory(directory_kind, directory_prefix, directory_heuristics):
 def process_images_and_css(directory_prefix, resize_percent, target_directory):
   images_directory = get_directory('Images', directory_prefix,
                                    ['images', 'Images', 'image'])
-  print "\nNow converting images. Resize is " + str(resize_percent) + "%"
+  print "\nNow converting images. Resize is {}%".format(resize_percent)
   process_images(directory_prefix, target_directory, images_directory + "/",
                  resize_percent)
 
