@@ -98,8 +98,8 @@ def process_file(filename, book_title, pagecycle, fragments,
   }
   page_prefix = render_template(page_prefix, config_pp)
 
-  links_to = set([])
   fd = open(directory_prefix + filename)
+  links_to = set([])
   new_contents = []
 
   if target_directory == None:
