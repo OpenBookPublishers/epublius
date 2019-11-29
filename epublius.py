@@ -111,14 +111,18 @@ def main():
     usage()
     raise Exception('Incomplete parameter list')
 
-  fragments = {}
-  for filename, key in [
-      (prefix_file, "prefix"),
-      (suffix_file, "suffix"),
-      (headeradd_file, "header_add")
-  ]:
-    with file(filename) as f:
-      fragments[key] = "\n".join(f.readlines())
+  def make_fragments(prefix_file, suffix_file, headeradd_file):
+    fragments = {}
+    for filename, key in [
+        (prefix_file, "prefix"),
+        (suffix_file, "suffix"),
+        (headeradd_file, "header_add")
+    ]:
+      with file(filename) as f:
+        fragments[key] = "\n".join(f.readlines())
+    return fragments
+
+  fragments = make_fragments(prefix_file, suffix_file, headeradd_file)
 
   epub_extract.process_pages(colophon_files, directory_prefix, toc_file,
                              book_title,
