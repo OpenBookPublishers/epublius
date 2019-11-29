@@ -167,7 +167,7 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
     "index": index_file,
     "frontpage": front_file,
     "copyright": copyright_file,
-    "colophon_links": 'Colophon: ' + ', '.join(colophon_links),
+    "colophon_links": 'Colophon: {}'.format(', '.join(colophon_links)),
     "donate": donation_link
   }
 
