@@ -280,14 +280,17 @@ def main():
   if donation_link == None: donation_link = ""
   else: donation_link = " -a '" + donation_link + "'"
 
+  copyright_arg = copyright_file + index_to_use
+  url_arg = url_prefix + donation_link
+
   cmd = (ePublius_path + "/epublius.py" +
          " -p " + prefix_file +
          " -s " + suffix_file +
          " -h " + headeradd_file +
          " -b " + book_page +
          " -f " + title_file +
-         " -k " + copyright_file + index_to_use +
-         " -u " + url_prefix + donation_link +
+         " -k " + copyright_arg +
+         " -u " + url_arg +
          " -t " + toc_file +
          " -d " + path +
          " -o " + target_directory +
