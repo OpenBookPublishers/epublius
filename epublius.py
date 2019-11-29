@@ -120,8 +120,6 @@ def process_file(filename, book_title, pagecycle, fragments,
         new_contents.append(match.group(1) + match.group(2) + match.group(3))
     else:
       match = matcher_link.match(line)
-      if match <> None:
-        links_to.add(match.group(1))
 
       if not write_mode:
         continue
@@ -152,6 +150,17 @@ def process_file(filename, book_title, pagecycle, fragments,
           print("Detected index file: {}".format(index_file))
       else:
         new_contents.append(line)
+
+  for line in all_lines():
+    if line == stylesheet_line:
+      continue
+    match = ignore_link.match(line)
+    if match <> None:
+      pass
+    else:
+      match = matcher_link.match(line)
+      if match <> None:
+        links_to.add(match.group(1))
 
   if write_mode:
     with file(target_directory + filename, 'w') as f:
