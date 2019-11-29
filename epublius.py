@@ -145,7 +145,6 @@ def process_file(filename, book_title, pagecycle, fragments,
         else:
           new_contents.append(line)
 
-  if write_mode:
     with file(target_directory + filename, 'w') as f:
       f.writelines(new_contents)
 
