@@ -257,22 +257,23 @@ def process_images(directory_prefix, target_directory, path, resize_percent):
     map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
     map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
   )
-  if target_directory <> None:
-    try:
-      os.makedirs(target_directory + path)
-    except:
-      pass
-    for filename in image_filenames:
-      input_path = directory_prefix + path + filename
-      output_path = target_directory + path + filename
-      rp = str(resize_percent)
+  if target_directory is None:
+    return
+  try:
+    os.makedirs(target_directory + path)
+  except:
+    pass
+  for filename in image_filenames:
+    input_path = directory_prefix + path + filename
+    output_path = target_directory + path + filename
+    rp = str(resize_percent)
 
-      result = commands.getstatusoutput(
-        "convert -resize {}% -quality 80 '{}' '{}'".format(
-          rp, input_path, output_path
-        )
+    result = commands.getstatusoutput(
+      "convert -resize {}% -quality 80 '{}' '{}'".format(
+        rp, input_path, output_path
       )
-      print "converting " + filename + ":" + str(result)
+    )
+    print "converting " + filename + ":" + str(result)
 
 
 def get_directory(directory_kind, directory_prefix, directory_heuristics):
