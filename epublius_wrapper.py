@@ -240,7 +240,8 @@ def main():
     #     to avoid complicated this code.
     if match_toc and toc_file == None:
       toc_file = content_file
-      #Cover should always precede the TOC, so once we find the TOC we can break out of the loop.
+      # Cover should always precede the TOC, so once we find the TOC we
+      # can break out of the loop.
       break
     else:
       colophon_files.append(content_file)
