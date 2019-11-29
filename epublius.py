@@ -222,11 +222,9 @@ def extract_pagecycle(path):
   # contents maps to the last page previous.
   pagecycle = dict()
 
-  files = string.split(commands.getoutput(
-    "grep 'content src' " + path + "toc.ncx " +
-    "| perl -pe 's/^.+<text>(.+?)<\/text>.+content src=\"(.+?)(#.*?)?\".+$/$2/' " +
-    "| uniq"), '\n'
-  )
+  script_path = os.path.join(os.path.dirname(__file__), "extract_pagecycle")
+  cmd = "{} {}".format(script_path, path)
+  files = string.split(commands.getoutput(cmd), '\n')
 
   print ("extracted files = " + str(files))
 
