@@ -65,6 +65,23 @@ def process_file(filename, book_title, pagecycle, fragments,
                  directory_prefix,
                  target_directory,
                  index_file):
+  """process_file(...) takes a filename referring to an input file which
+     must be partly rewritten, and combined with other material, and
+     does two things:
+
+       * create a version of the contents with various inclusions and
+         transformations applied
+       * returns the links found in the source file, as well as title and
+         index_file information also extracted
+
+     Returns: a tuple: (links,
+                        title,
+                        index_file)
+       where links is a set().
+
+     Bugs: this function combines too many responsibilities
+  """
+
   page_suffix = fragments["suffix"]
   # These re.subs are page-specific.
   #if filename <> "content.opf":
