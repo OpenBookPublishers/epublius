@@ -105,40 +105,50 @@ def process_file(filename, book_title, pagecycle, fragments,
           continue
         yield line
 
+  details = {
+    "book_title": book_title,
+    "index_file": index_file
+  }
+
   if target_directory is not None:
     # write_mode
-    new_contents = []
-    for line in all_lines():
-      match = ignore_link.match(line)
-      if match <> None:
-        new_contents.append(match.group(1) + match.group(2) + match.group(3))
-      else:
-        bodystart_match = body_start.match(line)
-        bodyend_match = body_end.match(line)
-        headerend_match = header_end.match(line)
-        title_match = title_matcher.match(line)
-        index_match = index_link.match(line)
-        if bodystart_match <> None:
-          new_contents.append(line)
-          new_contents.append(page_prefix)
-        elif bodyend_match <> None:
-          new_contents.append(page_suffix)
-          new_contents.append(line)
-        elif headerend_match <> None:
-          new_contents.append(fragments["header_add"])
-          new_contents.append(line)
-        elif title_match <> None:
-          new_contents.append(line)
-          if book_title == "":
-            book_title = title_match.group(1)
-            print("Detected book title: {}".format(book_title))
-        elif index_match <> None:
-          new_contents.append(line)
-          if index_file == "":
-            index_file = index_match.group(1)
-            print("Detected index file: {}".format(index_file))
+
+    def gather_rewritten_contents():
+      for line in all_lines():
+        match = ignore_link.match(line)
+        if match <> None:
+          yield match.group(1) + match.group(2) + match.group(3)
         else:
-          new_contents.append(line)
+          bodystart_match = body_start.match(line)
+          bodyend_match = body_end.match(line)
+          headerend_match = header_end.match(line)
+          title_match = title_matcher.match(line)
+          index_match = index_link.match(line)
+          if bodystart_match <> None:
+            yield line
+            yield page_prefix
+          elif bodyend_match <> None:
+            yield page_suffix
+            yield line
+          elif headerend_match <> None:
+            yield fragments["header_add"]
+            yield line
+          elif title_match <> None:
+            yield line
+            if details["book_title"] == "":
+              details["book_title"] = title_match.group(1)
+              print("Detected book title: {}".format(details["book_title"]))
+          elif index_match <> None:
+            yield line
+            if details["index_file"] == "":
+              details["index_file"] = index_match.group(1)
+              print("Detected index file: {}".format(details["index_file"]))
+          else:
+            yield line
+
+    new_contents = []
+    for content in gather_rewritten_contents():
+      new_contents.append(content)
 
     with file(target_directory + filename, 'w') as f:
       f.writelines(new_contents)
