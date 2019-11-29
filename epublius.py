@@ -164,7 +164,7 @@ def process_file(filename, book_title, pagecycle, fragments,
       if match <> None:
         links_to.add(match.group(1))
 
-  return links_to, book_title, index_file
+  return links_to, details["book_title"], details["index_file"]
 
 
 def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
