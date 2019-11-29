@@ -276,8 +276,8 @@ def main():
   title_file = "main.html"
 
   book_title_arg = ""
-  if book_title <> None:
-    book_title_arg = "-n \"" + book_title + "\""
+  if book_title is None:
+    book_title = ""
 
   if donation_link is None:
     donation_link = ""
