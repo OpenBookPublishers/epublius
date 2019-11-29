@@ -146,12 +146,9 @@ def process_file(filename, book_title, pagecycle, fragments,
           else:
             yield line
 
-    new_contents = []
-    for content in gather_rewritten_contents():
-      new_contents.append(content)
-
     with file(target_directory + filename, 'w') as f:
-      f.writelines(new_contents)
+      for line in gather_rewritten_contents():
+        f.write(line)
 
   links_to = set([])
 
