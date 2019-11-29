@@ -99,7 +99,7 @@ def process_file(filename, book_title, pagecycle, fragments,
   page_prefix = render_template(page_prefix, config_pp)
 
   def all_lines():
-    with file(directory_prefix + filename) as fd:
+    with file(os.path.join(directory_prefix, filename)) as fd:
       for line in fd.readlines():
         if line == stylesheet_line:
           continue
@@ -146,7 +146,7 @@ def process_file(filename, book_title, pagecycle, fragments,
           else:
             yield line
 
-    with file(target_directory + filename, 'w') as f:
+    with file(os.path.join(target_directory, filename), 'w') as f:
       for line in gather_rewritten_contents():
         f.write(line)
 
