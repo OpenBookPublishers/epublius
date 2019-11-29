@@ -145,6 +145,10 @@ def process_file(filename, book_title, pagecycle, fragments,
         else:
           new_contents.append(line)
 
+  if write_mode:
+    with file(target_directory + filename, 'w') as f:
+      f.writelines(new_contents)
+
   links_to = set([])
 
   for line in all_lines():
@@ -155,10 +159,6 @@ def process_file(filename, book_title, pagecycle, fragments,
       match = matcher_link.match(line)
       if match <> None:
         links_to.add(match.group(1))
-
-  if write_mode:
-    with file(target_directory + filename, 'w') as f:
-      f.writelines(new_contents)
 
   return links_to, book_title, index_file
 
