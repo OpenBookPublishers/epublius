@@ -259,13 +259,14 @@ def process_images(directory_prefix, target_directory, path, resize_percent):
   )
   if target_directory is None:
     return
+  img_path = os.path.join(target_directory, path)
   try:
-    os.makedirs(target_directory + path)
+    os.makedirs(img_path)
   except:
     pass
   for filename in image_filenames:
-    input_path = directory_prefix + path + filename
-    output_path = target_directory + path + filename
+    input_path = os.path.join(directory_prefix, path, filename)
+    output_path = os.path.join(img_path, filename)
     rp = str(resize_percent)
 
     result = commands.getstatusoutput(
