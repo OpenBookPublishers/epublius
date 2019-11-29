@@ -98,11 +98,6 @@ def process_file(filename, book_title, pagecycle, fragments,
   }
   page_prefix = render_template(page_prefix, config_pp)
 
-  if target_directory == None:
-    write_mode = False
-  else:
-    write_mode = True
-
   def all_lines():
     with file(directory_prefix + filename) as fd:
       for line in fd.readlines():
@@ -112,6 +107,10 @@ def process_file(filename, book_title, pagecycle, fragments,
 
   new_contents = []
 
+  if target_directory == None:
+    write_mode = False
+  else:
+    write_mode = True
   if write_mode:
     for line in all_lines():
       match = ignore_link.match(line)
