@@ -303,7 +303,7 @@ def process_images_and_css(directory_prefix, resize_percent, target_directory):
     )
   )
 
-  print "copying CSS directory (" + css_directory + "):" + str(result)
+  print "copying CSS directory ({}): {}".format(css_directory, result)
 
 
 def process_pages(colophon_files, directory_prefix, toc_file, book_title,
@@ -316,9 +316,10 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
                      for colo_file in colophon_files ]
   pagecycle = extract_pagecycle(directory_prefix)
 
+  opf_path = os.path.join(os.path.dirname(toc_file), 'content.opf')
   # List of HTML files
   processed_pages = set([])
-  pages_to_process = set([toc_file, os.path.dirname(toc_file) + 'content.opf'])
+  pages_to_process = set([toc_file, opf_path])
 
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
