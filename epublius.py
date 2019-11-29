@@ -114,11 +114,10 @@ def process_file(filename, book_title, pagecycle, fragments,
 
   for line in all_lines():
     match = ignore_link.match(line)
-    if match <> None:
-      if write_mode:
+    if write_mode:
+      if match <> None:
         new_contents.append(match.group(1) + match.group(2) + match.group(3))
-    else:
-      if write_mode:
+      else:
         bodystart_match = body_start.match(line)
         bodyend_match = body_end.match(line)
         headerend_match = header_end.match(line)
