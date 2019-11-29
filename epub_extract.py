@@ -323,3 +323,14 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
 
   print "processed {} files".format(files_done)
 
+
+def make_fragments(prefix_file, suffix_file, headeradd_file):
+  fragments = {}
+  for filename, key in [
+      (prefix_file, "prefix"),
+      (suffix_file, "suffix"),
+      (headeradd_file, "header_add")
+  ]:
+    with file(filename) as f:
+      fragments[key] = "\n".join(f.readlines())
+  return fragments
