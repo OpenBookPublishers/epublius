@@ -282,8 +282,9 @@ def main():
 
   copyright_arg = copyright_file + index_to_use
   url_arg = url_prefix + donation_link
+  exe_path = os.path.join(ePublius_path, "epublius.py")
 
-  cmd = (ePublius_path + "/epublius.py" +
+  cmd = (exe_path +
          " -p " + prefix_file +
          " -s " + suffix_file +
          " -h " + headeradd_file +
