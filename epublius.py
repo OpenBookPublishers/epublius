@@ -53,6 +53,8 @@ def main():
     print "-k: Copyright file"
     print "-a: Donation link"
 
+  # it seems -i is unused in practice
+
   prefix_file = None
   suffix_file = None
   book_page = None
