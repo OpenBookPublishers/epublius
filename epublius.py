@@ -258,8 +258,10 @@ def process_images(directory_prefix, target_directory, path, resize_percent):
     map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
   )
   if target_directory <> None:
-    try: os.makedirs(target_directory + path)
-    except: pass
+    try:
+      os.makedirs(target_directory + path)
+    except:
+      pass
     for filename in image_filenames:
       input_path = directory_prefix + path + filename
       output_path = target_directory + path + filename
