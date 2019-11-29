@@ -334,3 +334,33 @@ def make_fragments(prefix_file, suffix_file, headeradd_file):
     with file(filename) as f:
       fragments[key] = "\n".join(f.readlines())
   return fragments
+
+def extract_all(
+  prefix_file,
+  suffix_file,
+  headeradd_file,
+  colophon_files,
+  directory_prefix,
+  toc_file,
+  book_title,
+  url_prefix,
+  target_directory,
+  index_file,
+  front_file,
+  book_page,
+  copyright_file,
+  donation_link,
+  resize_percent
+):
+
+  fragments = make_fragments(prefix_file, suffix_file,
+                             headeradd_file)
+
+  process_pages(colophon_files, directory_prefix, toc_file,
+                book_title,
+                fragments, url_prefix, target_directory,
+                index_file, front_file, book_page, copyright_file,
+                donation_link)
+  process_images_and_css(directory_prefix, resize_percent,
+                         target_directory)
+
