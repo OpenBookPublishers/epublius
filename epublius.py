@@ -98,15 +98,15 @@ def process_file(filename, book_title, pagecycle, fragments,
   }
   page_prefix = render_template(page_prefix, config_pp)
 
+  if target_directory == None:
+    write_mode = False
+  else:
+    write_mode = True
+
   links_to = set([])
   new_contents = []
 
   with file(directory_prefix + filename) as fd:
-    if target_directory == None:
-      write_mode = False
-    else:
-      write_mode = True
-
     for line in fd.readlines():
       if line == stylesheet_line:
         continue
