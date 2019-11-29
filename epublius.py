@@ -297,10 +297,10 @@ def process_images_and_css(directory_prefix, resize_percent, target_directory):
   css_directory = get_directory('CSS', directory_prefix, ['css'])
 
   result = commands.getstatusoutput(
-    "cp -r " +
-    os.path.join(directory_prefix, css_directory) +
-    " " +
-    os.path.join(target_directory, css_directory)
+    "cp -r {} {}".format(
+      os.path.join(directory_prefix, css_directory),
+      os.path.join(target_directory, css_directory)
+    )
   )
 
   print "copying CSS directory (" + css_directory + "):" + str(result)
