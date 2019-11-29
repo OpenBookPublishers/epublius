@@ -118,8 +118,6 @@ def process_file(filename, book_title, pagecycle, fragments,
       if write_mode:
         new_contents.append(match.group(1) + match.group(2) + match.group(3))
     else:
-      match = matcher_link.match(line)
-
       if not write_mode:
         continue
 
