@@ -263,9 +263,10 @@ def process_images(directory_prefix, target_directory, path, resize_percent):
     for filename in image_filenames:
       input_path = directory_prefix + path + filename
       output_path = target_directory + path + filename
+      rp = str(resize_percent)
 
       result = commands.getstatusoutput(
-        "convert -resize " + str(resize_percent) + "% -quality 80 " +
+        "convert -resize " + rp + "% -quality 80 " +
         "'" + input_path + "'" +
         " '" + output_path + "'"
       )
