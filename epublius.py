@@ -226,11 +226,11 @@ def extract_pagecycle(path):
   cmd = "{} {}".format(script_path, path)
   files = string.split(commands.getoutput(cmd), '\n')
 
-  print ("extracted files = " + str(files))
+  print ("extracted files = {}".format(files))
 
   #store as tuples in pagecycle: page |-> (prev, next)
   for i in range(len(files)):
-    print "doing " + str(i) + ": " + files[i]
+    print "doing {}: {}".format(str(i), files[i])
     page = files[i]
     prev = files[i - 1]
     next_ = files[(i + 1) % len(files)]
