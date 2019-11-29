@@ -108,7 +108,6 @@ def process_file(filename, book_title, pagecycle, fragments,
       for line in fd.readlines():
         yield line
 
-  links_to = set([])
   new_contents = []
 
   for line in all_lines():
@@ -150,6 +149,8 @@ def process_file(filename, book_title, pagecycle, fragments,
           print("Detected index file: {}".format(index_file))
       else:
         new_contents.append(line)
+
+  links_to = set([])
 
   for line in all_lines():
     if line == stylesheet_line:
