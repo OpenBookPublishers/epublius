@@ -280,14 +280,17 @@ def main():
   if donation_link == None: donation_link = ""
   else: donation_link = " -a '" + donation_link + "'"
 
-  cmd = (ePublius_path + "/epublius.py -p " + prefix_file +
+  cmd = (ePublius_path + "/epublius.py" +
+         " -p " + prefix_file +
          " -s " + suffix_file +
-         " -h " + headeradd_file + " -b " + book_page + " -f " + title_file +
-         " -k " + copyright_file +
-         index_to_use +
-         " -u " + url_prefix +
-         donation_link +
-         " -t " + toc_file + " -d " + path + " -o " + target_directory  +
+         " -h " + headeradd_file +
+         " -b " + book_page +
+         " -f " + title_file +
+         " -k " + copyright_file + index_to_use +
+         " -u " + url_prefix + donation_link +
+         " -t " + toc_file +
+         " -d " + path +
+         " -o " + target_directory +
          ''.join(map(lambda s: ' -c ' + s, colophon_files)))
 
   if resize_percent <> None:
