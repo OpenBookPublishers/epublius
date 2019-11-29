@@ -48,6 +48,7 @@ import shutil
 import re
 import string
 import argparse
+import epub_extract
 
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
@@ -278,34 +279,34 @@ def main():
   if book_title <> None:
     book_title_arg = "-n \"" + book_title + "\""
 
-  if donation_link == None:
+  if donation_link is None:
     donation_link = ""
-  else:
-    donation_link = " -a '" + donation_link + "'"
+
+  if resize_percent is None:
+    resize_percent = 50
 
   copyright_arg = copyright_file + index_to_use
   url_arg = url_prefix + donation_link
-  exe_path = os.path.join(ePublius_path, "epublius.py")
-  colophon_args = ''.join(map(lambda s: ' -c ' + s, colophon_files))
 
-  cmd = (exe_path +
-         " -p " + prefix_file +
-         " -s " + suffix_file +
-         " -h " + headeradd_file +
-         " -b " + book_page +
-         " -f " + title_file +
-         " -k " + copyright_arg +
-         " -u " + url_arg +
-         " -t " + toc_file +
-         " -d " + path +
-         " -o " + target_directory +
-         colophon_args)
+  index_file = "" # ??
 
-  if resize_percent <> None:
-   cmd += ' -r ' + str(resize_percent)
-
-  _, output = fake_command(cmd + ' ' + book_title_arg)
-  print output
+  epub_extract.extract_all(
+    prefix_file,
+    suffix_file,
+    headeradd_file,
+    colophon_files,
+    path,
+    toc_file,
+    book_title,
+    url_arg,
+    target_directory,
+    index_file,
+    title_file,
+    book_page,
+    copyright_arg,
+    donation_link,
+    resize_percent
+  )
 
   # We recopy the file, since when we earlier copied the file it had
   # not yet been processed by epublius, but now it has.
