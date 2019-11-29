@@ -283,6 +283,7 @@ def main():
   copyright_arg = copyright_file + index_to_use
   url_arg = url_prefix + donation_link
   exe_path = os.path.join(ePublius_path, "epublius.py")
+  colophon_args = ''.join(map(lambda s: ' -c ' + s, colophon_files))
 
   cmd = (exe_path +
          " -p " + prefix_file +
@@ -295,7 +296,7 @@ def main():
          " -t " + toc_file +
          " -d " + path +
          " -o " + target_directory +
-         ''.join(map(lambda s: ' -c ' + s, colophon_files)))
+         colophon_args)
 
   if resize_percent <> None:
    cmd += ' -r ' + str(resize_percent)
