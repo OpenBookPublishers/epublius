@@ -356,7 +356,6 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
   print "processed {} files".format(files_done)
 
 
-
 def main():
   opts, args = getopt.getopt(sys.argv[1:], "p:s:b:t:f:d:o:h:n:c:r:i:u:k:a:", [])
 
