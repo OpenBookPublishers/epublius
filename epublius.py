@@ -106,6 +106,7 @@ def process_file(filename, book_title, pagecycle, fragments,
         yield line
 
   if target_directory is not None:
+    # write_mode
     new_contents = []
     for line in all_lines():
       match = ignore_link.match(line)
