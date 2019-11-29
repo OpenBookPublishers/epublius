@@ -230,30 +230,32 @@ def extract_pagecycle(path):
 
   #store as tuples in pagecycle: page |-> (prev, next)
   for i in range(len(files)):
-    print "doing {}: {}".format(str(i), files[i])
+    print "doing {}: {}".format(i, files[i])
     page = files[i]
     prev = files[i - 1]
     next_ = files[(i + 1) % len(files)]
     pagecycle[page] = (prev, next_)
 
-  print ("pagecycle = " + str(pagecycle))
+  print ("pagecycle = {}".format(pagecycle))
 
   return pagecycle
 
 def extract_colophon_links(colo_file):
   match = re.search('^(.+_)?(.+)\.x?html?$', colo_file)
   if not (match and match.group(2) <> None):
-    raise Exception('The colophon file ' + colo_file +
-                      ' does not match the expected pattern.')
+    raise Exception(
+      'The colophon file {} does not match the expected pattern.'.format(
+        colo_file))
 
   # FIXME hardcoded formatting
   return '<a href="{}">{}</a>'.format(colo_file, match.group(2).title())
 
 
 def process_images(directory_prefix, target_directory, path, resize_percent):
+  img_path = os.path.join(directory_prefix, path)
   image_filenames = (
-    map(os.path.basename, glob.glob(directory_prefix + path + '*.jpg')) +
-    map(os.path.basename, glob.glob(directory_prefix + path + '*.png'))
+    map(os.path.basename, glob.glob(os.path.join(img_path, '*.jpg'))) +
+    map(os.path.basename, glob.glob(os.path.join(img_path, '*.png')))
   )
   if target_directory is None:
     return
