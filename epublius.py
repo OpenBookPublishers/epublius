@@ -209,7 +209,7 @@ def render_template(template, config):
   """
   working_text = template
   for key, value in config.iteritems():
-    anchor = "%" + key.upper() + "%"
+    anchor = "%{}%".format(key.upper())
     if value is not None:
       working_text = re.sub(anchor, value, working_text)
   return working_text
