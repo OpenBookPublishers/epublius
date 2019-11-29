@@ -274,16 +274,17 @@ def process_images(directory_prefix, target_directory, path, resize_percent):
         rp, input_path, output_path
       )
     )
-    print "converting " + filename + ":" + str(result)
+    print "converting {}:{}".format(filename, result)
 
 
 def get_directory(directory_kind, directory_prefix, directory_heuristics):
   for directory_heuristic in directory_heuristics:
-    if os.path.exists(directory_prefix + directory_heuristic):
-      print "Detected " + directory_kind + " directory: " + directory_heuristic
+    if os.path.exists(os.path.join(directory_prefix, directory_heuristic)):
+      print "Detected {} directory: {}".format(directory_kind,
+                                               directory_heuristic)
       return directory_heuristic
 
-  raise Exception('Could not find ' + directory_kind + ' directory')
+  raise Exception('Could not find {} directory'.format(directory_kind))
 
 
 def process_images_and_css(directory_prefix, resize_percent, target_directory):
@@ -319,7 +320,7 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
 
   while len(pages_to_process) > 0:
     filename = pages_to_process.pop()
-    print "processing " + filename
+    print "processing {}".format(filename)
     new_links, book_title, index_file = process_file(
       filename, book_title,
       pagecycle, fragments, toc_file, url_prefix,
@@ -349,7 +350,7 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
     files_done += 1
     breadcrumbs.process_file(filename)
 
-  print "processed " + str(files_done) + " files"
+  print "processed {} files".format(files_done)
 
 
 
