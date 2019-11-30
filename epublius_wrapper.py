@@ -86,9 +86,16 @@ def fake_command(s):
   output = subprocess.check_output(args)
   return 0, output
 
+def create_tmpdir():
+  tmpdir = None
+  while (tmpdir == None):
+    tmpdir_try = TMPDIR + "/epublius_" + str(random.getrandbits(24)) + "_tmp/"
+    if os.path.exists(tmpdir_try) == False:
+      os.makedirs(tmpdir_try)
+      tmpdir = tmpdir_try
+  return tmpdir
 
 def main():
-
   parser = argparse.ArgumentParser(description='ePublius wrapper',
                                    add_help=False)
 
@@ -193,15 +200,6 @@ def process_epub(args):
   else:
     print "Will use index: " + index_to_use
     index_to_use = " -i " + index_to_use + " "
-
-  def create_tmpdir():
-    tmpdir = None
-    while (tmpdir == None):
-      tmpdir_try = TMPDIR + "/epublius_" + str(random.getrandbits(24)) + "_tmp/"
-      if os.path.exists(tmpdir_try) == False:
-        os.makedirs(tmpdir_try)
-        tmpdir = tmpdir_try
-    return tmpdir
 
   print "epub_file = " + epub_file
 
