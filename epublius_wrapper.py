@@ -236,7 +236,7 @@ def main():
     # NOTE
     # sometimes the files might be contained within a subdirectory
     #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
-    #     this is considered as a special case and handled manually, 
+    #     this is considered as a special case and handled manually,
     #     to avoid complicated this code.
     if match_toc and toc_file == None:
       toc_file = content_file
