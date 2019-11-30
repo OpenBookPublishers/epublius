@@ -220,19 +220,46 @@ def main():
   toc_file = None
   title_file = None
   copyright_file = None
+
+  def construct_re(patterns):
+    return "({})".format("|".join(patterns))
+
   for content_file in content_files:
     # FIXME:
     # could put these heuristics into a config file, or given them
     # at the command line.
-    match_cover = re.search('(_cover.html|cover.html|_Cover.html|Front-cover.xhtml|front-cover.xhtml|00-cover.xhtml)', content_file)
+    match_cover = re.search(
+      construct_re([
+        "_cover.html",
+        "cover.html",
+        "_Cover.html",
+        "Front-cover.xhtml",
+        "front-cover.xhtml",
+        "00-cover.xhtml"
+      ]), 
+      content_file
+    )
     if match_cover and title_file == None:
       title_file = content_file
 
     # FIXME:
     # could put these heuristics into a config file, or given them
     # at the command line.
-    match_toc = re.search('(_toc.html|toc.html|_Contents.html|_Content.html|_Tableofcontent.html|Contents-digital.xhtml|contents.xhtml|Contents.xhtml|Main-text-1.xhtml|Resemblance-and-Representation.xhtml)', content_file)
-
+    match_toc = re.search(
+      construct_re([
+        "_toc.html",
+        "toc.html",
+        "_Contents.html",
+        "_Content.html",
+        "_Tableofcontent.html",
+        "Contents-digital.xhtml",
+        "contents.xhtml",
+        "Contents.xhtml",
+        "Main-text-1.xhtml",
+        "Resemblance-and-Representation.xhtml"
+        ]),
+      content_file
+    )
     # NOTE
     # sometimes the files might be contained within a subdirectory
     #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
@@ -246,7 +273,14 @@ def main():
     else:
       colophon_files.append(content_file)
 
-    match_copyright = re.search('(copyright.xhtml|Copyright.xhtml|copyright.html)', content_file) #Copyright.xhtml added by Bianca on 2016-10-18
+    match_copyright = re.search(
+      construct_re([
+        "copyright.xhtml",
+        "Copyright.xhtml",
+        "copyright.html"
+      ]),
+      content_file
+    )
     if match_copyright and copyright_file == None:
       copyright_file = content_file
 
