@@ -212,11 +212,10 @@ def main():
     return file
 
 
-  content_files = string.split(commands.getoutput(
-    "grep \"<item id=\" " + path + "content.opf " +
-    "| grep 'media-type=\"application/xhtml+xml\"'" +
-    "| perl -pe 's/^.+href=\"(.+?)\".+$/$1/'"),
-                               '\n')
+  script_path = os.path.join(os.path.dirname(__file__), "content_files")
+  content_files = string.split(commands.getoutput("{} {}".format(
+    script_path, path)), '\n')
+
   colophon_files = []
   toc_file = None
   title_file = None
