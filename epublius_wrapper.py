@@ -225,9 +225,6 @@ def main():
     return "({})".format("|".join(patterns))
 
   for content_file in content_files:
-    # FIXME:
-    # could put these heuristics into a config file, or given them
-    # at the command line.
     match_cover = re.search(
       construct_re([
         "_cover.html",
@@ -242,9 +239,6 @@ def main():
     if match_cover and title_file == None:
       title_file = content_file
 
-    # FIXME:
-    # could put these heuristics into a config file, or given them
-    # at the command line.
     match_toc = re.search(
       construct_re([
         "_toc.html",
@@ -260,7 +254,7 @@ def main():
         ]),
       content_file
     )
-    # NOTE
+
     # sometimes the files might be contained within a subdirectory
     #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
     #     this is considered as a special case and handled manually,
