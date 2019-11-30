@@ -253,17 +253,11 @@ def main():
     return "({})".format("|".join(patterns))
 
   for content_file in content_files:
-    match_cover = re.search(
-      construct_re(COVER_RES), 
-      content_file
-    )
+    match_cover = re.search(construct_re(COVER_RES), content_file)
     if match_cover and title_file == None:
       title_file = content_file
 
-    match_toc = re.search(
-      construct_re(CONTENTS_RES),
-      content_file
-    )
+    match_toc = re.search(construct_re(CONTENTS_RES), content_file)
 
     # sometimes the files might be contained within a subdirectory
     #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
@@ -277,10 +271,7 @@ def main():
     else:
       colophon_files.append(content_file)
 
-    match_copyright = re.search(
-      construct_re(COPYRIGHT_RES),
-      content_file
-    )
+    match_copyright = re.search(construct_re(COPYRIGHT_RES), content_file)
     if match_copyright and copyright_file == None:
       copyright_file = content_file
 
