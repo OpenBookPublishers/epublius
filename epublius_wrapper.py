@@ -53,6 +53,34 @@ import epub_extract
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
 
+COVER_RES = [
+  "_cover.html",
+  "cover.html",
+  "_Cover.html",
+  "Front-cover.xhtml",
+  "front-cover.xhtml",
+  "00-cover.xhtml"
+]
+
+CONTENTS_RES = [
+  "_toc.html",
+  "toc.html",
+  "_Contents.html",
+  "_Content.html",
+  "_Tableofcontent.html",
+  "Contents-digital.xhtml",
+  "contents.xhtml",
+  "Contents.xhtml",
+  "Main-text-1.xhtml",
+  "Resemblance-and-Representation.xhtml"
+]
+
+COPYRIGHT_RES = [
+  "copyright.xhtml",
+  "Copyright.xhtml",
+  "copyright.html"
+]
+
 def fake_command(s):
   args = s.split(" ")
   output = subprocess.check_output(args)
@@ -226,32 +254,14 @@ def main():
 
   for content_file in content_files:
     match_cover = re.search(
-      construct_re([
-        "_cover.html",
-        "cover.html",
-        "_Cover.html",
-        "Front-cover.xhtml",
-        "front-cover.xhtml",
-        "00-cover.xhtml"
-      ]), 
+      construct_re(COVER_RES), 
       content_file
     )
     if match_cover and title_file == None:
       title_file = content_file
 
     match_toc = re.search(
-      construct_re([
-        "_toc.html",
-        "toc.html",
-        "_Contents.html",
-        "_Content.html",
-        "_Tableofcontent.html",
-        "Contents-digital.xhtml",
-        "contents.xhtml",
-        "Contents.xhtml",
-        "Main-text-1.xhtml",
-        "Resemblance-and-Representation.xhtml"
-        ]),
+      construct_re(CONTENTS_RES),
       content_file
     )
 
@@ -268,11 +278,7 @@ def main():
       colophon_files.append(content_file)
 
     match_copyright = re.search(
-      construct_re([
-        "copyright.xhtml",
-        "Copyright.xhtml",
-        "copyright.html"
-      ]),
+      construct_re(COPYRIGHT_RES),
       content_file
     )
     if match_copyright and copyright_file == None:
