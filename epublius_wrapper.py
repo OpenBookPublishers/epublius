@@ -222,7 +222,6 @@ def main():
     file = None
     for file_heuristic in file_heuristics:
       file_attempt = glob.glob(path + file_heuristic)
-      #print "Attempting " + path + file_heuristic + " : " + str(file_attempt)
       if len(file_attempt) == 1:
         file = os.path.basename(file_attempt[0])
         print "Detected " + file_kind + " file: " + file
