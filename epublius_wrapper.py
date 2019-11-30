@@ -166,7 +166,9 @@ def main():
                       default = '.')
 
   args = parser.parse_args()
+  process_epub(args)
 
+def process_epub(args):
   ## TODO We should use a dictionary instead of so many variables.
   ## Keeping the original notation as legacy code.
   prefix_file = args.prefix
