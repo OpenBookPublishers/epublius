@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+import os
+
+
+def run():
+    _, metadata_path, epub_path = sys.argv
+    with open(metadata_path) as f:
+        metadata = json.load(f)
+
+    epublius_dir = os.getcwd()
+
+    product_url_base = "https://www.openbookpublishers.com/product/"
+    output_dir_base = "../htmlreader_output"
+    htmlreader_url_base = "https://www.openbookpublishers.com/htmlreader/"
+
+    exe = "./epublius_wrapper.py"
+    args = [exe,
+            "-p", os.path.join(epublius_dir, "prefix"),
+            "-s", os.path.join(epublius_dir, "suffix"),
+            "-h", os.path.join(epublius_dir, "header_add"),
+            "-t", os.path.join(epublius_dir, ""),
+            "-e", os.path.join(epublius_dir, ""),
+            "-b", product_url_base + str(metadata['product_id']),
+            "-f", epub_path,
+            "-o", os.path.join(output_dir_base, metadata['isbn']),
+            "-u", htmlreader_url_base + metadata['isbn'],
+            "-n", metadata['title'],
+            "-r", "100"]
+
+    os.execvp(sys.executable, [exe] + args)
+
+
+if __name__ == '__main__':
+    run()
