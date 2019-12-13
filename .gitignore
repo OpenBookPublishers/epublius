@@ -1,1 +1,5 @@
 *.pyc
+*.zip
+*.epub
+*.json
+output/
