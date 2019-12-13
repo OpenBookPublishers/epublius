@@ -1,6 +1,16 @@
 # ePublius
 Generates a stylised HTML site from an ePub book
 
+```
+docker run --rm \
+  -v /path/to/local.epub:/ebook_automation/epub_file.epub \
+  -v /path/to/local.json:/ebook_automation/epub_file.json \
+  -v /path/to/output:/ebook_automation/output \
+  openbookpublishers/epublius
+```
+
+Alternatively you may clone the repo, build the image using `docker build . -t some/tag` and run the command above replacing `openbookpublishers/epublius` with `some/tag`.
+
 ## Usage
 
 ```bash
