@@ -49,6 +49,8 @@ import re
 import string
 import argparse
 import epub_extract
+from zipfile import ZipFile
+
 
 TMPDIR = "/tmp" #FIXME hardcoded path
 random.seed(str(time.gmtime()))
@@ -365,6 +367,15 @@ def process_epub(args):
 
   if not unzipped_ePub:
     shutil.rmtree(tmpdir)
+
+  out_file = os.path.normpath(target_directory) + '.zip'
+  with ZipFile(out_file, 'w') as zipfile:
+    for root, dirs, files in os.walk(target_directory):
+      for file in files:
+        filename = os.path.join(os.path.basename(os.path.normpath(
+            target_directory)), file)
+        zipfile.write(os.path.join(root, file), filename)
+  shutil.rmtree(target_directory)
 
 if __name__ == '__main__':
   main()
