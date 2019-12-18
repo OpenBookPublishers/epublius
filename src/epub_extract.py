@@ -34,7 +34,7 @@ import commands
 #import subprocess
 import string
 import urllib
-import breadcrumbs
+from mustache import Mustache
 
 #include both HTML and CSS files
 matcher_link = re.compile(
@@ -195,20 +195,17 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
 
 def render_template(template, config):
   """
-  Take some text like `Dear %FIRSTNAME% %SURNAME%, ...' and
-  a dictionary of the form:
-  {
-    "firstname": "John",
-    "surname": "Smith"
-  }
-  and interpolate the relevant items (capitalising the keyword).
+  Take the text (str) in template and replace values via logic-less mustache.
+  Returns the process text (str).
   """
-  working_text = template
-  for key, value in config.iteritems():
-    anchor = "%{}%".format(key.upper())
-    if value is not None:
-      working_text = re.sub(anchor, value, working_text)
-  return working_text
+  working_text = Mustache(template)
+  
+  args = {key: value for (key, value) in config.items() \
+                     if value is not None}
+
+  processed_text = working_text.substitute(args)
+
+  return processed_text
 
 
 # populates pagecycle, based on info in toc.ncx
@@ -347,7 +344,7 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
       pages_to_process.difference_update(processed_pages)
 
     files_done += 1
-    breadcrumbs.process_file(filename)
+    #breadcrumbs.process_file(filename)
 
   print "processed {} files".format(files_done)
 
