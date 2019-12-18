@@ -34,7 +34,8 @@ import commands
 #import subprocess
 import string
 import urllib
-import breadcrumbs
+from mustache import Mustache
+from bs4 import BeautifulSoup
 
 #include both HTML and CSS files
 matcher_link = re.compile(
@@ -109,8 +110,19 @@ def process_file(filename, book_title, pagecycle, fragments,
     "this_page_url_encoded": urllib.quote(slashed_url_prefix + filename,
                                           safe='')
   }
+
   page_prefix = render_template(page_prefix, config_pp)
 
+  # Breadcrumb
+  # Extract the content of the <title> tag and
+  # add it to page_prefix via the mustache module
+  if filename <> 'content.opf':
+    with open(os.path.join(directory_prefix,filename), 'r') as in_file:
+      soup = BeautifulSoup(in_file, 'html.parser')
+      breadcrumb = soup.find('title').text.encode('utf-8')
+
+    page_prefix = render_template(page_prefix, {'breadcrumb': breadcrumb})
+  
   def all_lines():
     with file(os.path.join(directory_prefix, filename)) as fd:
       for line in fd.readlines():
@@ -195,20 +207,17 @@ def generate_prefix(prefix, book_title, toc_file, book_page, index_file,
 
 def render_template(template, config):
   """
-  Take some text like `Dear %FIRSTNAME% %SURNAME%, ...' and
-  a dictionary of the form:
-  {
-    "firstname": "John",
-    "surname": "Smith"
-  }
-  and interpolate the relevant items (capitalising the keyword).
+  Take the text (str) in template and replace values via logic-less mustache.
+  Returns the process text (str).
   """
-  working_text = template
-  for key, value in config.iteritems():
-    anchor = "%{}%".format(key.upper())
-    if value is not None:
-      working_text = re.sub(anchor, value, working_text)
-  return working_text
+  working_text = Mustache(template)
+  
+  args = {key: value for (key, value) in config.items() \
+                     if value is not None}
+
+  processed_text = working_text.substitute(args)
+
+  return processed_text
 
 
 # populates pagecycle, based on info in toc.ncx
@@ -347,7 +356,6 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
       pages_to_process.difference_update(processed_pages)
 
     files_done += 1
-    breadcrumbs.process_file(filename)
 
   print "processed {} files".format(files_done)
 
