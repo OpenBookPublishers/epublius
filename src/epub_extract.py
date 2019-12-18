@@ -35,6 +35,7 @@ import commands
 import string
 import urllib
 from mustache import Mustache
+from bs4 import BeautifulSoup
 
 #include both HTML and CSS files
 matcher_link = re.compile(
@@ -109,8 +110,19 @@ def process_file(filename, book_title, pagecycle, fragments,
     "this_page_url_encoded": urllib.quote(slashed_url_prefix + filename,
                                           safe='')
   }
+
   page_prefix = render_template(page_prefix, config_pp)
 
+  # Breadcrumb
+  # Extract the content of the <title> tag and
+  # add it to page_prefix via the mustache module
+  if filename <> 'content.opf':
+    with open(os.path.join(directory_prefix,filename), 'r') as in_file:
+      soup = BeautifulSoup(in_file, 'html.parser')
+      breadcrumb = soup.find('title').text.encode('utf-8')
+
+    page_prefix = render_template(page_prefix, {'breadcrumb': breadcrumb})
+  
   def all_lines():
     with file(os.path.join(directory_prefix, filename)) as fd:
       for line in fd.readlines():
@@ -344,7 +356,6 @@ def process_pages(colophon_files, directory_prefix, toc_file, book_title,
       pages_to_process.difference_update(processed_pages)
 
     files_done += 1
-    #breadcrumbs.process_file(filename)
 
   print "processed {} files".format(files_done)
 
