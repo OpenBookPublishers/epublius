@@ -50,10 +50,8 @@ import string
 import argparse
 import epub_extract
 from zipfile import ZipFile
+import tempfile
 
-
-TMPDIR = "/tmp" #FIXME hardcoded path
-random.seed(str(time.gmtime()))
 
 COVER_RES = [
   "_cover.html",
@@ -89,12 +87,8 @@ def fake_command(s):
   return 0, output
 
 def create_tmpdir():
-  tmpdir = None
-  while (tmpdir == None):
-    tmpdir_try = TMPDIR + "/epublius_" + str(random.getrandbits(24)) + "_tmp/"
-    if os.path.exists(tmpdir_try) == False:
-      os.makedirs(tmpdir_try)
-      tmpdir = tmpdir_try
+  tmpdir = tempfile.mkdtemp(prefix='epublius_')
+
   return tmpdir
 
 def main():
