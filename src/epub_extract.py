@@ -31,7 +31,7 @@ import re
 import glob
 import os
 import commands
-#import subprocess
+import subprocess
 import string
 import urllib
 from mustache import Mustache
@@ -399,4 +399,12 @@ def extract_all(
                 donation_link)
   process_images_and_css(directory_prefix, resize_percent,
                          target_directory)
+
+  # Copy 'font' directory to target folder
+  subprocess.check_output(['cp', '-r',
+                           os.path.join(directory_prefix, 'font'),
+                           os.path.join(target_directory, 'font')],
+                          stderr=subprocess.STDOUT)
+
+  print("Copying font directory")
 
