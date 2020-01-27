@@ -40,7 +40,6 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 | `-n`      | Title name                                                                |
 | `-c`      | A colophon file (e.g., the license). There may be  multiple -c parameters |
 | `-r`      | How much to resize the images (as percentage; default is 50).             |
-| `-i`      | Index file to use                                                         |
 | `-u`      | URL path of this book                                                     |
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |

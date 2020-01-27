@@ -112,12 +112,6 @@ def main():
                       help = 'Location of the ePublius script.',
                       default = '.')
 
-  parser.add_argument('-i', '--index',
-                      help = 'Force the use of a particular index ' \
-                             'file. This parameter will simply be ' \
-                             'passed on to the epublius script.',
-                      default = None)
-
   parser.add_argument('-u', '--url',
                       help = 'URL path of this book',
                       required = True)
@@ -148,17 +142,9 @@ def process_epub(args):
   no_cover = args.cover
   resize_percent = args.resample
   ePublius_path = args.epublish
-  index_to_use = args.index
   url_prefix = args.url
   donation_link = args.donation
   template_dir = args.template
-
-  #Transform index_to_use into a parameter for the epublius script.
-  if index_to_use == None:
-    index_to_use = "" #No parameter
-  else:
-    print "Will use index: " + index_to_use
-    index_to_use = " -i " + index_to_use + " "
 
   print "epub_file = " + epub_file
 
@@ -267,7 +253,7 @@ def process_epub(args):
   if resize_percent is None:
     resize_percent = 50
 
-  copyright_arg = copyright_file + index_to_use
+  copyright_arg = copyright_file
   url_arg = url_prefix + donation_link
 
   index_file = "" # ??
