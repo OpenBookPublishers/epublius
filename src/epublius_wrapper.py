@@ -17,34 +17,6 @@ import tempfile
 from bs4 import BeautifulSoup
 
 
-COVER_RES = [
-  "_cover.html",
-  "cover.html",
-  "_Cover.html",
-  "Front-cover.xhtml",
-  "front-cover.xhtml",
-  "00-cover.xhtml"
-]
-
-CONTENTS_RES = [
-  "_toc.html",
-  "toc.html",
-  "_Contents.html",
-  "_Content.html",
-  "_Tableofcontent.html",
-  "Contents-digital.xhtml",
-  "contents.xhtml",
-  "Contents.xhtml",
-  "Main-text-1.xhtml",
-  "Resemblance-and-Representation.xhtml"
-]
-
-COPYRIGHT_RES = [
-  "copyright.xhtml",
-  "Copyright.xhtml",
-  "copyright.html"
-]
-
 def fake_command(s):
   args = s.split(" ")
   output = subprocess.check_output(args)
@@ -92,11 +64,6 @@ def main():
                       default = None,
                       help = 'Book name')
 
-  parser.add_argument('-c', '--cover',
-                      help = 'Book doesn\'t have a cover',
-                      default = False,
-                      action="store_true")
-
   parser.add_argument('-r', '--resample',
                       help = 'Resample image (as percentage; ' \
                              'default is 50, no resampling is 100).',
@@ -133,7 +100,6 @@ def process_epub(args):
   epub_file = args.file
   target_directory = args.output
   book_title = args.name
-  no_cover = args.cover
   resize_percent = args.resample
   ePublius_path = args.epublish
   url_prefix = args.url
@@ -192,48 +158,10 @@ def process_epub(args):
   content_files = parse_toc(os.path.join(path, 'toc.xhtml'))
 
   colophon_files = []
-  toc_file = None
-  title_file = None
-  copyright_file = None
+  toc_file = 'contents.xhtml'
+  title_file = 'title.xhtml'
+  copyright_file = 'copyright.xhtml'
 
-  def construct_re(patterns):
-    return "({})".format("|".join(patterns))
-
-  for content_file in content_files:
-    match_cover = re.search(construct_re(COVER_RES), content_file)
-    if match_cover and title_file == None:
-      title_file = content_file
-
-    match_toc = re.search(construct_re(CONTENTS_RES), content_file)
-
-    # sometimes the files might be contained within a subdirectory
-    #   -- e.g., 'Text/toc.html' in the case of Yates Annual.
-    #     this is considered as a special case and handled manually,
-    #     to avoid complicated this code.
-    if match_toc and toc_file == None:
-      toc_file = content_file
-      # Cover should always precede the TOC, so once we find the TOC we
-      # can break out of the loop.
-      break
-    else:
-      colophon_files.append(content_file)
-
-    match_copyright = re.search(construct_re(COPYRIGHT_RES), content_file)
-    if match_copyright and copyright_file == None:
-      copyright_file = content_file
-
-  if no_cover:
-    title_file = toc_file
-
-  print "found toc_file: " + str(toc_file)
-  print "found title_file: " + str(title_file)
-  print "found copyright_file: " + str(copyright_file)
-
-  print "colophon_files=" + str(colophon_files)
-
-  #Remove Cover from colophon_files, to avoid it being shown twice in the menu
-  # (as an individual link, and as part of the colophon).
-  del colophon_files[colophon_files.index(title_file)]
 
   target_directory = target_directory + "/" #FIXME check for this
   os.makedirs(target_directory)
@@ -323,12 +251,12 @@ def process_epub(args):
   root_dir = '/'.join([target_directory.split('/')[0],
                        target_directory.split('/')[1]])
 
-#  shutil.make_archive(base_dir=base_dir,
-#                      root_dir=root_dir,
-#                      format='zip',
-#                      base_name=target_directory)
+  shutil.make_archive(base_dir=base_dir,
+                      root_dir=root_dir,
+                      format='zip',
+                      base_name=target_directory)
 
-#  shutil.rmtree(target_directory)
+  shutil.rmtree(target_directory)
 
 if __name__ == '__main__':
   main()
