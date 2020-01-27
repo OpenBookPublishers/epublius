@@ -146,13 +146,8 @@ def process_epub(args):
   with ZipFile(epub_file, 'r') as zip_file:
     zip_file.extractall(tmpdir)
 
-  _, path = fake_command("find " + tmpdir + " -name toc.ncx")
-
-  # In case there were multiple finds, we use the first:
-  path = (string.split(path, '\n'))[0]
-  print "Temporary directory: " + tmpdir
-  path = os.path.dirname(path) + "/"
-  print "Expecting to find cover file at: " + path
+  # path where xhtml and folders are expected
+  path = os.path.join(tmpdir, 'OEBPS')
 
   def get_file (file_kind, file_heuristics):
     file = None
