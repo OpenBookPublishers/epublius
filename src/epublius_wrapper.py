@@ -116,26 +116,6 @@ def process_epub(args):
   # path where xhtml and folders are expected
   path = os.path.join(tmpdir, 'OEBPS')
 
-  def get_file (file_kind, file_heuristics):
-    file = None
-    for file_heuristic in file_heuristics:
-      file_attempt = glob.glob(path + file_heuristic)
-      if len(file_attempt) == 1:
-        file = os.path.basename(file_attempt[0])
-        print "Detected " + file_kind + " file: " + file
-        break
-      elif len(file_attempt) > 1:
-        #This is suspicious, since there should be only one match.
-        print ("Possible problem: detected " + file_kind + " files:" +
-               str(file_attempt) + " using glob " + file_heuristic)
-
-    if file == None:
-      shutil.rmtree(tmpdir)
-      raise Exception('Could not find ' + file_kind + ' file')
-
-    return file
-
-
   def parse_toc(toc_path):
     '''
     Parse the file ./toc.xhtml and return an ordered
