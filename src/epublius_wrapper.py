@@ -141,8 +141,10 @@ def process_epub(args):
 
 
   tmpdir = create_tmpdir()
-  _, output = fake_command("unzip " + epub_file + " -d " + tmpdir)
-  print output
+
+  # Unzip epub to tmpdir
+  with ZipFile(epub_file, 'r') as zip_file:
+    zip_file.extractall(tmpdir)
 
   _, path = fake_command("find " + tmpdir + " -name toc.ncx")
 
