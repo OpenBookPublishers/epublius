@@ -14,6 +14,7 @@ import argparse
 import epub_extract
 from zipfile import ZipFile
 import tempfile
+from bs4 import BeautifulSoup
 
 
 COVER_RES = [
@@ -169,9 +170,26 @@ def process_epub(args):
     return file
 
 
-  script_path = os.path.join(os.path.dirname(__file__), "content_files")
-  content_files = string.split(commands.getoutput("{} {}".format(
-    script_path, path)), '\n')
+  def parse_toc(toc_path):
+    '''
+    Parse the file ./toc.xhtml and return an ordered
+    list of the files the epub is made up of.
+
+    File names are extracted from the 'href' value of 
+    each toc entry.
+    '''
+    
+    with open(toc_path, 'r') as toc:
+      soup = BeautifulSoup(toc, 'html.parser')
+      listing = soup.find(id='toc').find_all('a')
+
+      contents = [content['href'].encode('utf-8') \
+                  for content in listing]
+
+      return contents
+
+  # Get a list of the ebook content files
+  content_files = parse_toc(os.path.join(path, 'toc.xhtml'))
 
   colophon_files = []
   toc_file = None
@@ -305,12 +323,12 @@ def process_epub(args):
   root_dir = '/'.join([target_directory.split('/')[0],
                        target_directory.split('/')[1]])
 
-  shutil.make_archive(base_dir=base_dir,
-                      root_dir=root_dir,
-                      format='zip',
-                      base_name=target_directory)
+#  shutil.make_archive(base_dir=base_dir,
+#                      root_dir=root_dir,
+#                      format='zip',
+#                      base_name=target_directory)
 
-  shutil.rmtree(target_directory)
+#  shutil.rmtree(target_directory)
 
 if __name__ == '__main__':
   main()

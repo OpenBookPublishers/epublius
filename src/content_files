@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -eu
-
-path=$1
-
-grep "<item id=" ${path}/content.opf | \
-grep 'media-type="application/xhtml+xml"' | \
-perl -pe 's/^.+href="(.+?)".+$/$1/'
