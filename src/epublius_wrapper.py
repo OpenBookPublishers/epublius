@@ -91,12 +91,6 @@ def main():
                       default = None,
                       help = 'Book name')
 
-  parser.add_argument('-z', '--zip',
-                      help = 'Target of -f parameter is an unzipped ' \
-                             'ePub file',
-                      default = False,
-                      action = "store_true")
-
   parser.add_argument('-c', '--cover',
                       help = 'Book doesn\'t have a cover',
                       default = False,
@@ -138,7 +132,6 @@ def process_epub(args):
   epub_file = args.file
   target_directory = args.output
   book_title = args.name
-  unzipped_ePub = args.zip
   no_cover = args.cover
   resize_percent = args.resample
   ePublius_path = args.epublish
@@ -146,14 +139,10 @@ def process_epub(args):
   donation_link = args.donation
   template_dir = args.template
 
-  print "epub_file = " + epub_file
 
-  if unzipped_ePub:
-    tmpdir = epub_file
-  else:
-    tmpdir = create_tmpdir()
-    _, output = fake_command("unzip " + epub_file + " -d " + tmpdir)
-    print output
+  tmpdir = create_tmpdir()
+  _, output = fake_command("unzip " + epub_file + " -d " + tmpdir)
+  print output
 
   _, path = fake_command("find " + tmpdir + " -name toc.ncx")
 
@@ -177,8 +166,7 @@ def process_epub(args):
                str(file_attempt) + " using glob " + file_heuristic)
 
     if file == None:
-      if not unzipped_ePub:
-        shutil.rmtree(tmpdir)
+      shutil.rmtree(tmpdir)
       raise Exception('Could not find ' + file_kind + ' file')
 
     return file
@@ -233,8 +221,7 @@ def process_epub(args):
   del colophon_files[colophon_files.index(title_file)]
 
   target_directory = target_directory + "/" #FIXME check for this
-  if not unzipped_ePub:
-    os.makedirs(target_directory)
+  os.makedirs(target_directory)
 
   # We previously used title_file as the main page, but switched to
   # toc_file in 2016.
@@ -308,8 +295,7 @@ def process_epub(args):
   #_, output = fake_command(cmd)
   ##
 
-  if not unzipped_ePub:
-    shutil.rmtree(tmpdir)
+  shutil.rmtree(tmpdir)
 
   # ZIP OUTPUT FOLDER
   # if target_directory looks like:
