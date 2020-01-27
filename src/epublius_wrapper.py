@@ -166,13 +166,12 @@ def process_epub(args):
   target_directory = target_directory + "/" #FIXME check for this
   os.makedirs(target_directory)
 
-  # We previously used title_file as the main page, but switched to
-  # toc_file in 2016.
 
-  fake_command("cp " + path + "/" + toc_file +
-                           " " + path + "/" + "main.html")
-  title_file = "main.html"
-
+  # Duplicate contents.xhtml to main.html
+  landing_file = "main.html"
+  shutil.copy2(os.path.join(path, toc_file),
+               os.path.join(path, landing_file))
+               
   book_title_arg = ""
   if book_title is None:
     book_title = ""
@@ -199,7 +198,7 @@ def process_epub(args):
     url_arg,
     target_directory,
     index_file,
-    title_file,
+    landing_file,
     book_page,
     copyright_arg,
     donation_link,
