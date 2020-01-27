@@ -61,8 +61,8 @@ def main():
                       required = True)
 
   parser.add_argument('-n', '--name',
-                      default = None,
-                      help = 'Book name')
+                      help = 'Book name',
+                      required = True)
 
   parser.add_argument('-r', '--resample',
                       help = 'Resample image (as percentage; ' \
@@ -152,10 +152,6 @@ def process_epub(args):
   shutil.copy2(os.path.join(path, toc_file),
                os.path.join(path, landing_file))
                
-  book_title_arg = ""
-  if book_title is None:
-    book_title = ""
-
   if donation_link is None:
     donation_link = ""
 
