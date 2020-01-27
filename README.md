@@ -45,3 +45,6 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
 
+## Credits
+Based on a software by:
+(c) Nik Sultana, Open Book Publishers, September 2013 - GPLv3.

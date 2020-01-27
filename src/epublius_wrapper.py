@@ -1,41 +1,4 @@
 #!/usr/bin/python2
-#
-# ePublius wrapper
-
-# Discovers the values of parameters to be given to epublius.py.
-
-# Currently works for -f, -t and -l.
-# Uses toc.ncx to get these values. I also rely on matching
-
-# filenames, but these often vary wildly.
-# FIXME change the process to rely solely on toc.ncx
-#
-# (c) Nik Sultana, Open Book Publishers, September 2013
-# Use of this software is governed by the terms of the GPLv3 -- see LICENSE.
-#
-# Example usage: ./epublius_wrapper.py -p prefix -s suffix \
-#   -h header_add -b https://www.openbookpublishers.com/product/97 \
-#   -f /home/nik/OBP/code/epub/9781906924737_Oral_Literature_in_Africa.epub \
-#   -o test \
-#   -u https://www.openbookpublishers.com/product/000
-#
-# or: ./epublius_wrapper.py -p prefix -s suffix -h header_add \
-#   -b https://www.openbookpublishers.com/product/98/women-in-nineteenth-century-russia--lives-and-culture \
-#   -f testfiles/Women_in_Russia.epub -o WIR2 -n "Women in Russia"
-#
-# or, with variable image resizing:
-#    ./epublius_wrapper.py -p prefix -s suffix -h header_add \
-#    -b https://www.openbookpublishers.com/product/215/ \
-#    -f 9781783740031_Tacitus_Annals.epub -o TA \
-#    -n "Tacitus, Annals, 15.20-23, 33-45. Latin Text, Study Aids with Vocabulary, and Commentary" \
-#    -r 80
-#
-# What it does:
-# - create temp directory
-# - unzip epub into it
-# - detect values of parameters to be passed to epublius.py.
-# - run epublius
-# - remove temp directory
 
 import random
 import time
