@@ -183,8 +183,11 @@ def process_epub(args):
 
   # We recopy the file, since when we earlier copied the file it had
   # not yet been processed by epublius, but now it has.
-  fake_command("cp " + target_directory + "/" + toc_file
-                           + " " + target_directory + "/" + "main.html")
+  #
+  # TODO PLEASE GET RID OF THIS REPETITION
+  shutil.copy2(os.path.join(path, toc_file),
+               os.path.join(path, landing_file))
+
   # add html charset meta tag based on original encoding
   cmd = ("sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " +
          target_directory + "/" + toc_file +
@@ -226,12 +229,12 @@ def process_epub(args):
   root_dir = '/'.join([target_directory.split('/')[0],
                        target_directory.split('/')[1]])
 
-  shutil.make_archive(base_dir=base_dir,
-                      root_dir=root_dir,
-                      format='zip',
-                      base_name=target_directory)
+#  shutil.make_archive(base_dir=base_dir,
+#                      root_dir=root_dir,
+#                      format='zip',
+#                      base_name=target_directory)
 
-  shutil.rmtree(target_directory)
+#  shutil.rmtree(target_directory)
 
 if __name__ == '__main__':
   main()
