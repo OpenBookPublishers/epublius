@@ -188,25 +188,15 @@ def process_epub(args):
   shutil.copy2(os.path.join(path, toc_file),
                os.path.join(path, landing_file))
 
-  cmd = ("cp " + template_dir + "/html-style.css" +
-         " " + target_directory + "/css/ && " +
-         "cp " + template_dir + "/JS/*" +
-         " " + target_directory + "/")
-  print "Copying JS and CSS via command: " + cmd
-  _, output = commands.getstatusoutput(cmd)
 
-  cmd = ("cp -r " + template_dir + "/logo" +
-         " " + target_directory + "/")
+  shutil.copy2(os.path.join(template_dir, 'html-style.css'),
+               os.path.join(target_directory, 'css'))
 
-  print "Copying logo folder via command: " + cmd
-  _, output = fake_command(cmd)
+  shutil.copytree(os.path.join(template_dir, 'JS'),
+                  os.path.join(target_directory, 'JS'))
 
-  ## Append left and right padding requirement to CSS file.
-  # cmd = ("echo 'body { padding : 0px 40px 0px 40px; }' >> "
-  #          + path + "/css/idGeneratedStyles_0.css")
-  #print "Appending CSS info via command: " + cmd
-  #_, output = fake_command(cmd)
-  ##
+  shutil.copytree(os.path.join(template_dir, 'logo'),
+                  os.path.join(target_directory, 'logo'))
 
   shutil.rmtree(tmpdir)
 
