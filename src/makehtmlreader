@@ -18,7 +18,7 @@ def run():
 
     epublius_dir = os.getcwd()
 
-    exe = "./epublius_wrapper.py"
+    exe = "./main.py"
     args = [exe,
             "-p", os.path.join(epublius_dir, "prefix"),
             "-s", os.path.join(epublius_dir, "suffix"),
