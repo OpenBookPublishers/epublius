@@ -188,14 +188,6 @@ def process_epub(args):
   shutil.copy2(os.path.join(path, toc_file),
                os.path.join(path, landing_file))
 
-  # add html charset meta tag based on original encoding
-  cmd = ("sed -i \"s/<head>/<head>\\n    <meta $(awk 'NR==1' " +
-         target_directory + "/" + toc_file +
-         " |awk '{print $3}' | sed 's/encoding/charset/')>/\" " +
-         target_directory + "/main.html")
-  print "Adding charset to main.html: " + cmd
-  commands.getoutput(cmd)
-
   cmd = ("cp " + template_dir + "/html-style.css" +
          " " + target_directory + "/css/ && " +
          "cp " + template_dir + "/JS/*" +
