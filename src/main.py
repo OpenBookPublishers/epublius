@@ -1,27 +1,12 @@
 #!/usr/bin/python2
 
-import random
-import time
 import os
-import sys
-import glob
 import subprocess
-import commands
 import shutil
-import re
-import string
-import argparse
 import epub_extract
-from zipfile import ZipFile
 import tempfile
 from bs4 import BeautifulSoup
 from epublius import epublius
-
-
-def fake_command(s):
-  args = s.split(" ")
-  output = subprocess.check_output(args)
-  return 0, output
 
 
 def main():
