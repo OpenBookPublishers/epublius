@@ -34,11 +34,7 @@ def main():
   core = epublius.Epublius(tmpdir)
 
   args = core.argv
-  process_epub(args, tmpdir)
 
-def process_epub(args, tmpdir):
-  ## TODO We should use a dictionary instead of so many variables.
-  ## Keeping the original notation as legacy code.
   prefix_file = args.prefix
   suffix_file = args.suffix
   headeradd_file = args.header
@@ -54,9 +50,8 @@ def process_epub(args, tmpdir):
 
 
   # Unzip epub to tmpdir
-  with ZipFile(epub_file, 'r') as zip_file:
-    zip_file.extractall(tmpdir)
-
+  core.unzip_epub()
+    
   # path where xhtml and folders are expected
   path = os.path.join(tmpdir, 'OEBPS')
 

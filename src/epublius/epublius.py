@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 
 import argparse
+import zipfile
 
 
 class Epublius:
@@ -76,3 +77,11 @@ class Epublius:
                             default = '.')
 
         return parser.parse_args(argv)
+
+    def unzip_epub(self):
+        '''
+        Unzip epub file to tmpdir
+        '''
+        
+        with zipfile.ZipFile(self.argv.file, 'r') as file:
+            file.extractall(self.tmpdir)
