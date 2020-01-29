@@ -5,8 +5,8 @@ import subprocess
 import shutil
 import epub_extract
 import tempfile
-from bs4 import BeautifulSoup
 from epublius import epublius
+from epublius import parse_tools
 
 
 def main():
@@ -15,8 +15,9 @@ def main():
   # to be used with a context manager when sw ported to python3
   tmpdir = tempfile.mkdtemp(prefix='epublius_')
   
-  # create epublius core instance
+  # create epublius instances
   core = epublius.Epublius(tmpdir)
+  parser = parse_tools.Parse_tools()
 
   args = core.argv
 
@@ -39,27 +40,8 @@ def main():
     
   # path where xhtml and folders are expected
   path = os.path.join(tmpdir, 'OEBPS')
-
-  def parse_toc(toc_path):
-    '''
-    Parse the file ./toc.xhtml and return an ordered
-    list of the files the epub is made up of.
-
-    File names are extracted from the 'href' value of 
-    each toc entry.
-    '''
-    
-    with open(toc_path, 'r') as toc:
-      soup = BeautifulSoup(toc, 'html.parser')
-      listing = soup.find(id='toc').find_all('a')
-
-      contents = [content['href'].encode('utf-8') \
-                  for content in listing]
-
-      return contents
-
   # Get a list of the ebook content files
-  content_files = parse_toc(os.path.join(path, 'toc.xhtml'))
+  content_files = parser.parse_toc(os.path.join(path, 'toc.xhtml'))
 
   colophon_files = []
   toc_file = 'contents.xhtml'
