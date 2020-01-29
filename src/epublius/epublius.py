@@ -4,9 +4,11 @@ import argparse
 
 
 class Epublius:
-    def __init__(self):
+    def __init__(self, tmpdir):
         # Parse arguments
         self.argv = self.parse_args()
+
+        self.tmpdir = tmpdir
 
     def parse_args(self, argv=None):
         '''

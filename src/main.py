@@ -23,19 +23,20 @@ def fake_command(s):
   output = subprocess.check_output(args)
   return 0, output
 
-def create_tmpdir():
-  tmpdir = tempfile.mkdtemp(prefix='epublius_')
-
-  return tmpdir
 
 def main():
 
-  core = epublius.Epublius()
+  # TODO
+  # to be used with a context manager when sw ported to python3
+  tmpdir = tempfile.mkdtemp(prefix='epublius_')
   
-  args = core.argv
-  process_epub(args)
+  # create epublius core instance
+  core = epublius.Epublius(tmpdir)
 
-def process_epub(args):
+  args = core.argv
+  process_epub(args, tmpdir)
+
+def process_epub(args, tmpdir):
   ## TODO We should use a dictionary instead of so many variables.
   ## Keeping the original notation as legacy code.
   prefix_file = args.prefix
@@ -51,8 +52,6 @@ def process_epub(args):
   donation_link = args.donation
   template_dir = args.template
 
-
-  tmpdir = create_tmpdir()
 
   # Unzip epub to tmpdir
   with ZipFile(epub_file, 'r') as zip_file:
