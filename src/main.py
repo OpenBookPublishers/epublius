@@ -128,13 +128,13 @@ def main():
                os.path.join(path, landing_file))
 
 
-  shutil.copy2(os.path.join(template_dir, 'html-style.css'),
+  shutil.copy2(os.path.join(template_dir, 'includes', 'css', 'html-style.css'),
                os.path.join(target_directory, 'css'))
 
-  shutil.copytree(os.path.join(template_dir, 'JS'),
+  shutil.copytree(os.path.join(template_dir, 'includes', 'JS'),
                   os.path.join(target_directory, 'JS'))
 
-  shutil.copytree(os.path.join(template_dir, 'logo'),
+  shutil.copytree(os.path.join(template_dir, 'includes', 'logo'),
                   os.path.join(target_directory, 'logo'))
 
   shutil.rmtree(tmpdir)
