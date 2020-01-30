@@ -7,6 +7,8 @@ import epub_extract
 import tempfile
 from epublius import epublius
 from epublius import parse_tools
+from epublius import metadata
+from epublius import output_html
 
 
 def main():
@@ -33,6 +35,9 @@ def main():
   url_prefix = args.url
   donation_link = args.donation
   template_dir = args.template
+
+  data = metadata.Metadata(core.argv)
+  html = output_html.Output_html(os.path.abspath('assets/template.xhtml'))
 
 
   # Unzip epub to tmpdir
@@ -69,6 +74,7 @@ def main():
 
   index_file = "" # ??
 
+  '''
   epub_extract.extract_all(
     prefix_file,
     suffix_file,
@@ -86,6 +92,19 @@ def main():
     donation_link,
     resize_percent
   )
+  '''
+
+  for index, content in enumerate(content_files):
+    print('{}: {}'.format(index, content))
+
+    m = data.get_metadata(index, content_files)
+
+    processed_content = html.render_template(m)
+    print(processed_content)
+    print('----')
+    
+    
+  
 
   # We recopy the file, since when we earlier copied the file it had
   # not yet been processed by epublius, but now it has.
