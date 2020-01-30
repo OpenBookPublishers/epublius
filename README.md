@@ -29,8 +29,6 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 
 | Parameter | Description                                                               |
 |-----------|---------------------------------------------------------------------------|
-| `-p`      | File containing prefix                                                    |
-| `-s`      | File containing suffix                                                    |
 | `-b`      | URL of book's page                                                        |
 | `-t`      | TOC file                                                                  |
 | `-f`      | Frontpage file                                                            |

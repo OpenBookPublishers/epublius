@@ -20,23 +20,6 @@ class Epublius:
         parser = argparse.ArgumentParser(description='ePublius wrapper',
                                          add_help=False)
 
-        parser.add_argument('-p', '--prefix',
-                            help = 'file containing prefix',
-                            required = True)
-
-        parser.add_argument('-s', '--suffix',
-                            help = 'file containing suffix',
-                            required = True)
-
-        parser.add_argument('--help',
-                            action='help',
-                            default=argparse.SUPPRESS,
-                            help=argparse._('show this help message and exit'))
-
-        parser.add_argument('-h', '--header',
-                            help = 'file containing HTML to inject into header',
-                            required = True)
-
         parser.add_argument('-b', '--book',
                             help = 'URL of book\'s page',
                             required = True)

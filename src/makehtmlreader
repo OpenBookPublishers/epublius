@@ -20,9 +20,6 @@ def run():
 
     exe = "./main.py"
     args = [exe,
-            "-p", os.path.join(epublius_dir, "prefix"),
-            "-s", os.path.join(epublius_dir, "suffix"),
-            "-h", os.path.join(epublius_dir, "header_add"),
             "-t", os.path.join(epublius_dir, ""),
             "-e", os.path.join(epublius_dir, ""),
             "-b", BOOK_URL + str(metadata['product_id']),
