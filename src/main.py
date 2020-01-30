@@ -12,60 +12,60 @@ from epublius import output_html
 
 def main():
 
-    # TODO
-    # to be used with a context manager when sw ported to python3
-    tmpdir = tempfile.mkdtemp(prefix='epublius_')
-  
-    # create epublius instances
-    core = epublius.Epublius(tmpdir)
-    parser = parse_tools.Parse_tools()
+    # Destruction of the temporary directory on completion
+    with tempfile.TemporaryDirectory(prefix='epublius_') as work_dir:
 
-    data = metadata.Metadata(core.argv)
-    html = output_html.Output_html(os.path.abspath('assets/template.xhtml'))
+        # Create epublius instances
+        core = epublius.Epublius(work_dir)
+        parser = parse_tools.Parse_tools()
+
+        data = metadata.Metadata(core.argv)
+        html = output_html.Output_html(os.path.abspath('assets/template.xhtml'))
 
 
-    # Unzip epub to tmpdir
-    core.unzip_epub()
+        # Unzip epub to tmpdir
+        core.unzip_epub()
     
-    # path where xhtml and folders are expected
-    path = os.path.join(tmpdir, 'OEBPS')
-    # Get a list of the ebook content files
-    content_files = parser.parse_toc(os.path.join(path, 'toc.xhtml'))
+        # path where xhtml and folders are expected
+        path = os.path.join(work_dir, 'OEBPS')
+        # Get a list of the ebook content files
+        content_files = parser.parse_toc(os.path.join(path, 'toc.xhtml'))
 
-    target_directory = core.argv.output
-    os.makedirs(target_directory)
+        target_directory = core.argv.output
+        os.makedirs(target_directory)
 
-    toc_file = 'contents.xhtml'
-    landing_file = 'main.html'
-    template_dir = core.argv.template
-
-
-    for index, content in enumerate(content_files):
-        print('{}: {}'.format(index, content))
-
-        m = data.get_metadata(index, content_files)
-
-        processed_content = html.render_template(m)
-        print(processed_content)
-        print('----')
+        toc_file = 'contents.xhtml'
+        landing_file = 'main.html'
+        template_dir = core.argv.template
 
 
+        for index, content in enumerate(content_files):
+            print('{}: {}'.format(index, content))
 
-    shutil.copy2(os.path.join(path, toc_file),
-                 os.path.join(path, landing_file))
+            m = data.get_metadata(index, content_files)
+
+            processed_content = html.render_template(m)
+            print(processed_content)
+            print('----')
 
 
-    shutil.copy2(os.path.join(template_dir, 'includes',
-                              'css', 'html-style.css'),
-                 os.path.join(target_directory, 'css'))
 
-    shutil.copytree(os.path.join(template_dir, 'includes', 'JS'),
-                    os.path.join(target_directory, 'JS'))
+            shutil.copy2(os.path.join(path, toc_file),
+                         os.path.join(path, landing_file))
 
-    shutil.copytree(os.path.join(template_dir, 'includes', 'logo'),
-                    os.path.join(target_directory, 'logo'))
 
-    shutil.rmtree(tmpdir)
+            shutil.copy2(os.path.join(template_dir, 'includes',
+                                      'css', 'html-style.css'),
+                         os.path.join(target_directory, 'css'))
+
+            shutil.copytree(os.path.join(template_dir, 'includes', 'JS'),
+                            os.path.join(target_directory, 'JS'),
+                            dirs_exist_ok=True)
+
+            shutil.copytree(os.path.join(template_dir, 'includes', 'logo'),
+                            os.path.join(target_directory, 'logo'),
+                            dirs_exist_ok=True)
+
 
     # ZIP OUTPUT FOLDER
     # if target_directory looks like:
