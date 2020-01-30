@@ -1,6 +1,6 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python3
 
-from mustache import Mustache
+from epublius import mustache
 from bs4 import BeautifulSoup
 
 
@@ -15,7 +15,7 @@ class Output_html():
         logic-less mustache.
         Returns the process text (str).
         """
-        skeleton = Mustache(self.template)
+        skeleton = mustache.Mustache(self.template)
   
         processed_text = skeleton.substitute(data)
 

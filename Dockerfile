@@ -1,4 +1,4 @@
-FROM python:2-slim-buster
+FROM python:3-slim-buster
 
 WORKDIR /ebook_automation
 

@@ -1,12 +1,11 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
+
 from string import Template
 
 
 class Mustache:
     '''
     Python implementation of mustache using standard libraries.
-
-    It is declared python2.7, but it works seamlessly on python3.
     '''
     def __init__(self, template):
         self.template = Template(template)
