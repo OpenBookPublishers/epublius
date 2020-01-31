@@ -15,24 +15,33 @@ def main():
 
         # Create epublius instances
         epublius = Epublius(work_dir)
-        metadata = Metadata(epublius.argv)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
         # Unzip epub to work_dir
         epublius.unzip_epub()
 
-
+        # Get book contents
         contents = epublius.get_contents()
 
+        # Create an instance of Metadata
+        metadata = Metadata(epublius.argv, contents, work_dir)
+        
         for index, content in enumerate(contents):
-            print('{}: {}'.format(index, content))
 
-            content_metadata = metadata.get_metadata(index, contents)
+            # Get book section metadata
+            section_data = metadata.get_section_data(index)
+            section_css = metadata.get_css(index)
 
-            processed_content = output.render_template(content_metadata)
+            # Combine all the metadata into one (python) dictionary
+            section_metadata = {
+                **section_data,
+                **section_css
+            }
+
+            processed_content = output.render_template(section_metadata)
             print(processed_content)
             print('----')
-
+            
 
 
         oebps_path = os.path.join(work_dir, 'OEBPS')

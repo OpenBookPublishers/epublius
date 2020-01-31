@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 
 import argparse
 import zipfile
@@ -86,7 +86,6 @@ class Epublius:
             soup = BeautifulSoup(toc, 'html.parser')
             listing = soup.find(id='toc').find_all('a')
 
-            contents = [content['href'].encode('utf-8') \
-                        for content in listing]
+            contents = [content['href'] for content in listing]
 
         return contents

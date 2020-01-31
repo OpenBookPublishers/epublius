@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 
+import os
+from bs4 import BeautifulSoup
 
 class Metadata():
-    def __init__(self, args):
+    def __init__(self, args, contents, work_dir):
         self.args = args
+        self.contents = contents
+        self.work_dir = work_dir
 
-    def get_metadata(self, index, content_files):
+    def get_section_data(self, index):
         '''
-        Return a (python) dictionary containing the information
-        to add the book file
+        Compose a (python) dictionary containing metadata
+        of the book section
         '''
 
-        metadata = {
+        section_data = {
             # Constants
             'toc': 'contents.xhtml',
             'copyright': 'copyright.xhtml',
@@ -21,13 +25,13 @@ class Metadata():
             'booktitle': self.args.name,
 
             # Previus and next page
-            'previous': content_files[index-1],
-            'next': self.get_next(index, content_files)
+            'previous': self.contents[index-1],
+            'next': self.get_next(index)
         }
 
-        return metadata
+        return section_data
 
-    def get_next(self, index, content_files):
+    def get_next(self, index):
         '''
         Return the filename of the following book section.
 
@@ -35,8 +39,25 @@ class Metadata():
         '''
 
         try:
-            next = content_files[index+1]
+            next = self.contents[index+1]
         except IndexError:
-            next = content_files[0]
+            next = self.contents[0]
 
         return next
+
+    def get_css(self, index):
+        '''
+        Return a str with the CSS information of a file 
+        (self.contents[index])
+        '''
+
+        file_path = os.path.join(self.work_dir, 'OEBPS',
+                                 self.contents[index])
+
+        with open(file_path, 'r') as file:
+            soup = BeautifulSoup(file, 'html.parser')
+            listing = soup.find_all('link')
+
+            contents = '\n'.join([str(content) for content in listing])
+
+        return {'book_page_css': contents}
