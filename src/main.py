@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-import subprocess
 import shutil
 import tempfile
 from epublius.epublius import Epublius
@@ -19,19 +18,14 @@ def main():
         metadata = Metadata(epublius.argv)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
-
         # Unzip epub to tmpdir
         epublius.unzip_epub()
     
-        # path where xhtml and folders are expected
-        path = os.path.join(work_dir, 'OEBPS')
+        oebps_path = os.path.join(work_dir, 'OEBPS')
+
         # Get a list of the ebook content files
-        content_files = metadata.parse_toc(os.path.join(path, 'toc.xhtml'))
-
-        toc_file = 'contents.xhtml'
-        landing_file = 'main.html'
-        template_dir = epublius.argv.template
-
+        content_files = metadata.parse_toc(os.path.join(oebps_path,
+                                                        'toc.xhtml'))
 
         for index, content in enumerate(content_files):
             print('{}: {}'.format(index, content))
@@ -47,11 +41,13 @@ def main():
         target_directory = epublius.argv.output
         os.makedirs(target_directory)
             
-        shutil.copy2(os.path.join(path, toc_file),
-                     os.path.join(path, landing_file))
+        # duplicate content.xhtml to main.html
+        shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),
+                     os.path.join(oebps_path, 'main.html'))
 
 
-        shutil.copytree(os.path.join(template_dir, 'includes'),
+        # copy inclides to target directory
+        shutil.copytree(os.path.join(os.getcwd(), 'includes'),
                         os.path.join(target_directory),
                         dirs_exist_ok=True)
 
