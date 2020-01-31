@@ -5,7 +5,6 @@ import subprocess
 import shutil
 import tempfile
 from epublius.epublius import Epublius
-from epublius.parse_tools import Parse_tools
 from epublius.metadata import Metadata
 from epublius.output import Output
 
@@ -17,8 +16,6 @@ def main():
 
         # Create epublius instances
         epublius = Epublius(work_dir)
-        parser = Parse_tools()
-
         metadata = Metadata(epublius.argv)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
@@ -29,7 +26,7 @@ def main():
         # path where xhtml and folders are expected
         path = os.path.join(work_dir, 'OEBPS')
         # Get a list of the ebook content files
-        content_files = parser.parse_toc(os.path.join(path, 'toc.xhtml'))
+        content_files = metadata.parse_toc(os.path.join(path, 'toc.xhtml'))
 
         target_directory = epublius.argv.output
         os.makedirs(target_directory)
