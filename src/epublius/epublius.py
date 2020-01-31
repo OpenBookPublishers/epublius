@@ -2,14 +2,16 @@
 
 import argparse
 import zipfile
+import os
+from bs4 import BeautifulSoup
 
 
 class Epublius:
-    def __init__(self, tmpdir):
+    def __init__(self, work_dir):
         # Parse arguments
         self.argv = self.parse_args()
 
-        self.tmpdir = tmpdir
+        self.work_dir = work_dir
 
     def parse_args(self, argv=None):
         '''
@@ -63,8 +65,28 @@ class Epublius:
 
     def unzip_epub(self):
         '''
-        Unzip epub file to tmpdir
+        Unzip epub file to work_dir
         '''
         
         with zipfile.ZipFile(self.argv.file, 'r') as file:
-            file.extractall(self.tmpdir)
+            file.extractall(self.work_dir)
+
+    def get_contents(self):
+        '''
+        Parse the file ./toc.xhtml and return an ordered
+        list of the files the epub is made up of.
+
+        File names are extracted from the 'href' value of 
+        each toc entry.
+        '''
+
+        toc_path = os.path.join(self.work_dir, 'OEBPS', 'toc.xhtml')
+        
+        with open(toc_path, 'r') as toc:
+            soup = BeautifulSoup(toc, 'html.parser')
+            listing = soup.find(id='toc').find_all('a')
+
+            contents = [content['href'].encode('utf-8') \
+                        for content in listing]
+
+        return contents

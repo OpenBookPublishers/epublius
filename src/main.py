@@ -18,26 +18,25 @@ def main():
         metadata = Metadata(epublius.argv)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
-        # Unzip epub to tmpdir
+        # Unzip epub to work_dir
         epublius.unzip_epub()
-    
-        oebps_path = os.path.join(work_dir, 'OEBPS')
 
-        # Get a list of the ebook content files
-        content_files = metadata.parse_toc(os.path.join(oebps_path,
-                                                        'toc.xhtml'))
 
-        for index, content in enumerate(content_files):
+        contents = epublius.get_contents()
+
+        for index, content in enumerate(contents):
             print('{}: {}'.format(index, content))
 
-            content_metadata = metadata.get_metadata(index, content_files)
+            content_metadata = metadata.get_metadata(index, contents)
 
             processed_content = output.render_template(content_metadata)
             print(processed_content)
             print('----')
 
 
-        
+
+        oebps_path = os.path.join(work_dir, 'OEBPS')
+            
         target_directory = epublius.argv.output
         os.makedirs(target_directory)
             
