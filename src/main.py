@@ -4,10 +4,10 @@ import os
 import subprocess
 import shutil
 import tempfile
-from epublius import epublius
-from epublius import parse_tools
-from epublius import metadata
-from epublius import output_html
+from epublius.epublius import Epublius
+from epublius.parse_tools import Parse_tools
+from epublius.metadata import Metadata
+from epublius.output_html import Output_html
 
 
 def main():
@@ -16,35 +16,35 @@ def main():
     with tempfile.TemporaryDirectory(prefix='epublius_') as work_dir:
 
         # Create epublius instances
-        core = epublius.Epublius(work_dir)
-        parser = parse_tools.Parse_tools()
+        epublius = Epublius(work_dir)
+        parser = Parse_tools()
 
-        data = metadata.Metadata(core.argv)
-        html = output_html.Output_html(os.path.abspath('assets/template.xhtml'))
+        metadata = Metadata(epublius.argv)
+        html = Output_html(os.path.abspath('assets/template.xhtml'))
 
 
         # Unzip epub to tmpdir
-        core.unzip_epub()
+        epublius.unzip_epub()
     
         # path where xhtml and folders are expected
         path = os.path.join(work_dir, 'OEBPS')
         # Get a list of the ebook content files
         content_files = parser.parse_toc(os.path.join(path, 'toc.xhtml'))
 
-        target_directory = core.argv.output
+        target_directory = epublius.argv.output
         os.makedirs(target_directory)
 
         toc_file = 'contents.xhtml'
         landing_file = 'main.html'
-        template_dir = core.argv.template
+        template_dir = epublius.argv.template
 
 
         for index, content in enumerate(content_files):
             print('{}: {}'.format(index, content))
 
-            m = data.get_metadata(index, content_files)
+            content_metadata = metadata.get_metadata(index, content_files)
 
-            processed_content = html.render_template(m)
+            processed_content = html.render_template(content_metadata)
             print(processed_content)
             print('----')
 
