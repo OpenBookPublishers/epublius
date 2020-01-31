@@ -28,9 +28,6 @@ def main():
         # Get a list of the ebook content files
         content_files = metadata.parse_toc(os.path.join(path, 'toc.xhtml'))
 
-        target_directory = epublius.argv.output
-        os.makedirs(target_directory)
-
         toc_file = 'contents.xhtml'
         landing_file = 'main.html'
         template_dir = epublius.argv.template
@@ -46,14 +43,17 @@ def main():
             print('----')
 
 
+        
+        target_directory = epublius.argv.output
+        os.makedirs(target_directory)
+            
+        shutil.copy2(os.path.join(path, toc_file),
+                     os.path.join(path, landing_file))
 
-            shutil.copy2(os.path.join(path, toc_file),
-                         os.path.join(path, landing_file))
 
-
-            shutil.copytree(os.path.join(template_dir, 'includes'),
-                            os.path.join(target_directory),
-                            dirs_exist_ok=True)
+        shutil.copytree(os.path.join(template_dir, 'includes'),
+                        os.path.join(target_directory),
+                        dirs_exist_ok=True)
 
 
     # ZIP OUTPUT FOLDER
