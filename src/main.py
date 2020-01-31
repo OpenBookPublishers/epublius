@@ -7,7 +7,7 @@ import tempfile
 from epublius.epublius import Epublius
 from epublius.parse_tools import Parse_tools
 from epublius.metadata import Metadata
-from epublius.output_html import Output_html
+from epublius.output import Output
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
         parser = Parse_tools()
 
         metadata = Metadata(epublius.argv)
-        html = Output_html(os.path.abspath('assets/template.xhtml'))
+        output = Output(os.path.abspath('assets/template.xhtml'))
 
 
         # Unzip epub to tmpdir
@@ -44,7 +44,7 @@ def main():
 
             content_metadata = metadata.get_metadata(index, content_files)
 
-            processed_content = html.render_template(content_metadata)
+            processed_content = output.render_template(content_metadata)
             print(processed_content)
             print('----')
 
