@@ -26,9 +26,12 @@ def main():
         # Create an instance of Metadata
         metadata = Metadata(epublius.argv, contents, work_dir)
         
-        for index, content in enumerate(contents):
+        target_directory = epublius.argv.output
+        os.makedirs(target_directory)
 
-            # Get book section metadata
+        for index, file_name in enumerate(contents):
+
+            # Get book section data
             section_data = metadata.get_section_data(index)
             section_css = metadata.get_css(index)
             section_body_text = metadata.get_body_text(index)
@@ -40,16 +43,16 @@ def main():
                 **section_body_text
             }
 
+            # Merge data into template
             processed_content = output.render_template(section_metadata)
-            print(processed_content)
-            print('----')
+
+            # Write to file
+            file_path = os.path.join(epublius.argv.output, file_name)
+            output.write_file(processed_content, file_path)
             
 
 
         oebps_path = os.path.join(work_dir, 'OEBPS')
-            
-        target_directory = epublius.argv.output
-        os.makedirs(target_directory)
             
         # duplicate content.xhtml to main.html
         shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),

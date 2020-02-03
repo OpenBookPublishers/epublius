@@ -27,5 +27,11 @@ class Output:
 
         return self.template.safe_substitute(metadata)
 
+    def write_file(self, processed_content, file_path):
+        '''
+        Write content to file
+        '''
 
-
+        with open(file_path, 'w+') as section_file:
+            section_file.write(processed_content)
+                  
