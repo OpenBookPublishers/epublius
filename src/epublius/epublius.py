@@ -99,3 +99,15 @@ class Epublius:
         shutil.copytree(os.path.join(os.getcwd(), 'includes'),
                         self.argv.output,
                         dirs_exist_ok=True)
+
+    def copy_epub_dir(self, dir):
+
+        oebps_path = os.path.join(self.work_dir, 'OEBPS')
+
+        try:
+            shutil.copytree(os.path.join(oebps_path, dir),
+                            os.path.join(self.argv.output, dir),
+                            dirs_exist_ok=True)
+            
+        except FileNotFoundError:
+            print('[INFO] Folder {} not found'.format(dir))

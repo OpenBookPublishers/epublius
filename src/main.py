@@ -62,8 +62,15 @@ def main():
         shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),
                      os.path.join(oebps_path, 'main.html'))
 
-
+        # Copy includes contents to output directory
         epublius.copy_includes()
+
+        # Copy directory from work_dir to output directory
+        dirs = ['css', 'fonts', 'image']
+
+        for dir in dirs:
+            epublius.copy_epub_dir(dir)
+        
 
 
     # ZIP OUTPUT FOLDER
