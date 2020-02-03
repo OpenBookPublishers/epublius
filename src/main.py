@@ -22,20 +22,22 @@ def main():
 
         # Get book contents
         contents = epublius.get_contents()
-
-        # Create an instance of Metadata
-        metadata = Metadata(epublius.argv, contents, work_dir)
         
         target_directory = epublius.argv.output
         os.makedirs(target_directory)
 
+        
         for index, file_name in enumerate(contents):
 
+            # Create an instance of Metadata
+            metadata = Metadata(epublius.argv, work_dir,
+                                index, contents)
+
             # Get book section data
-            section_data = metadata.get_section_data(index)
-            section_css = metadata.get_css(index)
-            section_body_text = metadata.get_body_text(index)
-            section_breadcrumbs = metadata.get_breadcrumbs(index)
+            section_data = metadata.get_section_data()
+            section_css = metadata.get_css()
+            section_body_text = metadata.get_body_text()
+            section_breadcrumbs = metadata.get_breadcrumbs()
 
             # Combine all the metadata into one (python) dictionary
             section_metadata = {
