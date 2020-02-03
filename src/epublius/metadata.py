@@ -61,3 +61,20 @@ class Metadata():
             contents = '\n'.join([str(content) for content in listing])
 
         return {'book_page_css': contents}
+
+
+    def get_body_text(self, index):
+        '''
+        Return a str with the content of the section body text
+        '''
+
+        file_path = os.path.join(self.work_dir, 'OEBPS',
+                                 self.contents[index])
+
+        with open(file_path, 'r') as file:
+            soup = BeautifulSoup(file, 'html.parser')
+            contents = soup.body.contents
+
+            body_text = ''.join([str(content) for content in contents])
+
+        return {'body_text': body_text}

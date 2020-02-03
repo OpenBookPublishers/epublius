@@ -31,11 +31,13 @@ def main():
             # Get book section metadata
             section_data = metadata.get_section_data(index)
             section_css = metadata.get_css(index)
+            section_body_text = metadata.get_body_text(index)
 
             # Combine all the metadata into one (python) dictionary
             section_metadata = {
                 **section_data,
-                **section_css
+                **section_css,
+                **section_body_text
             }
 
             processed_content = output.render_template(section_metadata)
