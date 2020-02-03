@@ -35,12 +35,14 @@ def main():
             section_data = metadata.get_section_data(index)
             section_css = metadata.get_css(index)
             section_body_text = metadata.get_body_text(index)
+            section_breadcrumbs = metadata.get_breadcrumbs(index)
 
             # Combine all the metadata into one (python) dictionary
             section_metadata = {
                 **section_data,
                 **section_css,
-                **section_body_text
+                **section_body_text,
+                **section_breadcrumbs
             }
 
             # Merge data into template

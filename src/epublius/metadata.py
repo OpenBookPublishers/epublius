@@ -78,3 +78,23 @@ class Metadata():
             body_text = ''.join([str(content) for content in contents])
 
         return {'body_text': body_text}
+
+    def get_breadcrumbs(self, index):
+        '''
+        Return a str with the content of the title tag.
+
+        If the title has a subtitle such as:
+        'This is a Long Title: Which Includes a Subtitle'
+        the method returns only the part prior the colon
+        '''
+
+        file_path = os.path.join(self.work_dir, 'OEBPS',
+                                 self.contents[index])
+
+        with open(file_path, 'r') as file:
+            soup = BeautifulSoup(file, 'html.parser')
+
+            title = soup.find('title').text
+            breadcrumbs = title.split(':')[0]
+
+        return {'breadcrumbs': breadcrumbs}
