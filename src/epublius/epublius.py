@@ -4,6 +4,7 @@ import argparse
 import zipfile
 import os
 from bs4 import BeautifulSoup
+import shutil
 
 
 class Epublius:
@@ -89,3 +90,12 @@ class Epublius:
             contents = [content['href'] for content in listing]
 
         return contents
+
+    def copy_includes(self):
+        '''
+        Copy inclides to target directory
+        '''
+
+        shutil.copytree(os.path.join(os.getcwd(), 'includes'),
+                        self.argv.output,
+                        dirs_exist_ok=True)

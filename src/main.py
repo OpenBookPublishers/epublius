@@ -63,10 +63,7 @@ def main():
                      os.path.join(oebps_path, 'main.html'))
 
 
-        # copy inclides to target directory
-        shutil.copytree(os.path.join(os.getcwd(), 'includes'),
-                        os.path.join(target_directory),
-                        dirs_exist_ok=True)
+        epublius.copy_includes()
 
 
     # ZIP OUTPUT FOLDER
