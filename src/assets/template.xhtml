@@ -75,7 +75,7 @@
       <ul class="navbar-nav d-lg-none">
 
         <li class="nav-item">
-          <a href="${bookpage}">
+          <a href="${book_web_page}">
             <img id="nav-book-cover" class="rounded" src="image/1.png" alt="Book cover" />
           </a>
         </li>
@@ -95,13 +95,13 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="${bookpage}">
+          <a class="nav-link" href="${book_web_page}">
             <span class="fas fa-shopping-cart mr-2"></span>Buy the book
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url_encoded}&amp;sandbox=1" title="Click to translate this page">
+          <a class="nav-link" href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url}&amp;sandbox=1" title="Click to translate this page">
             <span class="fas fa-language mr-2"></span>Translate this page
           </a>
         </li>
@@ -124,7 +124,7 @@
                 class="form-control" type="text" placeholder="Search this book"
                 aria-label="Search this book" />
             <input id="search-button" title="Search" type="hidden" value="Search" />
-            <input name="sitesearch" type="hidden" value="${this_page_url_prefix}" />
+            <input name="sitesearch" type="hidden" value="${this_book_url}" />
           </div>
         </form>
       </div>
@@ -155,16 +155,16 @@
           </div>
 
           <div class="col-12 mt-5 mb-3">
-            <a href="${bookpage}">
+            <a href="${book_web_page}">
               <img src="image/1.png" id="book-cover" alt="Book cover" />
             </a>
           </div>
 
           <div class="col-12 mt-1 sidebar-button blue-bg">
-            <a href="${bookpage}">Buy the book</a>
+            <a href="${book_web_page}">Buy the book</a>
           </div>
           <div class="col-12 mt-1 sidebar-button blue-bg">
-            <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url_encoded}&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
+            <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url}&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
           </div>
           <div class="col-12 mt-1 sidebar-button orange-bg">
             <a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">Donate 1£</a>
@@ -181,7 +181,7 @@
 
             <nav class="d-print-none" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="${toc}">${booktitle}</a></li>
+                <li class="breadcrumb-item"><a href="${toc}">${book_title}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">${breadcrumbs}</li>
               </ol>
             </nav>
@@ -209,7 +209,7 @@
                     class="form-control" type="text" placeholder="Search this book"
                     aria-label="Search this book" />
                 <input id="search-button-lg" title="Search" type="hidden" value="Search" />
-                <input name="sitesearch" type="hidden" value="${this_page_url_prefix}" />
+                <input name="sitesearch" type="hidden" value="${this_book_url}" />
               </div>
             </form>
           </div>
@@ -223,7 +223,7 @@
                 <img src="logo/logo.png" id="OBP-logo-jumbotron" style="width: 100%" alt="OPB logo" />
               </div>
               <div class="col-9">
-                <p><strong>${booktitle}</strong><br />More info and resources at: ${bookpage}</p>
+                <p><strong>${book_title}</strong><br />More info and resources at: ${book_web_page}</p>
               </div>
             </div>
           </div>

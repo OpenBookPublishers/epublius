@@ -2,6 +2,7 @@
 
 import os
 from bs4 import BeautifulSoup
+import urllib.parse
 
 class Metadata():
     def __init__(self, args, work_dir, index, contents):
@@ -27,15 +28,61 @@ class Metadata():
             'copyright': 'copyright.xhtml',
 
             # From input arguments
-            'bookpage': self.args.book,
-            'booktitle': book_title,
+            'book_web_page': self.args.book,
+            'book_title': book_title,
 
+            # Page and book URLs
+            'this_page_url': self.get_page_url(),
+            'this_book_url': self.get_book_url(),
+            
             # Previus and next page
             'previous': self.contents[self.index - 1],
             'next': self.get_next()
         }
 
         return section_data
+
+    def get_reader_url(self, page):
+        '''
+        Compose a generic url of the current epublius instance, 
+        to be specialized by the methods 
+
+        self.get_book_url and self.get_page_url
+
+        the url returned looks like thisi.e.:
+        https://www.openbookpublishers.com/htmlreader/ \
+        978-1-78374-791-7/ch1.xhtml
+
+        urllib.urljoin() can't join multiple folders/paths,
+        so the task is performed with a simple join()
+
+        The url is finally encoded to allow google translator
+        to parse it.
+        '''
+
+        url_prefix = 'https://www.openbookpublishers.com/htmlreader'
+        isbn = self.args.output.split('/')[-1]
+        
+        url =  '/'.join([url_prefix, isbn, page])
+        encoded_url = urllib.parse.quote_plus(url)
+
+        return encoded_url
+
+    def get_book_url(self):
+        '''
+        Compose the url of the current (web) page, i.e.:
+        https://www.openbookpublishers.com/htmlreader/ \
+        978-1-78374-791-7/*
+        '''
+        return self.get_reader_url('*')
+
+    def get_page_url(self):
+        '''
+        Compose the url of the current (web) page, i.e.:
+        https://www.openbookpublishers.com/htmlreader/ \
+        978-1-78374-791-7/ch1.xhtml
+        '''
+        return self.get_reader_url(self.contents[self.index])
 
     def get_next(self):
         '''
