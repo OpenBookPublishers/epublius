@@ -18,6 +18,9 @@ class Metadata():
         of the book section
         '''
 
+        # Truncate book title to the first ':' occurrence
+        book_title = self.args.name.split(':')[0]
+
         section_data = {
             # Constants
             'toc': 'contents.xhtml',
@@ -25,7 +28,7 @@ class Metadata():
 
             # From input arguments
             'bookpage': self.args.book,
-            'booktitle': self.args.name,
+            'booktitle': book_title,
 
             # Previus and next page
             'previous': self.contents[self.index - 1],
