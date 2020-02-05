@@ -13,6 +13,8 @@ class Epublius:
         self.argv = self.parse_args()
 
         self.work_dir = work_dir
+        self.output_dir = os.path.join(self.argv.output,
+                                       self.argv.isbn)
 
     def parse_args(self, argv=None):
         '''
@@ -101,7 +103,7 @@ class Epublius:
         '''
 
         shutil.copytree(os.path.join(os.getcwd(), 'includes'),
-                        self.argv.output,
+                        self.output_dir,
                         dirs_exist_ok=True)
 
     def copy_epub_dir(self, dir):
@@ -110,7 +112,7 @@ class Epublius:
 
         try:
             shutil.copytree(os.path.join(oebps_path, dir),
-                            os.path.join(self.argv.output, dir),
+                            os.path.join(self.output_dir, dir),
                             dirs_exist_ok=True)
             
         except FileNotFoundError:

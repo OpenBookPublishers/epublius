@@ -23,8 +23,9 @@ def main():
         # Get book contents
         contents = epublius.get_contents()
         
-        target_directory = epublius.argv.output
-        os.makedirs(target_directory)
+        output_directory = os.path.join(epublius.argv.output,
+                                        epublius.argv.isbn)
+        os.makedirs(output_directory)
 
         
         for index, file_name in enumerate(contents):
@@ -51,7 +52,7 @@ def main():
             processed_content = output.render_template(section_metadata)
 
             # Write to file
-            file_path = os.path.join(epublius.argv.output, file_name)
+            file_path = os.path.join(output_directory, file_name)
             output.write_file(processed_content, file_path)
             
 

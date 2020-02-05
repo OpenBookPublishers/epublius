@@ -24,7 +24,7 @@ def run():
             "-e", os.path.join(epublius_dir, ""),
             "-b", BOOK_URL + str(metadata['product_id']),
             "-f", epub_path,
-            "-o", os.path.join(OUTDIR, metadata['isbn']),
+            "-o", OUTDIR,
             "-u", HTMLREADER_URL + metadata['isbn'],
             "-n", metadata['title'],
             "-r", "100",
