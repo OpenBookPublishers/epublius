@@ -41,6 +41,7 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 | `-u`      | URL path of this book                                                     |
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
+| `-i`      | Book ISBN                                                             |
 
 ## Credits
 Based on a software by:

@@ -27,7 +27,8 @@ def run():
             "-o", os.path.join(OUTDIR, metadata['isbn']),
             "-u", HTMLREADER_URL + metadata['isbn'],
             "-n", metadata['title'],
-            "-r", "100"]
+            "-r", "100",
+            "-i", metadata['isbn']]
 
     os.execvp(sys.executable, [exe] + args)
 

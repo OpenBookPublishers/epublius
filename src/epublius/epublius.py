@@ -62,6 +62,10 @@ class Epublius:
                                    'files (CSS and JS)',
                             default = '.')
 
+        parser.add_argument('-i', '--isbn',
+                            help = 'Book ISBN',
+                            required = True)
+
         return parser.parse_args(argv)
 
     def unzip_epub(self):

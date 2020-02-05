@@ -61,7 +61,7 @@ class Metadata():
         '''
 
         url_prefix = 'https://www.openbookpublishers.com/htmlreader'
-        isbn = self.args.output.split('/')[-1]
+        isbn = self.args.isbn
         
         url =  '/'.join([url_prefix, isbn, page])
         encoded_url = urllib.parse.quote_plus(url)
