@@ -111,3 +111,13 @@ class Epublius:
             
         except FileNotFoundError:
             print('[INFO] Folder {} not found'.format(dir))
+
+    def duplicate_contents(self):
+        '''
+        Duplicate content.xhtml to main.html
+        '''
+        
+        oebps_path = os.path.join(self.work_dir, 'OEBPS')
+            
+        shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),
+                     os.path.join(oebps_path, 'main.html'))

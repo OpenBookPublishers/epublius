@@ -55,12 +55,8 @@ def main():
             output.write_file(processed_content, file_path)
             
 
-
-        oebps_path = os.path.join(work_dir, 'OEBPS')
-            
-        # duplicate content.xhtml to main.html
-        shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),
-                     os.path.join(oebps_path, 'main.html'))
+        # Duplicate content.xhtml to main.html
+        epublius.duplicate_contents()
 
         # Copy includes contents to output directory
         epublius.copy_includes()
