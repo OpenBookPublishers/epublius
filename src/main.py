@@ -17,8 +17,8 @@ def main():
         epublius = Epublius(work_dir)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
-        # Unzip epub to work_dir
-        epublius.unzip_epub()
+        # Unzip the 'OEBPS/' folder of the epub file to work_dir
+        epublius.unzip_epub('OEBPS/')
 
         # Get book contents
         contents = epublius.get_contents()
@@ -63,9 +63,9 @@ def main():
         # Copy the subfolders of ./src/includes/ to output_directory
         epublius.copy_folders(os.path.abspath('./includes/'))
 
-        # Copy the subfolders of work_dir/OEBPS/ (such as images/ and fonts/)
+        # Copy the subfolders of work_dir/ (such as images/ and fonts/)
         # to output_directory
-        epublius.copy_folders(os.path.join(work_dir, 'OEBPS'))
+        epublius.copy_folders(work_dir)
         
 
 if __name__ == '__main__':

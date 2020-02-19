@@ -5,6 +5,7 @@ import zipfile
 import os
 from bs4 import BeautifulSoup
 import shutil
+import pathlib
 
 
 class Epublius:
@@ -70,13 +71,31 @@ class Epublius:
 
         return parser.parse_args(argv)
 
-    def unzip_epub(self):
+    def unzip_epub(self, prefix):
         '''
-        Unzip epub file to work_dir
+        Unzip the content of the prefix folder to work_dir.
+
+        In standard epub file, the content of prefix would be 'OEBPS/'
         '''
-        
-        with zipfile.ZipFile(self.argv.file, 'r') as file:
-            file.extractall(self.work_dir)
+        archive = zipfile.ZipFile(self.argv.file)
+        out = pathlib.Path(self.work_dir)
+
+        for archive_item in archive.namelist():
+            # Skip if archive_element is a folder
+            if archive_item.endswith('/'):
+                continue
+
+            # If archive_element is a file stored in the prefix folder
+            if archive_item.startswith(prefix):
+                # Strip the prefix from the file path
+                destpath = out.joinpath(archive_item[len(prefix):])
+
+                # Make sure destination directory exists
+                os.makedirs(destpath.parent, exist_ok=True)
+
+                with archive.open(archive_item) as source, \
+                     open(destpath, 'wb') as dest:
+                    shutil.copyfileobj(source, dest)
 
     def get_contents(self):
         '''
@@ -87,7 +106,7 @@ class Epublius:
         each toc entry.
         '''
 
-        toc_path = os.path.join(self.work_dir, 'OEBPS', 'toc.xhtml')
+        toc_path = os.path.join(self.work_dir, 'toc.xhtml')
         
         with open(toc_path, 'r') as toc:
             soup = BeautifulSoup(toc, 'html.parser')
@@ -122,8 +141,5 @@ class Epublius:
         '''
         Duplicate content.xhtml to main.html
         '''
-        
-        oebps_path = os.path.join(self.work_dir, 'OEBPS')
-            
-        shutil.copy2(os.path.join(oebps_path, 'contents.xhtml'),
-                     os.path.join(oebps_path, 'main.html'))
+        shutil.copy2(os.path.join(self.output_dir, 'contents.xhtml'),
+                     os.path.join(self.output_dir, 'main.html'))

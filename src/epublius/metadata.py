@@ -103,7 +103,7 @@ class Metadata():
         make a beautiful soup object of the content file
         '''
 
-        file_path = os.path.join(self.work_dir, 'OEBPS',
+        file_path = os.path.join(self.work_dir,
                                  self.contents[self.index])
 
         with open(file_path, 'r') as file:
