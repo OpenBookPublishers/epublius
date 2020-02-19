@@ -28,7 +28,7 @@ def main():
         os.makedirs(output_directory)
 
         
-        for index, file_name in enumerate(contents):
+        for index, section in enumerate(contents):
 
             # Create an instance of Metadata
             metadata = Metadata(epublius.argv, work_dir,
@@ -40,7 +40,7 @@ def main():
             section_body_text = metadata.get_body_text()
             section_breadcrumbs = metadata.get_breadcrumbs()
 
-            # Combine all the metadata into one (python) dictionary
+            # Combine all the metadata into one large dictionary
             section_metadata = {
                 **section_data,
                 **section_css,
@@ -48,21 +48,22 @@ def main():
                 **section_breadcrumbs
             }
 
-            # Merge data into template
+            # Combine section_data with the page template
             processed_content = output.render_template(section_metadata)
 
-            # Write to file
-            file_path = os.path.join(output_directory, file_name)
+            # Write output to file
+            file_path = os.path.join(output_directory, section)
             output.write_file(processed_content, file_path)
             
 
-        # Duplicate content.xhtml to main.html
+        # Duplicate output_directory/content.xhtml
+        # to output_directory/main.html
         epublius.duplicate_contents()
 
-        # Copy includes contents to output directory
+        # Copy the content of ./src/includes/ to output_directory
         epublius.copy_includes()
 
-        # Copy directory from work_dir to output directory
+        # Copy directory from work_dir to output_directory
         dirs = ['css', 'fonts', 'image']
 
         for dir in dirs:
