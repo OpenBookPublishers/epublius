@@ -60,16 +60,13 @@ def main():
         # to output_directory/main.html
         epublius.duplicate_contents()
 
-        # Copy the content of ./src/includes/ to output_directory
-        epublius.copy_includes()
+        # Copy the subfolders of ./src/includes/ to output_directory
+        epublius.copy_folders(os.path.abspath('./includes/'))
 
-        # Copy directory from work_dir to output_directory
-        dirs = ['css', 'fonts', 'image']
-
-        for dir in dirs:
-            epublius.copy_epub_dir(dir)
+        # Copy the subfolders of work_dir/OEBPS/ (such as images/ and fonts/)
+        # to output_directory
+        epublius.copy_folders(os.path.join(work_dir, 'OEBPS'))
         
-
 
 if __name__ == '__main__':
     main()

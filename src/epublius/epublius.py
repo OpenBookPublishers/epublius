@@ -97,26 +97,26 @@ class Epublius:
 
         return contents
 
-    def copy_includes(self):
+    def copy_folders(self, parent_dir):
         '''
-        Copy inclides to target directory
+        Copy the subfolders recursively from parent_dir to output_directory.
+
+        If the folder is already present in output_directory,
+        simply copy the content.
         '''
+        # Get a (python) dictionary of the subfolders of parent_dir
+        # which looks like this: {dir_name: dir_path}
+        #
+        # i.e.: dirs = {'bar': '/foo/bar'}
+        dirs = {dir_name: os.path.join(parent_dir, dir_name) \
+                for dir_name in os.listdir(parent_dir) \
+                if os.path.isdir(os.path.join(parent_dir, dir_name))}
 
-        shutil.copytree(os.path.join(os.getcwd(), 'includes'),
-                        self.output_dir,
-                        dirs_exist_ok=True)
-
-    def copy_epub_dir(self, dir):
-
-        oebps_path = os.path.join(self.work_dir, 'OEBPS')
-
-        try:
-            shutil.copytree(os.path.join(oebps_path, dir),
-                            os.path.join(self.output_dir, dir),
+        for dir_name, dir_path in dirs.items():
+            # Copy the folder
+            shutil.copytree(dir_path,
+                            os.path.join(self.output_dir, dir_name),
                             dirs_exist_ok=True)
-            
-        except FileNotFoundError:
-            print('[INFO] Folder {} not found'.format(dir))
 
     def duplicate_contents(self):
         '''
