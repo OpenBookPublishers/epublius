@@ -39,13 +39,15 @@ def main():
             section_css = metadata.get_css()
             section_body_text = metadata.get_body_text()
             section_breadcrumbs = metadata.get_breadcrumbs()
+            mathjax_support = metadata.mathjax_support()
 
             # Combine all the metadata into one large dictionary
             section_metadata = {
                 **section_data,
                 **section_css,
                 **section_body_text,
-                **section_breadcrumbs
+                **section_breadcrumbs,
+                **mathjax_support
             }
 
             # Combine section_data with the page template

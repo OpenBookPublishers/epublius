@@ -9,7 +9,7 @@ BOOK_URL = os.getenv('BOOK_URL',
                      'https://www.openbookpublishers.com/product/')
 HTMLREADER_URL = os.getenv('HTMLREADER_URL',
                            'https://www.openbookpublishers.com/htmlreader/')
-
+MATHJAX = os.getenv('MATHJAX', 'False')
 
 def run():
     _, metadata_path, epub_path = sys.argv
@@ -27,7 +27,8 @@ def run():
             "-e", os.path.join(epublius_dir, ""),
             "-u", HTMLREADER_URL + metadata['isbn'] + '/',
             "-t", os.path.join(epublius_dir, ""),
-            "-i", metadata['isbn']]
+            "-i", metadata['isbn'],
+            "-m", MATHJAX]
 
     os.execvp(sys.executable, [exe] + args)
 

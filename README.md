@@ -6,8 +6,11 @@ docker run --rm \
   -v /path/to/local.epub:/ebook_automation/epub_file.epub \
   -v /path/to/local.json:/ebook_automation/epub_file.json \
   -v /path/to/output:/ebook_automation/output \
+  -e MATHJAX=False
   openbookpublishers/epublius
 ```
+
+The environment variable MATHJAX enables or disable MathJax support
 
 Alternatively you may clone the repo, build the image using `docker build . -t some/tag` and run the command above replacing `openbookpublishers/epublius` with `some/tag`.
 
@@ -42,6 +45,7 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
 | `-i`      | Book ISBN                                                             |
+| `-m`      | MathJax support                                                             |
 
 ## Credits
 Based on a software by:

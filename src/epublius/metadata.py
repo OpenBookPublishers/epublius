@@ -42,6 +42,19 @@ class Metadata():
 
         return section_data
 
+    def mathjax_support(self):
+        '''
+        Enable/disable MathJax support by adding or removing
+        comments to the output file template.
+        '''
+        if self.args.mathjax == 'False':
+            mathjax = {'mathjax_start': '<!--',
+                       'mathjax_end': '-->'}
+        else:
+            mathjax = {'mathjax_start': '',
+                       'mathjax_end': ''}
+        return mathjax
+
     def get_book_url(self):
         '''
         Compose the url of the current (web) page, i.e.:

@@ -59,6 +59,10 @@ class Epublius:
                             help = 'Book ISBN',
                             required = True)
 
+        parser.add_argument('-m', '--mathjax',
+                            help = 'MathJax support',
+                            default = False)
+
         return parser.parse_args(argv)
 
     def unzip_epub(self, prefix):
