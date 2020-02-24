@@ -42,39 +42,13 @@ class Metadata():
 
         return section_data
 
-    def get_reader_url(self, page):
-        '''
-        Compose a generic url of the current epublius instance, 
-        to be specialized by the methods 
-
-        self.get_book_url and self.get_page_url
-
-        the url returned looks like thisi.e.:
-        https://www.openbookpublishers.com/htmlreader/ \
-        978-1-78374-791-7/ch1.xhtml
-
-        urllib.urljoin() can't join multiple folders/paths,
-        so the task is performed with a simple join()
-
-        The url is finally encoded to allow google translator
-        to parse it.
-        '''
-
-        url_prefix = 'https://www.openbookpublishers.com/htmlreader'
-        isbn = self.args.isbn
-        
-        url =  '/'.join([url_prefix, isbn, page])
-        encoded_url = urllib.parse.quote_plus(url)
-
-        return encoded_url
-
     def get_book_url(self):
         '''
         Compose the url of the current (web) page, i.e.:
         https://www.openbookpublishers.com/htmlreader/ \
         978-1-78374-791-7/*
         '''
-        return self.get_reader_url('*')
+        return self.args.url + '*'
 
     def get_page_url(self):
         '''
@@ -82,7 +56,12 @@ class Metadata():
         https://www.openbookpublishers.com/htmlreader/ \
         978-1-78374-791-7/ch1.xhtml
         '''
-        return self.get_reader_url(self.contents[self.index])
+        url = urllib.parse.urljoin(self.args.url,
+                                   self.contents[self.index])
+        url_encoded = urllib.parse.quote_plus(url)
+
+        return url_encoded
+
 
     def get_next(self):
         '''

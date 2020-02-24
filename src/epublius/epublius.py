@@ -42,12 +42,6 @@ class Epublius:
                             help = 'Book name',
                             required = True)
 
-        parser.add_argument('-r', '--resample',
-                            help = 'Resample image (as percentage; ' \
-                            'default is 50, no resampling is 100).',
-                            default = None,
-                            type = int)
-
         parser.add_argument('-e', '--epublish',
                             help = 'Location of the ePublius script.',
                             default = '.')
@@ -55,10 +49,6 @@ class Epublius:
         parser.add_argument('-u', '--url',
                             help = 'URL path of this book',
                             required = True)
-
-        parser.add_argument('-a', '--donation',
-                            help = 'Donation link',
-                            default = None)
 
         parser.add_argument('-t', '--template',
                             help = 'Directory containing the template ' \

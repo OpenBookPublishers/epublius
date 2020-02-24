@@ -20,14 +20,13 @@ def run():
 
     exe = "./main.py"
     args = [exe,
-            "-t", os.path.join(epublius_dir, ""),
-            "-e", os.path.join(epublius_dir, ""),
             "-b", BOOK_URL + str(metadata['product_id']),
             "-f", epub_path,
             "-o", OUTDIR,
-            "-u", HTMLREADER_URL + metadata['isbn'],
             "-n", metadata['title'],
-            "-r", "100",
+            "-e", os.path.join(epublius_dir, ""),
+            "-u", HTMLREADER_URL + metadata['isbn'] + '/',
+            "-t", os.path.join(epublius_dir, ""),
             "-i", metadata['isbn']]
 
     os.execvp(sys.executable, [exe] + args)
