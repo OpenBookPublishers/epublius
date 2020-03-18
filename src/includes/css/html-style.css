@@ -4,6 +4,31 @@
     --orange:#F58020;
 }
 
+/* Font Awesome (customised) */
+@font-face {
+  font-family: 'font-awesome-custom';
+  src: url('../font/font-awesome-custom.woff2') format('woff2'),
+       url('../font/font-awesome-custom.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^='fa-']:before, [class*=' fa-']:before {
+  font-family: 'font-awesome-custom';
+  font-style: normal;
+  font-weight: normal;
+}
+
+.fa-search:before { content: '\e800'; } /* '' */
+.fa-book:before { content: '\e801'; } /* '' */
+.fa-basket:before { content: '\e802'; } /* '' */
+.fa-heart:before { content: '\e803'; } /* '' */
+.fa-caret-left:before { content: '\e804'; } /* '' */
+.fa-caret-right:before { content: '\e805'; } /* '' */
+.fa-button-icon:before { content: '\f0c9'; } /* '' */
+.fa-language:before { content: '\f1ab'; } /* '' */
+
+
 /* NAVBAR */
 #OBP-logo,
 #OA-logo {
