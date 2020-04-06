@@ -2,7 +2,7 @@
 Generates a stylised HTML site from an ePub book
 
 ## Run
-We encourage to run this software with Docker.
+We encourage you to run this software with Docker.
 
 ```
 docker run --rm \
@@ -54,5 +54,5 @@ The idea is to make tweaks super fast and encourage future commits.
 | `-m`      | MathJax support                                                             |
 
 ## Credits
-Based on a software by:
+Based on software by:
 (c) Nik Sultana, Open Book Publishers, September 2013 - GPLv3.
