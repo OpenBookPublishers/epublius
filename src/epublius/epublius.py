@@ -93,20 +93,28 @@ class Epublius:
 
     def get_contents(self):
         '''
-        Parse the file ./toc.xhtml and return an ordered
-        list of the files the epub is made up of.
+        Parse the file ./content.opf and return an ordered
+        list of the TOC files the epub is made up of.
 
         File names are extracted from the 'href' value of 
-        each toc entry.
+        each TOC entry.
         '''
 
-        toc_path = os.path.join(self.work_dir, 'toc.xhtml')
+        toc_path = os.path.join(self.work_dir, 'content.opf')
+
+        # blacklist files of no interest
+        blacklist = ['cover.xhtml', 'toc.xhtml']
         
         with open(toc_path, 'r') as toc:
             soup = BeautifulSoup(toc, 'html.parser')
-            listing = soup.find(id='toc').find_all('a')
 
-            contents = [content['href'] for content in listing]
+            # find elements like <item media-type=application/xhtml+xml>
+            listing = soup.find_all("item",
+                                    {"media-type": "application/xhtml+xml"})
+
+            # compose the list of content filenames filtering blacklist
+            contents = [content['href'] for content in listing \
+                        if content['href'] not in blacklist]
 
         return contents
 
