@@ -106,41 +106,30 @@ class Metadata():
     def get_chapter_title(self):
         '''
         Retrieve chapter title based on the text of <h1> or
-        known file names (i.e. front-cover.xhtml -> "Front Cover")
+        taking a guess from the file name
+        (i.e. front-cover.xhtml -> "Front Cover")
         '''
 
-        # Dictionary with known filenames and relative section name
-        known = {
-            # Front matters
-            'front-cover.xhtml': 'Front Cover',
-            'half-title.xhtml': 'Half Title',
-            'title.xhtml': 'Title',
-            'copyright.xhtml': 'Copyright',
-            'dedication.xhtml': 'Dedication',
-            'contents.xhtml': 'Contents',
+        class_list = ["heading1", "heading1-aut"]
+        h1 = self.soup.find_all('h1', class_=class_list)
 
-            # Back matters
-            'back-page.xhtml': 'Back Page',
-            'back-cover.xhtml': 'Back Cover'
-        }
+        if len(h1) == 1:
+            ch_title = self.soup.h1.get_text()
 
-        if self.contents[self.index] in known:
-            ch_title = known[self.contents[self.index]]
+        elif len(h1) > 1:
+            print("[WARNING] {} has multiple h1 tags"
+                  .format(self.contents[self.index]))
+            ch_title = h1.pop(0).get_text()
+
         else:
-            class_list = ["heading1", "heading1-aut"]
-            h1 = self.soup.find_all('h1', class_=class_list)
+            # Strip extension from file name
+            basename = self.contents[self.index].split('.')[0]
 
-            if len(h1) == 1:
-                ch_title = self.soup.h1.get_text()
+            # Replace hypens with spaces (if any)
+            title_words = basename.replace('-', ' ')
 
-            elif len(h1) > 1:
-                print("[WARNING] {} has multiple h1 tags"
-                      .format(self.contents[self.index]))
-                ch_title = h1.pop(0).get_text()
-            else:
-                print("[ERROR]Can't find a title for {}"
-                      .format(self.contents[self.index]))
-                ch_title = ""
+            # Create a titlecased version of title words
+            ch_title = title_words.title()
 
         return ch_title
 
