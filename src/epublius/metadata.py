@@ -3,6 +3,7 @@
 import os
 from bs4 import BeautifulSoup
 import urllib.parse
+import html
 
 class Metadata():
     def __init__(self, args, work_dir, index, contents):
@@ -108,6 +109,9 @@ class Metadata():
         Retrieve chapter title based on the text of <h1> or
         taking a guess from the file name
         (i.e. front-cover.xhtml -> "Front Cover")
+
+        Special characters in the title are escaped before
+        the ch_title varible is returned.
         '''
 
         class_list = ["heading1", "heading1-aut"]
@@ -131,7 +135,7 @@ class Metadata():
             # Create a titlecased version of title words
             ch_title = title_words.title()
 
-        return ch_title
+        return html.escape(ch_title)
 
     def get_css(self):
         '''
