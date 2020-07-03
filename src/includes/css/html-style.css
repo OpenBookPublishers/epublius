@@ -391,7 +391,8 @@ li.endnote-other-para {
     font-size:100%;
     margin-bottom:0px;
 }
-p.quote-first-para {
+p.quote-first-para,
+blockquote.quote-first-para {
     width:90%;
     font-size:90%;
     margin:3% auto 0px;
@@ -399,7 +400,8 @@ p.quote-first-para {
     text-indent:0px;
     text-align:justify;
 }
-p.quote-other-para {
+p.quote-other-para,
+blockquote.quote-other-para {
     width:90%;
     font-size:90%;
     margin:0 auto;
