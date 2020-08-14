@@ -65,6 +65,9 @@ def main():
         # Copy the subfolders of ./src/includes/ to output_directory
         epublius.copy_folders(os.path.abspath('./includes/'))
 
+        # Copy the subfolders of ./src/assets/uikit to output_directory
+        epublius.copy_folders(os.path.abspath('./assets/uikit/'))
+
         # Copy the subfolders of work_dir/ (such as images/ and fonts/)
         # to output_directory
         epublius.copy_folders(work_dir)
