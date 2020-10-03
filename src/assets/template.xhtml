@@ -66,7 +66,65 @@
         </div>
 	
       </div>
-    </nav>    
+
+      <div class="uk-navbar-right">
+
+	<a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-nav"></a>
+
+      </div>
+    </nav>
+
+    <!-- OffCanvas-nav -->
+    <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+      <div class="uk-offcanvas-bar">
+
+	<ul class="uk-nav uk-nav-default">
+
+	  <li>
+	    <a href="${book_web_page}">
+	      <img id="nav-book-cover" src="image/1.png" alt="Book cover" />
+	    </a>
+	  </li>
+
+	  <!-- 'Go to' section -->
+	  <li class="uk-nav-header">Go to</li>
+          <li>
+	    <a href="${toc}">
+	      <span class="uk-margin-small-right" uk-icon="bookmark"></span>
+	      Contents
+	    </a>
+	  </li>
+          <li>
+	    <a href="${copyright}">
+	      <span class="uk-margin-small-right" uk-icon="info"></span>
+	      Copyright
+	    </a>
+	  </li>
+
+	    <!-- 'More' section -->
+	  <li class="uk-nav-header">More</li>
+	  <li>
+	    <a class="nav-link" href="${book_web_page}">
+	      <span class="uk-margin-small-right" uk-icon="cart"></span>
+	      Buy the book
+	    </a>
+	  </li>
+	  <li>
+	    <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url}&amp;sandbox=1" title="Click to translate this page">
+	      <span class="uk-margin-small-right" uk-icon="bolt"></span>
+	      Translate This Page
+	    </a>
+	  </li>
+	  <li>
+	    <a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">
+	      <span class="uk-margin-small-right" uk-icon="heart"></span>
+	      Donate 1£
+	    </a>
+	  </li>
+
+	</ul>
+      </div>
+    </div>
     
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="reader-nav">
     <a class="navbar-brand" href="https://www.openbookpublishers.com/">
