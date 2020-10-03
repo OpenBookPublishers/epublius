@@ -158,122 +158,38 @@
       </div>
     </div>
 
-  <!-- Main container -->
-  <div class="container-fluid mt-3">
+    <!-- Main container -->
+    <div class="uk-container">
+      <div class="uk-flex-center" uk-grid="masonry: true">
 
-    <div class="row">
+	<!-- Book content -->
+	<div class="uk-width-expand@s">
 
-      <!-- Legacy sidebar-->
-      <div class="col-md-2 d-print-none d-none d-lg-block">
-        <div class="row">
+	  <ul class="uk-breadcrumb">
+	    <li><a href="${toc}">${book_title}</a></li>
+            <li>${breadcrumbs}</li>
+	  </ul>
 
-          <div class="col-12 sidebar-button blue-bg" style="text-align: inherit;">
-            Go to
-          </div>
+	  ${body_text}
 
-          <div class="col-12 sidebar-link">
-            <a href="${toc}">Contents</a>
-          </div>
-
-          <div class="col-12 sidebar-link">
-            <a href="${copyright}">Copyright</a>
-          </div>
-
-          <div class="col-12 mt-5 mb-3">
-            <a href="${book_web_page}">
-              <img src="image/1.png" id="book-cover" alt="Book cover" />
-            </a>
-          </div>
-
-          <div class="col-12 mt-1 sidebar-button blue-bg">
-            <a href="${book_web_page}">Buy the book</a>
-          </div>
-          <div class="col-12 mt-1 sidebar-button blue-bg">
-            <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url}&amp;sandbox=1" title="Click to translate this page">TRANSLATE THIS PAGE</a>
-          </div>
-          <div class="col-12 mt-1 sidebar-button orange-bg">
-            <a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">Donate 1£</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <div class="col-lg-10">
-
-      <!-- Breadcrumb menu -->
-        <div class="row">
-          <div class="col">
-
-            <nav class="d-print-none" aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="${toc}">${book_title}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">${breadcrumbs}</li>
-              </ol>
-            </nav>
-
-          </div>
-        </div>
-
-        <!-- Text size and search box -->
-        <div class="row justify-content-between d-print-none d-none d-lg-flex">
-          <div class="col col-md-2">
-            <span id="zoom-small" class="zoom-selector small">
-              <a href="#">A</a>
-            </span>
-            <span id="zoom-medium" class="zoom-selector medium">
-              <a href="#">A</a>
-            </span>
-            <span id="zoom-large" class="zoom-selector large">
-              <a href="#">A</a>
-            </span>
-          </div>
-          <div class="col col-md-3">
-            <form id="google-search-lg" action="https://www.google.co.uk/search" method="get">
-              <div class="form-group">
-                <input  accesskey="4" id="search-term-lg" name="q"
-                    class="form-control" type="text" placeholder="Search this book"
-                    aria-label="Search this book" />
-                <input id="search-button-lg" title="Search" type="hidden" value="Search" />
-                <input name="sitesearch" type="hidden" value="${this_book_url}" />
-              </div>
-            </form>
-          </div>
-        </div>
-
-
+	</div>
 	
-        <!-- Book content -->
-        <div class="row">
-          <div class="col" id="mainwin">
+	<!-- Left arrow -->
+	<div class="uk-text-center uk-text-large uk-width-1-6@s uk-flex-first@s" >
+	   <a href="${previous}" title="Go to the previous chapter">
+             <span class="uk-margin-small-right" uk-icon="chevron-left"></span>
+	   </a>
+	</div>
 
-	    ${body_text}
-	    
-          <!-- This closes the book content col-->
-          </div>
-        <!-- This closes the book content row-->
-        </div>
+	<!-- Right arrow -->
+	<div class="uk-text-center uk-text-large uk-width-1-6@s">
+	   <a href="${next}" title="Go to the next chapter">
+             <span class="uk-margin-small-right" uk-icon="chevron-right"></span>
+	   </a>
+	</div>
 
-
-        <!-- Navigation buttons -->
-        <div class="row mt-2 mb-3 d-print-none">
-          <div class="col-6 text-right">
-            <a href="${previous}" title="Go to the previous chapter">
-              <span class="mr-1">
-                <i class="fa-caret-left"></i>
-              </span>
-              <span>Previous Chapter</span>
-            </a>
-          </div>
-          <div class="col-6 text-left">
-            <a href="${next}" title="Go to the next chapter">
-              <span>Next Chapter</span>
-              <span class="ml-1">
-                <i class="fa-caret-right"></i>
-              </span>
-            </a>
-          </div>
-
-        </div>
+      </div>
+    </div>
 
   <!-- Close content divs-->
       </div>
