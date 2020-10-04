@@ -174,7 +174,7 @@
 
     <!-- Main container -->
     <div class="uk-container">
-      <div class="uk-flex-center" uk-grid="masonry: true">
+      <div class="uk-flex uk-flex-wrap">
 
 	<!-- Book content -->
 	<div class="uk-width-expand@s">
@@ -188,7 +188,7 @@
 	    </li>
 	  </ul>
 
-	  <!-- <div> element for `js/zoom-selector.js` script compatibility -->
+	  <!-- div element for `js/zoom-selector.js` script compatibility -->
 	  <div id="mainwin">
 	    ${body_text}
 	  </div>
@@ -196,19 +196,24 @@
 	</div>
 
 	<!-- Left arrow -->
-	<div class="uk-text-center uk-text-large uk-width-1-6@s uk-flex-first@s" >
-	   <a href="${previous}" title="Go to the previous chapter">
-             <span class="uk-margin-small-right" uk-icon="chevron-left">
-	     </span>
-	   </a>
+	<div class="uk-width-1-6@m uk-flex-first@m">
+	  <div class="uk-text-center uk-margin-medium-top" style="z-index: 980;" uk-sticky="offset: 100; bottom: #top">
+	    <a href="${previous}" title="Go to the previous section">
+              <span class="uk-icon-link" uk-icon="icon:chevron-left; ratio: 1.5">
+	      </span>
+	    </a>
+	  </div>
 	</div>
 
+
 	<!-- Right arrow -->
-	<div class="uk-text-center uk-text-large uk-width-1-6@s">
-	   <a href="${next}" title="Go to the next chapter">
-             <span class="uk-margin-small-right" uk-icon="chevron-right">
+	<div class="uk-width-1-6@m">
+	  <div class="uk-text-center uk-margin-medium-top" style="z-index: 980;" uk-sticky="offset: 100; bottom: #top">
+	    <a href="${next}" title="Go to the next section">
+             <span class="uk-icon-link" uk-icon="icon:chevron-right; ratio: 1.5">
 	     </span>
-	   </a>
+	    </a>
+	  </div>
 	</div>
 
       </div>
