@@ -38,8 +38,7 @@
     border-bottom: 1px solid var(--blue);
 }
 #nav-book-cover {
-    width: auto;
-    height: 5em;
+    width: 8em;
 }
 .nav-button-icon {
     display: inline-block;
