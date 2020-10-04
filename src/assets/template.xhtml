@@ -74,8 +74,11 @@
 
       <div class="uk-navbar-right">
 
-	<a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-nav">
-	</a>
+	<!-- This button is a replacement of the standard menu element
+             for XHTML compatility -->
+	<button class="uk-button-small uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-nav">
+	  <span uk-icon="icon: menu"></span>
+	</button>
 
       </div>
     </nav>
@@ -160,7 +163,6 @@
 	    <form class="uk-search uk-search-default" id="google-search" action="https://www.google.co.uk/search" method="get">
 	      <fieldset class="uk-fieldset">
 
-		<span uk-search-icon></span>
 		<input id="search-term" name="q" class="uk-search-input" type="text" placeholder="Search this book"/>
 		<input id="search-button" title="Search" type="hidden" value="Search" />
 		<input name="sitesearch" type="hidden" value="${this_book_url}" />
