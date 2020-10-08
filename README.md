@@ -1,36 +1,43 @@
 # ePublius
 Generates a stylised HTML site from an ePub book
 
+## Run
+We encourage you to run this software with Docker.
+
 ```
 docker run --rm \
   -v /path/to/local.epub:/ebook_automation/epub_file.epub \
   -v /path/to/local.json:/ebook_automation/epub_file.json \
   -v /path/to/output:/ebook_automation/output \
+  -e MATHJAX=False
   openbookpublishers/epublius
 ```
 
+The environment variable MATHJAX enables or disable MathJax support
+
 Alternatively you may clone the repo, build the image using `docker build . -t some/tag` and run the command above replacing `openbookpublishers/epublius` with `some/tag`.
 
-## Usage
+## Mods
+Epublius has been rewritten to make it (a) modular and (b) easy to tweak.
 
-```bash
-./epublius.py -p prefix -s suffix -f 02_title.html -t 06_toc.html -b https://www.openbookpublishers.com/product/97 -d ../epub/OEBPS/ -o ../epub/new/ -h header_add
-```
+## The *epublius* module
+The *epublius* module contains:
+ -  `./epublius.py` - this is where the low-level epublius functionalities live;
+ -  `./metadata.py` - this produces the metadata for each book page;
+ -  `./output.py` - this part takes care of merging metadata with a page template and writing the output to file.
 
-Alternatively, one can use `epublius_wrapper.py` to discover the values of parameters to be given to `epublius.py`:
+The idea is to have separate classes for these three logic blocks to ease the transition should we want to change bits of the software in the future.
 
-```bash
-./epublius_wrapper.py -p prefix -s suffix -h header_add -b https://www.openbookpublishers.com/product/97 -f 9781906924737_Oral_Literature_in_Africa.epub -o test
-```
+## Tweak epublius
+All the action happens in the `.src/main.py` file, where `epublius` class modules are called and supplied with (almost) pedantic arguments.
 
+The idea is to make tweaks super fast and encourage future commits.
 
 ### Parameters
 
 
 | Parameter | Description                                                               |
 |-----------|---------------------------------------------------------------------------|
-| `-p`      | File containing prefix                                                    |
-| `-s`      | File containing suffix                                                    |
 | `-b`      | URL of book's page                                                        |
 | `-t`      | TOC file                                                                  |
 | `-f`      | Frontpage file                                                            |
@@ -40,8 +47,12 @@ Alternatively, one can use `epublius_wrapper.py` to discover the values of param
 | `-n`      | Title name                                                                |
 | `-c`      | A colophon file (e.g., the license). There may be  multiple -c parameters |
 | `-r`      | How much to resize the images (as percentage; default is 50).             |
-| `-i`      | Index file to use                                                         |
 | `-u`      | URL path of this book                                                     |
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
+| `-i`      | Book ISBN                                                             |
+| `-m`      | MathJax support                                                             |
 
+## Credits
+Based on software by:
+(c) Nik Sultana, Open Book Publishers, September 2013 - GPLv3.

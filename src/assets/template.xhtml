@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <title>${book_title} - ${breadcrumbs}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+
+    <!-- CSS -->
+    ${book_page_css}
+    <link rel="stylesheet" href="css/html-style.css" />
+    <link rel="stylesheet" href="css/uikit.min.css" />
+
+    <!-- JS dependences -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+
+    <!-- JS scripts-->
+    <script src="js/uikit.min.js">
+    </script>
+    <script src="js/uikit-icons.min.js">
+    </script>
+    <script src="js/jquery-cookie.js">
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+    var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-322127-44']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
+    <script src="js/zoom-selector.js">
+    </script>
+
+    <!-- Piwik -->
+    <script src="data:application/javascript;charset=utf-8;base64,dmFyIF9wYXEgPSBfcGFxIHx8IFtdOw0KX3BhcS5wdXNoKFsic2V0Q29va2llRG9tYWluIiwgIioub3BlbmJvb2twdWJsaXNoZXJzLmNvbSJdKTsNCl9wYXEucHVzaChbJ3RyYWNrUGFnZVZpZXcnXSk7DQpfcGFxLnB1c2goWydlbmFibGVMaW5rVHJhY2tpbmcnXSk7DQooZnVuY3Rpb24oKSB7DQogIHZhciB1PSIvL2FuYWx5dGljcy5vcGVuYm9va3B1Ymxpc2hlcnMuY29tLyI7DQogIF9wYXEucHVzaChbJ3NldFRyYWNrZXJVcmwnLCB1KydwaXdpay5waHAnXSk7DQogIF9wYXEucHVzaChbJ3NldFNpdGVJZCcsICcxJ10pOw0KICB2YXIgZD1kb2N1bWVudCwgZz1kLmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpLCBzPWQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ3NjcmlwdCcpWzBdOw0KICBnLnR5cGU9J2FwcGxpY2F0aW9uL2phdmFzY3JpcHQnOyBnLmFzeW5jPXRydWU7IGcuZGVmZXI9dHJ1ZTsgZy5zcmM9dSsncGl3aWsuanMnOyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGcscyk7DQp9KSgpOw==">
+    </script>
+
+    <!-- MathJax support -->
+    ${mathjax_start}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6">
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>${mathjax_end}
+
+  </head>
+  <body>
+
+    <!-- Navbar -->
+    <nav class="uk-navbar-container uk-margin uk-navbar">
+      <div class="uk-navbar-left">
+
+        <a class="uk-navbar-item uk-logo" href="https://www.openbookpublishers.com/">
+	  <img src="logo/OBP_logo_color.svg" id="OBP-logo" alt="OBP logo" />
+	</a>
+
+	<div class="uk-navbar-item">
+	  <img src="logo/OA_circle_and_text.svg" id="OA-logo" alt="OA logo" />
+        </div>
+
+      </div>
+
+      <div class="uk-navbar-right">
+
+	<!-- This button is a replacement of the standard menu element
+             for XHTML compatility -->
+	<div class="uk-navbar-item">
+	  <a class="uk-margin-small-right" uk-toggle="target: #offcanvas-nav">
+	    <span class="uk-icon-link" uk-icon="icon: menu; ratio: 1.25"></span>
+	  </a>
+	</div>
+
+      </div>
+    </nav>
+
+    <!-- OffCanvas-nav -->
+    <div id="offcanvas-nav" uk-offcanvas="overlay: true">
+      <div class="uk-offcanvas-bar">
+
+	<ul class="uk-nav uk-nav-default">
+
+	  <li>
+	    <a href="${book_web_page}">
+	      <img id="nav-book-cover" src="image/1.png" alt="Book cover" />
+	    </a>
+	  </li>
+
+	  <!-- 'Go to' section -->
+	  <li class="uk-nav-header">Go to
+	  </li>
+          <li>
+	    <a href="${toc}">
+	      <span class="uk-margin-small-right" uk-icon="bookmark">
+	      </span>
+	      Contents
+	    </a>
+	  </li>
+          <li>
+	    <a href="${copyright}">
+	      <span class="uk-margin-small-right" uk-icon="info">
+	      </span>
+	      Copyright
+	    </a>
+	  </li>
+
+	    <!-- 'More' section -->
+	  <li class="uk-nav-header">More
+	  </li>
+	  <li>
+	    <a class="nav-link" href="${book_web_page}">
+	      <span class="uk-margin-small-right" uk-icon="cart">
+	      </span>
+	      Buy the book
+	    </a>
+	  </li>
+	  <li>
+	    <a href="https://translate.google.com/translate?sl=auto&amp;tl=af&amp;u=${this_page_url}&amp;sandbox=1" title="Click to translate this page">
+	      <span class="uk-margin-small-right" uk-icon="bolt">
+	      </span>
+	      Translate this page
+	    </a>
+	  </li>
+	  <li>
+	    <a href="https://www.openbookpublishers.com/donate.html" title="Click to donate">
+	      <span class="uk-margin-small-right" uk-icon="heart">
+	      </span>
+	      Donate 1£
+	    </a>
+	  </li>
+
+	  <hr/>
+
+	  <!-- Text size -->
+	  <li>
+	    <span class="uk-margin-small-right" uk-icon="settings">
+	    </span>
+            <span id="zoom-small" class="zoom-selector small">
+              <a href="#">A
+	      </a>
+            </span>
+            <span id="zoom-medium" class="zoom-selector medium">
+              <a href="#">A
+	      </a>
+            </span>
+            <span id="zoom-large" class="zoom-selector large">
+              <a href="#">A
+	      </a>
+            </span>
+	  </li>
+
+	  <!-- Search field -->
+	  <li>
+	    <form class="uk-search uk-search-default" id="google-search" action="https://www.google.co.uk/search" method="get">
+	      <fieldset class="uk-fieldset">
+
+		<input id="search-term" name="q" class="uk-search-input" type="text" placeholder="Search this book"/>
+		<input id="search-button" title="Search" type="hidden" value="Search" />
+		<input name="sitesearch" type="hidden" value="${this_book_url}" />
+	      </fieldset>
+	    </form>
+	  </li>
+
+	</ul>
+      </div>
+    </div>
+
+    <!-- Main container -->
+    <div class="uk-container">
+      <div class="uk-flex uk-flex-wrap">
+
+	<!-- Book content -->
+	<div class="uk-width-expand@s">
+
+	  <ul class="uk-breadcrumb">
+	    <li>
+	      <a href="${toc}">${book_title}
+	      </a>
+	    </li>
+            <li>${breadcrumbs}
+	    </li>
+	  </ul>
+
+	  <!-- div element for `js/zoom-selector.js` script compatibility -->
+	  <div id="mainwin">
+	    ${body_text}
+	  </div>
+
+	</div>
+
+	<!-- Left arrow -->
+	<div class="uk-margin-small uk-width-1-6@m uk-flex-first@m">
+	  <div class="uk-text-center" style="z-index: 980;" uk-sticky="offset: 47vh; bottom: #top">
+	    <a href="${previous}" title="Go to the previous section">
+              <span class="uk-icon-link" uk-icon="icon:chevron-left; ratio: 1.5">
+	      </span>
+	    </a>
+	  </div>
+	</div>
+
+
+	<!-- Right arrow -->
+	<div class="uk-margin-small uk-width-1-6@m">
+	  <div class="uk-text-center" style="z-index: 980;" uk-sticky="offset: 47vh; bottom: #top">
+	    <a href="${next}" title="Go to the next section">
+             <span class="uk-icon-link" uk-icon="icon:chevron-right; ratio: 1.5">
+	     </span>
+	    </a>
+	  </div>
+	</div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="uk-container uk-margin">
+
+      <p class="uk-text-meta uk-text-center">
+	Powered by
+	<a href="https://github.com/OpenBookPublishers/epublius">Epublius
+	  <span class="uk-margin-small-right" uk-icon="github">
+	  </span>
+	</a>
+      </p>
+
+    </div>
+
+</body>
+</html>
