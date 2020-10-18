@@ -19,10 +19,10 @@ class Epublius:
 
     def parse_args(self, argv=None):
         '''
-        Parse input arguments with argparse. 
+        Parse input arguments with argparse.
         Return argparse object.
         '''
-        
+
         parser = argparse.ArgumentParser(description='ePublius wrapper',
                                          add_help=False)
 
@@ -96,7 +96,7 @@ class Epublius:
         Parse the file ./content.opf and return an ordered
         list of the TOC files the epub is made up of.
 
-        File names are extracted from the 'href' value of 
+        File names are extracted from the 'href' value of
         each TOC entry.
         '''
 
@@ -104,7 +104,7 @@ class Epublius:
 
         # blacklist files of no interest
         blacklist = ['cover.xhtml', 'toc.xhtml']
-        
+
         with open(toc_path, 'r') as toc:
             soup = BeautifulSoup(toc, 'html.parser')
 
@@ -117,6 +117,31 @@ class Epublius:
                         if content['href'] not in blacklist]
 
         return contents
+
+    def get_cover_filepath(self):
+        '''
+        Parse the file ./content.opf and return a dictionary
+        with the path to the cover image.
+        '''
+
+        opf_path = os.path.join(self.work_dir, 'content.opf')
+
+        with open(opf_path, 'r') as opf_file:
+            soup = BeautifulSoup(opf_file, 'html.parser')
+
+            # find cover image entry
+            cover = soup.find("item", {"properties": "cover-image"})
+
+            if cover:
+                path = cover.get('href', '')
+            else:
+                print('[WARNING] No cover image declared in content.opf')
+                path = ''
+
+            # compose dictionary to return
+            cover_filepath = {'cover_filepath': path}
+
+        return cover_filepath
 
     def copy_folders(self, parent_dir):
         '''

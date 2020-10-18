@@ -22,12 +22,15 @@ def main():
 
         # Get book contents
         contents = epublius.get_contents()
-        
+
         output_directory = os.path.join(epublius.argv.output,
                                         epublius.argv.isbn)
         os.makedirs(output_directory)
 
-        
+        # Get book cover file path
+        cover_filepath = epublius.get_cover_filepath()
+
+
         for index, section in enumerate(contents):
 
             # Create an instance of Metadata
@@ -47,7 +50,8 @@ def main():
                 **section_css,
                 **section_body_text,
                 **section_breadcrumbs,
-                **mathjax_support
+                **mathjax_support,
+                **cover_filepath
             }
 
             # Combine section_data with the page template
@@ -56,7 +60,7 @@ def main():
             # Write output to file
             file_path = os.path.join(output_directory, section)
             output.write_file(processed_content, file_path)
-            
+
 
         # Duplicate output_directory/content.xhtml
         # to output_directory/main.html
@@ -71,7 +75,7 @@ def main():
         # Copy the subfolders of work_dir/ (such as images/ and fonts/)
         # to output_directory
         epublius.copy_folders(work_dir)
-        
+
 
 if __name__ == '__main__':
     main()
