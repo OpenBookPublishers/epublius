@@ -42,7 +42,7 @@ def main():
             section_data = metadata.get_section_data()
             section_css = metadata.get_css()
             section_body_text = metadata.get_body_text()
-            section_title = metadata.get_breadcrumbs()
+            section_title = metadata.get_section_title()
             mathjax_support = metadata.mathjax_support(
                                 os.path.abspath('assets/mathjax-cdn.html'))
 

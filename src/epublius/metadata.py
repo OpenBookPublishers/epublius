@@ -157,7 +157,7 @@ class Metadata():
 
         return {'body_text': body_text}
 
-    def get_breadcrumbs(self):
+    def get_section_title(self):
         '''
         Return a str with the content of the title tag.
 
@@ -166,7 +166,7 @@ class Metadata():
         the method returns only the part prior the colon
         '''
 
-        title = self.get_chapter_title()
-        breadcrumbs = title.split(':')[0]
+        full_title = self.get_chapter_title()
+        shortened_title = full_title.split(':')[0]
 
-        return {'section_title': breadcrumbs}
+        return {'section_title': shortened_title}
