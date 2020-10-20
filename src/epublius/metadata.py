@@ -169,4 +169,4 @@ class Metadata():
         title = self.get_chapter_title()
         breadcrumbs = title.split(':')[0]
 
-        return {'breadcrumbs': breadcrumbs}
+        return {'section_title': breadcrumbs}
