@@ -124,6 +124,9 @@ class Epublius:
         with the path to the cover image.
         '''
 
+        # TODO: Use this object instead of re-creting the soup over and over
+        self.opf_soup = self._get_opf_soup()
+
         opf_path = os.path.join(self.work_dir, 'content.opf')
 
         with open(opf_path, 'r') as opf_file:
@@ -164,9 +167,50 @@ class Epublius:
                             os.path.join(self.output_dir, dir_name),
                             dirs_exist_ok=True)
 
-    def duplicate_contents(self):
+    def duplicate_contents(self, TOC_filepath):
         '''
-        Duplicate content.xhtml to main.html
+        Duplicate TOC file to main.html
         '''
-        shutil.copy2(os.path.join(self.output_dir, 'contents.xhtml'),
+
+        shutil.copy2(os.path.join(self.output_dir, TOC_filepath),
                      os.path.join(self.output_dir, 'main.html'))
+
+    def _get_opf_soup(self):
+        '''
+        Return a Soup object of the content.opf file
+        '''
+
+        # This is where we expect the file to be found
+        opf_path = os.path.join(self.work_dir, 'content.opf')
+
+        if not os.path.isfile(opf_path):
+            # TODO: instead of rising an error, find the file in the folder
+            print('[ERROR] content.opf not found')
+            raise
+
+        with open(opf_path, 'r') as opf_file:
+            soup = BeautifulSoup(opf_file, 'html.parser')
+
+            return soup
+
+    def get_TOC_filepath(self):
+        '''
+        Return a dictionary with the path to the TOC file.
+        '''
+
+        # find cover image entry
+        reference = self.opf_soup.find("reference", {"type": "toc"})
+
+        if not reference:
+            print('[ERROR] TOC not declared in content.opf')
+            raise
+
+        href = reference.get('href', '')
+
+        # Strip the fragment from href (i.e. toc.html#foo -> toc.html)
+        filepath = href.split('#')[0]
+
+        # compose dictionary to return
+        TOC_filepath = {'TOC_filepath': filepath}
+
+        return TOC_filepath

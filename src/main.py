@@ -30,6 +30,9 @@ def main():
         # Get book cover file path
         cover_filepath = epublius.get_cover_filepath()
 
+        # Get book TOC file path
+        TOC_filepath = epublius.get_TOC_filepath()
+
 
         for index, section in enumerate(contents):
 
@@ -46,12 +49,16 @@ def main():
 
             # Combine all the metadata into one large dictionary
             section_metadata = {
+                # Section data
                 **section_data,
                 **section_css,
                 **section_body_text,
                 **section_breadcrumbs,
                 **mathjax_support,
-                **cover_filepath
+
+                # Book data
+                **cover_filepath,
+                **TOC_filepath
             }
 
             # Combine section_data with the page template
@@ -62,9 +69,8 @@ def main():
             output.write_file(processed_content, file_path)
 
 
-        # Duplicate output_directory/content.xhtml
-        # to output_directory/main.html
-        epublius.duplicate_contents()
+        # Duplicate TOC file to output_directory/main.html
+        epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
 
         # Copy the subfolders of ./src/includes/ to output_directory
         epublius.copy_folders(os.path.abspath('./includes/'))
