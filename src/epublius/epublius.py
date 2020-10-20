@@ -21,6 +21,9 @@ class Epublius:
         # TODO: we can't assume files are in 'OEBPS/'.
         self.unzip_epub('OEBPS/')
 
+        # Create Soup object for the `content.opf` file
+        self.opf_soup = self._get_opf_soup()
+
     def parse_args(self, argv=None):
         '''
         Parse input arguments with argparse.
@@ -127,26 +130,17 @@ class Epublius:
         Parse the file ./content.opf and return a dictionary
         with the path to the cover image.
         '''
+        # find cover image entry
+        cover = self.opf_soup.find("item", {"properties": "cover-image"})
 
-        # TODO: Use this object instead of re-creting the soup over and over
-        self.opf_soup = self._get_opf_soup()
+        if cover:
+            path = cover.get('href', '')
+        else:
+            print('[WARNING] No cover image declared in content.opf')
+            path = ''
 
-        opf_path = os.path.join(self.work_dir, 'content.opf')
-
-        with open(opf_path, 'r') as opf_file:
-            soup = BeautifulSoup(opf_file, 'html.parser')
-
-            # find cover image entry
-            cover = soup.find("item", {"properties": "cover-image"})
-
-            if cover:
-                path = cover.get('href', '')
-            else:
-                print('[WARNING] No cover image declared in content.opf')
-                path = ''
-
-            # compose dictionary to return
-            cover_filepath = {'cover_filepath': path}
+        # compose dictionary to return
+        cover_filepath = {'cover_filepath': path}
 
         return cover_filepath
 
