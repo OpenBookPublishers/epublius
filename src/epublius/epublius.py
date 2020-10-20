@@ -167,11 +167,12 @@ class Epublius:
                             os.path.join(self.output_dir, dir_name),
                             dirs_exist_ok=True)
 
-    def duplicate_contents(self):
+    def duplicate_contents(self, TOC_filepath):
         '''
-        Duplicate content.xhtml to main.html
+        Duplicate TOC file to main.html
         '''
-        shutil.copy2(os.path.join(self.output_dir, 'contents.xhtml'),
+
+        shutil.copy2(os.path.join(self.output_dir, TOC_filepath),
                      os.path.join(self.output_dir, 'main.html'))
 
     def _get_opf_soup(self):
@@ -191,3 +192,25 @@ class Epublius:
             soup = BeautifulSoup(opf_file, 'html.parser')
 
             return soup
+
+    def get_TOC_filepath(self):
+        '''
+        Return a dictionary with the path to the TOC file.
+        '''
+
+        # find cover image entry
+        reference = self.opf_soup.find("reference", {"type": "toc"})
+
+        if not reference:
+            print('[ERROR] TOC not declared in content.opf')
+            raise
+
+        href = reference.get('href', '')
+
+        # Strip the fragment from href (i.e. toc.html#foo -> toc.html)
+        filepath = href.split('#')[0]
+
+        # compose dictionary to return
+        TOC_filepath = {'TOC_filepath': filepath}
+
+        return TOC_filepath

@@ -30,6 +30,9 @@ def main():
         # Get book cover file path
         cover_filepath = epublius.get_cover_filepath()
 
+        # Get book TOC file path
+        TOC_filepath = epublius.get_TOC_filepath()
+
 
         for index, section in enumerate(contents):
 
@@ -62,9 +65,8 @@ def main():
             output.write_file(processed_content, file_path)
 
 
-        # Duplicate output_directory/content.xhtml
-        # to output_directory/main.html
-        epublius.duplicate_contents()
+        # Duplicate TOC file to output_directory/main.html
+        epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
 
         # Copy the subfolders of ./src/includes/ to output_directory
         epublius.copy_folders(os.path.abspath('./includes/'))
