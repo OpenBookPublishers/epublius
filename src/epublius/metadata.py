@@ -114,8 +114,7 @@ class Metadata():
         the ch_title varible is returned.
         '''
 
-        class_list = ["heading1", "heading1-aut"]
-        h1 = self.soup.find_all('h1', class_=class_list)
+        h1 = self.soup.find_all('h1')
 
         if len(h1) == 1:
             ch_title = self.soup.h1.get_text()
