@@ -13,10 +13,9 @@ def main():
     # Destruction of the temporary directory on completion
     with tempfile.TemporaryDirectory(prefix='epublius_') as work_dir:
 
-        # Create epublius instances
+        # Create instances
         epublius = Epublius(work_dir)
         output = Output(os.path.abspath('assets/template.xhtml'))
-
 
         # Get book contents
         contents = epublius.get_contents()
@@ -25,11 +24,10 @@ def main():
                                         epublius.argv.isbn)
         os.makedirs(output_directory)
 
-        # Get book cover file path
         cover_filepath = epublius.get_cover_filepath()
-
-        # Get book TOC file path
         TOC_filepath = epublius.get_TOC_filepath()
+
+        mathjax_cdn_filepath = os.path.abspath('assets/mathjax-cdn.html')
 
 
         for index, section in enumerate(contents):
@@ -38,24 +36,16 @@ def main():
             metadata = Metadata(epublius.argv, work_dir,
                                 index, contents)
 
-            # Get book section data
-            section_data = metadata.get_section_data()
-            section_css = metadata.get_css()
-            section_body_text = metadata.get_body_text()
-            section_title = metadata.get_section_title()
-            mathjax_support = metadata.mathjax_support(
-                                os.path.abspath('assets/mathjax-cdn.html'))
-
             # Combine all the metadata into one large dictionary
             section_metadata = {
                 # Section data
-                **section_data,
-                **section_css,
-                **section_body_text,
-                **section_title,
+                **metadata.get_section_data(),
+                **metadata.get_css(),
+                **metadata.get_body_text(),
+                **metadata.get_section_title(),
 
                 # Book data
-                **mathjax_support,
+                **metadata.mathjax_support(mathjax_cdn_filepath),
                 **cover_filepath,
                 **TOC_filepath
             }
