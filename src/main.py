@@ -49,12 +49,16 @@ def main():
 
             # Combine all the metadata into one large dictionary
             section_metadata = {
+                # Section data
                 **section_data,
                 **section_css,
                 **section_body_text,
                 **section_breadcrumbs,
                 **mathjax_support,
-                **cover_filepath
+
+                # Book data
+                **cover_filepath,
+                **TOC_filepath
             }
 
             # Combine section_data with the page template
