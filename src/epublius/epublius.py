@@ -124,6 +124,9 @@ class Epublius:
         with the path to the cover image.
         '''
 
+        # TODO: Use this object instead of re-creting the soup over and over
+        self.opf_soup = self._get_opf_soup()
+
         opf_path = os.path.join(self.work_dir, 'content.opf')
 
         with open(opf_path, 'r') as opf_file:
@@ -170,3 +173,21 @@ class Epublius:
         '''
         shutil.copy2(os.path.join(self.output_dir, 'contents.xhtml'),
                      os.path.join(self.output_dir, 'main.html'))
+
+    def _get_opf_soup(self):
+        '''
+        Return a Soup object of the content.opf file
+        '''
+
+        # This is where we expect the file to be found
+        opf_path = os.path.join(self.work_dir, 'content.opf')
+
+        if not os.path.isfile(opf_path):
+            # TODO: instead of rising an error, find the file in the folder
+            print('[ERROR] content.opf not found')
+            raise
+
+        with open(opf_path, 'r') as opf_file:
+            soup = BeautifulSoup(opf_file, 'html.parser')
+
+            return soup
