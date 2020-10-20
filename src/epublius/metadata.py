@@ -42,17 +42,18 @@ class Metadata():
 
         return section_data
 
-    def mathjax_support(self):
+    def mathjax_support(self, mathjax_cdn):
         '''
-        Enable/disable MathJax support by adding or removing
-        comments to the output file template.
+        Enable/disable MathJax support.
         '''
-        if self.args.mathjax == 'False':
-            mathjax = {'mathjax_start': '<!--',
-                       'mathjax_end': '-->'}
-        else:
-            mathjax = {'mathjax_start': '',
-                       'mathjax_end': ''}
+        mathjax = {'mathjax': ''}
+
+        # The reason why True is a string is that this value comes
+        # from a bash generated document where boleans are not possible.
+        if self.args.mathjax == 'True':
+            with open(mathjax_cdn, 'r') as file:
+                mathjax['mathjax'] = file.read()
+
         return mathjax
 
     def get_book_url(self):

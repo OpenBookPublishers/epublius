@@ -43,7 +43,8 @@ def main():
             section_css = metadata.get_css()
             section_body_text = metadata.get_body_text()
             section_breadcrumbs = metadata.get_breadcrumbs()
-            mathjax_support = metadata.mathjax_support()
+            mathjax_support = metadata.mathjax_support(
+                                os.path.abspath('assets/mathjax-cdn.html'))
 
             # Combine all the metadata into one large dictionary
             section_metadata = {
@@ -52,9 +53,9 @@ def main():
                 **section_css,
                 **section_body_text,
                 **section_breadcrumbs,
-                **mathjax_support,
 
                 # Book data
+                **mathjax_support,
                 **cover_filepath,
                 **TOC_filepath
             }
