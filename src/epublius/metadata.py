@@ -13,7 +13,7 @@ class Metadata():
         self.index = index
 
         self.soup = self.get_file_soup()
-        
+
     def get_section_data(self):
         '''
         Compose a (python) dictionary containing metadata
@@ -25,7 +25,6 @@ class Metadata():
 
         section_data = {
             # Constants
-            'toc': 'contents.xhtml',
             'copyright': 'copyright.xhtml',
 
             # From input arguments
@@ -139,7 +138,7 @@ class Metadata():
 
     def get_css(self):
         '''
-        Return a str with the CSS information of a file 
+        Return a str with the CSS information of a file
         (self.contents[index])
         '''
         listing = self.soup.find_all('link')
