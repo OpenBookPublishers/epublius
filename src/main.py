@@ -17,8 +17,6 @@ def main():
         epublius = Epublius(work_dir)
         output = Output(os.path.abspath('assets/template.xhtml'))
 
-        # Unzip the 'OEBPS/' folder of the epub file to work_dir
-        epublius.unzip_epub('OEBPS/')
 
         # Get book contents
         contents = epublius.get_contents()

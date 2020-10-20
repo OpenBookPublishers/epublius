@@ -17,6 +17,10 @@ class Epublius:
         self.output_dir = os.path.join(self.argv.output,
                                        self.argv.isbn)
 
+        # Unzip the 'OEBPS/' folder of the epub file to work_dir
+        # TODO: we can't assume files are in 'OEBPS/'.
+        self.unzip_epub('OEBPS/')
+
     def parse_args(self, argv=None):
         '''
         Parse input arguments with argparse.
