@@ -20,3 +20,8 @@
 .large {
     font-size: 1.9rem;
 }
+
+/* UIKIT */
+em {
+  color: inherit;
+}
