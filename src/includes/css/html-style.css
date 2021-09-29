@@ -22,6 +22,10 @@
 }
 
 /* UIKIT */
-em {
+em, blockquote {
   color: inherit;
+}
+
+blockquote {
+  margin: 1.5em 2em;
 }
