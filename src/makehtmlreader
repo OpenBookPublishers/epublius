@@ -6,7 +6,7 @@ import os
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 BOOK_URL = os.getenv('BOOK_URL',
-                     'https://www.openbookpublishers.com/product/')
+                     'https://doi.org/10.11647/')
 HTMLREADER_URL = os.getenv('HTMLREADER_URL',
                            'https://www.openbookpublishers.com/htmlreader/')
 MATHJAX = os.getenv('MATHJAX', 'False')
@@ -20,7 +20,7 @@ def run():
 
     exe = "./main.py"
     args = [exe,
-            "-b", BOOK_URL + str(metadata['product_id']),
+            "-b", BOOK_URL + str(metadata['doi']),
             "-f", epub_path,
             "-o", OUTDIR,
             "-n", metadata['title'],
