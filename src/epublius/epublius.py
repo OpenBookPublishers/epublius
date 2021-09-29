@@ -15,7 +15,7 @@ class Epublius:
 
         self.work_dir = work_dir
         self.output_dir = os.path.join(self.argv.output,
-                                       self.argv.isbn)
+                                       self.argv.doi)
 
         # Unzip the 'OEBPS/' folder of the epub file to work_dir
         # TODO: we can't assume files are in 'OEBPS/'.
@@ -62,8 +62,8 @@ class Epublius:
                                    'files (CSS and JS)',
                             default = '.')
 
-        parser.add_argument('-i', '--isbn',
-                            help = 'Book ISBN',
+        parser.add_argument('-d', '--doi',
+                            help = 'Book DOI',
                             required = True)
 
         parser.add_argument('-m', '--mathjax',

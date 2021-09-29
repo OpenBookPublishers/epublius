@@ -27,7 +27,7 @@ def run():
             "-e", os.path.join(epublius_dir, ""),
             "-u", HTMLREADER_URL + metadata['isbn'] + '/',
             "-t", os.path.join(epublius_dir, ""),
-            "-i", metadata['isbn'],
+            "-d", metadata['doi'],
             "-m", MATHJAX]
 
     os.execvp(sys.executable, [exe] + args)

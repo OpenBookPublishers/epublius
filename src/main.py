@@ -21,7 +21,7 @@ def main():
         contents = epublius.get_contents()
 
         output_directory = os.path.join(epublius.argv.output,
-                                        epublius.argv.isbn)
+                                        epublius.argv.doi)
         os.makedirs(output_directory)
 
         cover_filepath = epublius.get_cover_filepath()

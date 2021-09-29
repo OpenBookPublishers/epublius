@@ -50,7 +50,6 @@ The idea is to make tweaks super fast and encourage future commits.
 | `-u`      | URL path of this book                                                     |
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
-| `-i`      | Book ISBN                                                             |
 | `-m`      | MathJax support                                                             |
 
 ## Credits
