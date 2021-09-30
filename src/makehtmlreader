@@ -9,16 +9,16 @@ import urllib.parse
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
-def query_thoth(doi):
+def query_thoth(book_doi):
     url = 'https://api.thoth.pub/graphql'
-    query = {"query": "{ workByDoi (doi: \"https://doi.org/10.11647/%s\") { \
+    query = {"query": "{ workByDoi (doi: \"%s\") { \
                            fullTitle \
                            publications { \
                               publicationType \
                               publicationUrl \
                               } \
                            } \
-                        }" % doi}
+                        }" % book_doi}
 
     # handle connection issues
     try:
@@ -70,7 +70,7 @@ def run():
     doi = str(metadata['doi'])
     book_doi = urllib.parse.urljoin('https://doi.org/10.11647/', doi)
 
-    thoth_data = query_thoth(doi)
+    thoth_data = query_thoth(book_doi)
 
     epublius_dir = os.getcwd()
 
