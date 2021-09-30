@@ -8,14 +8,18 @@ import requests
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 BOOK_URL = os.getenv('BOOK_URL',
                      'https://doi.org/10.11647/')
-HTMLREADER_URL = os.getenv('HTMLREADER_URL',
-                           'https://books.openbookpublishers.com/10.11647/')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
 def query_thoth(doi):
     url = 'https://api.thoth.pub/graphql'
-    query = {"query": "{ workByDoi (doi: \"https://doi.org/10.11647/%s\") \
-                                       { fullTitle } }" % doi}
+    query = {"query": "{ workByDoi (doi: \"https://doi.org/10.11647/%s\") { \
+                           fullTitle \
+                           publications { \
+                              publicationType \
+                              publicationUrl \
+                              } \
+                           } \
+                        }" % doi}
 
     # handle connection issues
     try:
@@ -39,6 +43,26 @@ def get_title(thoth_data):
     # return title stripped of what follows the column
     return(title.split(':')[0])
 
+def get_html_pub_url(thoth_data):
+    try:
+        publications = thoth_data["data"]["workByDoi"]["publications"]
+    except TypeError as err:
+        print('The graphql query did not produce a valid response.',
+              'thoth_data["data"]["workByDoi"]["publications"] not found.')
+        raise SystemExit(err)
+
+    for publication in publications:
+        if publication['publicationType'] == 'HTML' \
+           and publication['publicationUrl']:
+            url = publication['publicationUrl']
+            break
+    else:
+        raise SystemExit('HTML publication URL not found.',
+                         'This might be either because the publication is',
+                         'to be entered or the associated URL is missing.')
+
+    return url
+
 def run():
     _, metadata_path, epub_path = sys.argv
     with open(metadata_path) as f:
@@ -55,7 +79,7 @@ def run():
             "-o", OUTDIR,
             "-n", get_title(thoth_data),
             "-e", os.path.join(epublius_dir, ""),
-            "-u", HTMLREADER_URL + metadata['doi'] + '/',
+            "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(thoth_data)),
             "-t", os.path.join(epublius_dir, ""),
             "-d", metadata['doi'],
             "-m", MATHJAX]
