@@ -12,7 +12,7 @@ HTMLREADER_URL = os.getenv('HTMLREADER_URL',
                            'https://books.openbookpublishers.com/10.11647/')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
-def get_title(doi):
+def query_thoth(doi):
     url = 'https://api.thoth.pub/graphql'
     query = {"query": "{ workByDoi (doi: \"https://doi.org/10.11647/%s\") \
                                        { fullTitle } }" % doi}
@@ -24,12 +24,15 @@ def get_title(doi):
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
 
+    return json.loads(r.text)
+
+def get_title(thoth_data):
     # handle bad responses
     try:
-        json_data = json.loads(r.text)
-        title = json_data["data"]["workByDoi"]["fullTitle"]
+        title = thoth_data["data"]["workByDoi"]["fullTitle"]
     except TypeError as err:
         print('The graphql query did not produce a valid response.',
+              'thoth_data["data"]["workByDoi"]["fullTitle"] not found.',
               'It is possible that a bad DOI was supplied.')
         raise SystemExit(err)
 
@@ -41,6 +44,8 @@ def run():
     with open(metadata_path) as f:
         metadata = json.load(f)
 
+    thoth_data = query_thoth(metadata['doi'])
+
     epublius_dir = os.getcwd()
 
     exe = "./main.py"
@@ -48,7 +53,7 @@ def run():
             "-b", BOOK_URL + str(metadata['doi']),
             "-f", epub_path,
             "-o", OUTDIR,
-            "-n", get_title(metadata['doi']),
+            "-n", get_title(thoth_data),
             "-e", os.path.join(epublius_dir, ""),
             "-u", HTMLREADER_URL + metadata['doi'] + '/',
             "-t", os.path.join(epublius_dir, ""),
