@@ -67,7 +67,7 @@ def run():
         metadata = json.load(f)
 
     doi = str(metadata['doi'])
-    book_doi = urllib.parse.urljoin('https://doi.org/10.11647/', doi)
+    book_doi = urllib.parse.urljoin('https://doi.org/', doi)
 
     thoth_data = query_thoth(book_doi)
 
