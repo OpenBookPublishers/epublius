@@ -39,8 +39,7 @@ def get_title(thoth_data):
               'It is possible that a bad DOI was supplied.')
         raise SystemExit(err)
 
-    # return title stripped of what follows the column
-    return(title.split(':')[0])
+    return title
 
 def get_html_pub_url(thoth_data):
     try:
