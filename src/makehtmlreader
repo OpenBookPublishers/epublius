@@ -4,10 +4,9 @@ import sys
 import json
 import os
 import requests
+import urllib.parse
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
-BOOK_URL = os.getenv('BOOK_URL',
-                     'https://doi.org/10.11647/')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
 def query_thoth(doi):
@@ -68,13 +67,16 @@ def run():
     with open(metadata_path) as f:
         metadata = json.load(f)
 
-    thoth_data = query_thoth(metadata['doi'])
+    doi = str(metadata['doi'])
+    book_doi = urllib.parse.urljoin('https://doi.org/10.11647/', doi)
+
+    thoth_data = query_thoth(doi)
 
     epublius_dir = os.getcwd()
 
     exe = "./main.py"
     args = [exe,
-            "-b", BOOK_URL + str(metadata['doi']),
+            "-b", os.getenv('BOOK_URL', book_doi),
             "-f", epub_path,
             "-o", OUTDIR,
             "-n", get_title(thoth_data),
