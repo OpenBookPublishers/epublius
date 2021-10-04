@@ -13,7 +13,7 @@ class Metadata():
         self.index = index
 
         self.soup = self.get_file_soup()
-        
+
     def get_section_data(self):
         '''
         Compose a (python) dictionary containing metadata
@@ -25,7 +25,6 @@ class Metadata():
 
         section_data = {
             # Constants
-            'toc': 'contents.xhtml',
             'copyright': 'copyright.xhtml',
 
             # From input arguments
@@ -43,17 +42,18 @@ class Metadata():
 
         return section_data
 
-    def mathjax_support(self):
+    def mathjax_support(self, mathjax_cdn):
         '''
-        Enable/disable MathJax support by adding or removing
-        comments to the output file template.
+        Enable/disable MathJax support.
         '''
-        if self.args.mathjax == 'False':
-            mathjax = {'mathjax_start': '<!--',
-                       'mathjax_end': '-->'}
-        else:
-            mathjax = {'mathjax_start': '',
-                       'mathjax_end': ''}
+        mathjax = {'mathjax': ''}
+
+        # The reason why True is a string is that this value comes
+        # from a bash generated document where boleans are not possible.
+        if self.args.mathjax == 'True':
+            with open(mathjax_cdn, 'r') as file:
+                mathjax['mathjax'] = file.read()
+
         return mathjax
 
     def get_book_url(self):
@@ -114,8 +114,7 @@ class Metadata():
         the ch_title varible is returned.
         '''
 
-        class_list = ["heading1", "heading1-aut"]
-        h1 = self.soup.find_all('h1', class_=class_list)
+        h1 = self.soup.find_all('h1')
 
         if len(h1) == 1:
             ch_title = self.soup.h1.get_text()
@@ -139,7 +138,7 @@ class Metadata():
 
     def get_css(self):
         '''
-        Return a str with the CSS information of a file 
+        Return a str with the CSS information of a file
         (self.contents[index])
         '''
         listing = self.soup.find_all('link')
@@ -158,7 +157,7 @@ class Metadata():
 
         return {'body_text': body_text}
 
-    def get_breadcrumbs(self):
+    def get_section_title(self):
         '''
         Return a str with the content of the title tag.
 
@@ -167,7 +166,7 @@ class Metadata():
         the method returns only the part prior the colon
         '''
 
-        title = self.get_chapter_title()
-        breadcrumbs = title.split(':')[0]
+        full_title = self.get_chapter_title()
+        shortened_title = full_title.split(':')[0]
 
-        return {'breadcrumbs': breadcrumbs}
+        return {'section_title': shortened_title}

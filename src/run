@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -eu
-
-cd $(dirname $0)
-
-book_name=$1
-
-python ./makehtmlreader ${book_name}.json $(pwd)/${book_name}.epub

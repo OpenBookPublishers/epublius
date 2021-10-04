@@ -13,22 +13,21 @@ def main():
     # Destruction of the temporary directory on completion
     with tempfile.TemporaryDirectory(prefix='epublius_') as work_dir:
 
-        # Create epublius instances
+        # Create instances
         epublius = Epublius(work_dir)
         output = Output(os.path.abspath('assets/template.xhtml'))
-
-        # Unzip the 'OEBPS/' folder of the epub file to work_dir
-        epublius.unzip_epub('OEBPS/')
 
         # Get book contents
         contents = epublius.get_contents()
 
         output_directory = os.path.join(epublius.argv.output,
-                                        epublius.argv.isbn)
+                                        epublius.argv.doi)
         os.makedirs(output_directory)
 
-        # Get book cover file path
         cover_filepath = epublius.get_cover_filepath()
+        TOC_filepath = epublius.get_TOC_filepath()
+
+        mathjax_cdn_filepath = os.path.abspath('assets/mathjax-cdn.html')
 
 
         for index, section in enumerate(contents):
@@ -37,21 +36,18 @@ def main():
             metadata = Metadata(epublius.argv, work_dir,
                                 index, contents)
 
-            # Get book section data
-            section_data = metadata.get_section_data()
-            section_css = metadata.get_css()
-            section_body_text = metadata.get_body_text()
-            section_breadcrumbs = metadata.get_breadcrumbs()
-            mathjax_support = metadata.mathjax_support()
-
             # Combine all the metadata into one large dictionary
             section_metadata = {
-                **section_data,
-                **section_css,
-                **section_body_text,
-                **section_breadcrumbs,
-                **mathjax_support,
-                **cover_filepath
+                # Section data
+                **metadata.get_section_data(),
+                **metadata.get_css(),
+                **metadata.get_body_text(),
+                **metadata.get_section_title(),
+
+                # Book data
+                **metadata.mathjax_support(mathjax_cdn_filepath),
+                **cover_filepath,
+                **TOC_filepath
             }
 
             # Combine section_data with the page template
@@ -62,9 +58,8 @@ def main():
             output.write_file(processed_content, file_path)
 
 
-        # Duplicate output_directory/content.xhtml
-        # to output_directory/main.html
-        epublius.duplicate_contents()
+        # Duplicate TOC file to output_directory/main.html
+        epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
 
         # Copy the subfolders of ./src/includes/ to output_directory
         epublius.copy_folders(os.path.abspath('./includes/'))

@@ -10,4 +10,4 @@ COPY ./src/ ./
 
 ENV OUTDIR=/ebook_automation/output
 
-CMD bash run epub_file
+CMD python3 ./makehtmlreader epub_file.json epub_file.epub
