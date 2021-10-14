@@ -9,7 +9,8 @@ docker run --rm \
   -v /path/to/local.epub:/ebook_automation/epub_file.epub \
   -v /path/to/local.json:/ebook_automation/epub_file.json \
   -v /path/to/output:/ebook_automation/output \
-  -e MATHJAX=False
+  -e MATHJAX=False \
+  -e PRIVACYPOLICY_URL=https://example.org \
   openbookpublishers/epublius
 ```
 
@@ -51,6 +52,7 @@ The idea is to make tweaks super fast and encourage future commits.
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
 | `-m`      | MathJax support                                                             |
+| `-p`      | Privacy policy URL                                                             |
 
 ## Credits
 Based on software by:
