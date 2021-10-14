@@ -83,7 +83,8 @@ def run():
             "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(thoth_data)),
             "-t", os.path.join(epublius_dir, ""),
             "-d", metadata['doi'],
-            "-m", MATHJAX]
+            "-m", MATHJAX,
+            "-p", os.getenv('PRIVACYPOLICY_URL', '#')]
 
     os.execvp(sys.executable, [exe] + args)
 

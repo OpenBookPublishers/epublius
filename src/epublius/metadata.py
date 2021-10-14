@@ -170,3 +170,9 @@ class Metadata():
         shortened_title = full_title.split(':')[0]
 
         return {'section_title': shortened_title}
+
+    def get_privacy_policy_url(self):
+        '''
+        Return a str with the privacy policy URL.
+        '''
+        return {'privacy_policy_url': self.args.privacy_policy}
