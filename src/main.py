@@ -47,7 +47,8 @@ def main():
                 # Book data
                 **metadata.mathjax_support(mathjax_cdn_filepath),
                 **cover_filepath,
-                **TOC_filepath
+                **TOC_filepath,
+                **metadata.get_privacy_policy_url()
             }
 
             # Combine section_data with the page template
