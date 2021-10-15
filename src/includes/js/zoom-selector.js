@@ -3,8 +3,11 @@ function is_allowed_size_str(size) {
 }
 
 $(document).ready(function() {
-    if (is_allowed_size_str($.cookie('TEXT_SIZE'))) {
-        $('div[id="mainwin"]').addClass($.cookie('TEXT_SIZE'));
+
+    const cookieTextSize = localStorage.getItem('text-size');
+
+    if (is_allowed_size_str(cookieTextSize)) {
+        $('div[id="mainwin"]').addClass(cookieTextSize);
     }
     $('.zoom-selector').click(function() {
         // we cannot simply use 'small', 'medium', or 'large' as the ID, so
@@ -15,7 +18,7 @@ $(document).ready(function() {
             $('div[id="mainwin"]')
                 .removeClass('small medium large')
                 .addClass(textSize);
-            $.cookie('TEXT_SIZE', textSize, { path: '/', expires: 10000 });
+	    localStorage.setItem('text-size', textSize);
             return false;
         }
     });
