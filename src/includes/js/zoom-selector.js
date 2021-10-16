@@ -14,8 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const selectors = document.querySelectorAll('.zoom-selector');
 
     selectors.forEach(el => el.addEventListener('click', event => {
-        // we cannot simply use 'small', 'medium', or 'large' as the ID, so
-        // we use 'zoom-{size}' - now we strip that part to obtain the size.
+	// get the text size information form the button id ('zoom-{size}')
 	const button = event.target.parentNode;
         textSize = button.getAttribute('id').replace('zoom-', '');
 
@@ -25,5 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	    localStorage.setItem('text-size', textSize);
         }
+	// prevent the <a href... element from firing when clicked
+	return false;
     }));
 });
