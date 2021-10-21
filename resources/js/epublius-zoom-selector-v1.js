@@ -1,3 +1,5 @@
+/* Epublius Zoom Selector v1 | https://github.com/OpenBookPublishers/epublius | (c) 2013 - 2021 Open Book Publishers | GPLv3 License */
+
 function is_allowed_size_str(size) {
     return ['small', 'medium', 'large'].indexOf(size) >= 0;
 }
