@@ -62,9 +62,6 @@ def main():
         # Duplicate TOC file to output_directory/main.html
         epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
 
-        # Copy the subfolders of ./src/includes/ to output_directory
-        epublius.copy_folders(os.path.abspath('./includes/'))
-
         # Copy the subfolders of work_dir/ (such as images/ and fonts/)
         # to output_directory
         epublius.copy_folders(work_dir)
