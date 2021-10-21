@@ -1,3 +1,5 @@
+/* Epublius Cookie Popup v1 | https://github.com/OpenBookPublishers/epublius | (c) 2013 - 2021 Open Book Publishers | GPLv3 License */
+
 document.addEventListener("DOMContentLoaded", function() {
 
     if(localStorage.getItem('cookies') != 'notified'){
