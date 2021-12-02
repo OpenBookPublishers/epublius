@@ -15,7 +15,9 @@ def query_thoth(book_doi):
                            fullTitle \
                            publications { \
                               publicationType \
-                              publicationUrl \
+                              locations(locationPlatform: OTHER){ \
+                                 fullTextUrl \
+                                 } \
                               } \
                            } \
                         }" % book_doi}
@@ -32,6 +34,7 @@ def query_thoth(book_doi):
 def get_title(thoth_data):
     # handle bad responses
     try:
+        print(thoth_data)
         title = thoth_data["data"]["workByDoi"]["fullTitle"]
     except TypeError as err:
         print('The graphql query did not produce a valid response.',
@@ -51,8 +54,8 @@ def get_html_pub_url(thoth_data):
 
     for publication in publications:
         if publication['publicationType'] == 'HTML' \
-           and publication['publicationUrl']:
-            url = publication['publicationUrl']
+           and publication['locations'][0]['fullTextUrl']:
+            url = publication['locations'][0]['fullTextUrl']
             break
     else:
         raise SystemExit('HTML publication URL not found.',
