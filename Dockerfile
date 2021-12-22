@@ -10,4 +10,4 @@ COPY ./src/ ./
 
 ENV OUTDIR=/ebook_automation/output
 
-CMD python3 ./makehtmlreader epub_file.json epub_file.epub
+CMD python3 ./thoth_wrapper.py epub_file.json epub_file.epub
