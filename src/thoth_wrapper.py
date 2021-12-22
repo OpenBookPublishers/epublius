@@ -5,6 +5,7 @@ import json
 import os
 import requests
 import urllib.parse
+import argparse
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
@@ -65,12 +66,12 @@ def get_html_pub_url(thoth_data):
     return url
 
 def run():
-    _, metadata_path, epub_path = sys.argv
-    with open(metadata_path) as f:
-        metadata = json.load(f)
-
-    doi = str(metadata['doi'])
-    book_doi = urllib.parse.urljoin('https://doi.org/', doi)
+    parser = argparse.ArgumentParser(description='Thoth wrapper')
+    parser.add_argument('epub_path', help='Path to epub file')
+    parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)')
+    args = parser.parse_args()
+    
+    book_doi = urllib.parse.urljoin('https://doi.org/', args.doi)
 
     thoth_data = query_thoth(book_doi)
 
@@ -79,13 +80,13 @@ def run():
     exe = "./main.py"
     args = [exe,
             "-b", os.getenv('BOOK_URL', book_doi),
-            "-f", epub_path,
+            "-f", args.epub_path,
             "-o", OUTDIR,
             "-n", get_title(thoth_data),
             "-e", os.path.join(epublius_dir, ""),
             "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(thoth_data)),
             "-t", os.path.join(epublius_dir, ""),
-            "-d", metadata['doi'],
+            "-d", args.doi,
             "-m", MATHJAX,
             "-p", os.getenv('PRIVACYPOLICY_URL', '#')]
 

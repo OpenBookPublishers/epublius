@@ -10,4 +10,6 @@ COPY ./src/ ./
 
 ENV OUTDIR=/ebook_automation/output
 
-CMD python3 ./thoth_wrapper.py epub_file.json epub_file.epub
+ENTRYPOINT ["python3"]
+
+CMD ["./thoth_wrapper.py", "--help"]
