@@ -1,40 +1,10 @@
-# ePublius
-Generates a stylised HTML site from an ePub book
+# epublius
 
-## Run
-We encourage you to run this software with Docker.
+A tool to generate a standalone website from an EPUB.
 
-```
-docker run --rm \
-  -v /path/to/local.epub:/ebook_automation/epub_file.epub \
-  -v /path/to/local.json:/ebook_automation/epub_file.json \
-  -v /path/to/output:/ebook_automation/output \
-  -e MATHJAX=False
-  openbookpublishers/epublius
-```
+## Usage
 
-The environment variable MATHJAX enables or disable MathJax support
-
-Alternatively you may clone the repo, build the image using `docker build . -t some/tag` and run the command above replacing `openbookpublishers/epublius` with `some/tag`.
-
-## Mods
-Epublius has been rewritten to make it (a) modular and (b) easy to tweak.
-
-## The *epublius* module
-The *epublius* module contains:
- -  `./epublius.py` - this is where the low-level epublius functionalities live;
- -  `./metadata.py` - this produces the metadata for each book page;
- -  `./output.py` - this part takes care of merging metadata with a page template and writing the output to file.
-
-The idea is to have separate classes for these three logic blocks to ease the transition should we want to change bits of the software in the future.
-
-## Tweak epublius
-All the action happens in the `.src/main.py` file, where `epublius` class modules are called and supplied with (almost) pedantic arguments.
-
-The idea is to make tweaks super fast and encourage future commits.
-
-### Parameters
-
+The entry point is `.src/main.py`, which can be called with the following arguments:
 
 | Parameter | Description                                                               |
 |-----------|---------------------------------------------------------------------------|
@@ -51,7 +21,34 @@ The idea is to make tweaks super fast and encourage future commits.
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
 | `-m`      | MathJax support                                                             |
+| `-p`      | Privacy policy URL                                                             |
 
-## Credits
-Based on software by:
-(c) Nik Sultana, Open Book Publishers, September 2013 - GPLv3.
+
+## Thoth Wrapper (Optional)
+
+### Installation
+
+Clone the repo and build the image with $ `docker build . -t openbookpublishers/epublius`.
+
+### Usage
+
+```bash
+docker run --rm \
+           -v /path/to/local.epub:/ebook_automation/epub_file.epub \
+           -v /path/to/output:/ebook_automation/output \
+           -e MATHJAX=False \
+           -e PRIVACYPOLICY_URL=https://example.org \
+           openbookpublishers/epublius \
+	   thoth_wrapper.py /ebook_automation/epub_file.epub \
+                            --doi 10.11647/obp.0275
+```
+
+The environment variable MATHJAX enables or disable MathJax support
+
+## Contributing
+
+Pull requests are welcome.
+
+## License
+
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)

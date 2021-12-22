@@ -1,4 +1,4 @@
-FROM python:3-slim-buster
+FROM python:3.8-slim-buster
 
 WORKDIR /ebook_automation
 
@@ -10,4 +10,6 @@ COPY ./src/ ./
 
 ENV OUTDIR=/ebook_automation/output
 
-CMD python3 ./makehtmlreader epub_file.json epub_file.epub
+ENTRYPOINT ["python3"]
+
+CMD ["./thoth_wrapper.py", "--help"]

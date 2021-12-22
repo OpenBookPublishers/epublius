@@ -5,6 +5,7 @@ import json
 import os
 import requests
 import urllib.parse
+import argparse
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
@@ -15,7 +16,9 @@ def query_thoth(book_doi):
                            fullTitle \
                            publications { \
                               publicationType \
-                              publicationUrl \
+                              locations(locationPlatform: OTHER){ \
+                                 fullTextUrl \
+                                 } \
                               } \
                            } \
                         }" % book_doi}
@@ -32,6 +35,7 @@ def query_thoth(book_doi):
 def get_title(thoth_data):
     # handle bad responses
     try:
+        print(thoth_data)
         title = thoth_data["data"]["workByDoi"]["fullTitle"]
     except TypeError as err:
         print('The graphql query did not produce a valid response.',
@@ -51,8 +55,8 @@ def get_html_pub_url(thoth_data):
 
     for publication in publications:
         if publication['publicationType'] == 'HTML' \
-           and publication['publicationUrl']:
-            url = publication['publicationUrl']
+           and publication['locations'][0]['fullTextUrl']:
+            url = publication['locations'][0]['fullTextUrl']
             break
     else:
         raise SystemExit('HTML publication URL not found.',
@@ -62,12 +66,12 @@ def get_html_pub_url(thoth_data):
     return url
 
 def run():
-    _, metadata_path, epub_path = sys.argv
-    with open(metadata_path) as f:
-        metadata = json.load(f)
-
-    doi = str(metadata['doi'])
-    book_doi = urllib.parse.urljoin('https://doi.org/', doi)
+    parser = argparse.ArgumentParser(description='Thoth wrapper')
+    parser.add_argument('epub_path', help='Path to epub file')
+    parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)')
+    args = parser.parse_args()
+    
+    book_doi = urllib.parse.urljoin('https://doi.org/', args.doi)
 
     thoth_data = query_thoth(book_doi)
 
@@ -76,14 +80,15 @@ def run():
     exe = "./main.py"
     args = [exe,
             "-b", os.getenv('BOOK_URL', book_doi),
-            "-f", epub_path,
+            "-f", args.epub_path,
             "-o", OUTDIR,
             "-n", get_title(thoth_data),
             "-e", os.path.join(epublius_dir, ""),
             "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(thoth_data)),
             "-t", os.path.join(epublius_dir, ""),
-            "-d", metadata['doi'],
-            "-m", MATHJAX]
+            "-d", args.doi,
+            "-m", MATHJAX,
+            "-p", os.getenv('PRIVACYPOLICY_URL', '#')]
 
     os.execvp(sys.executable, [exe] + args)
 

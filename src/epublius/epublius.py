@@ -70,6 +70,9 @@ class Epublius:
                             help = 'MathJax support',
                             default = False)
 
+        parser.add_argument('-p', '--privacy-policy',
+                            help = 'Privacy policy URL')
+
         return parser.parse_args(argv)
 
     def unzip_epub(self, prefix):

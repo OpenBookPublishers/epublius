@@ -13,20 +13,24 @@
 
     <!-- CSS -->
     ${book_page_css}
-    <link rel="stylesheet" href="css/uikit.min.css" />
-    <link rel="stylesheet" href="css/html-style.css" />
 
-    <!-- JS dependences -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.openbookpublishers.com/pkg/uikit-3.5.6/css/uikit.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.openbookpublishers.com/css/epublius-stylesheet-v1.css" />
 
     <!-- JS scripts-->
-    <script src="js/uikit.min.js">
+    <script src="https://cdn.openbookpublishers.com/pkg/uikit-3.5.6/js/uikit.min.js" type="text/javascript">
     </script>
-    <script src="js/uikit-icons.min.js">
+    <script src="https://cdn.openbookpublishers.com/pkg/uikit-3.5.6/js/uikit-icons.min.js" type="text/javascript">
     </script>
-    <script src="js/jquery-cookie.js">
+
+    <script src="https://cdn.openbookpublishers.com/js/epublius-cookie-popup-v1.js" type="text/javascript">
     </script>
+
+    <script src="https://cdn.openbookpublishers.com/js/epublius-zoom-selector-v1.js" type="text/javascript">
+    </script>
+
+    ${mathjax}
 
     <!-- Google Analytics -->
     <script>
@@ -41,14 +45,9 @@
       })();
     </script>
 
-    <script src="js/zoom-selector.js">
-    </script>
-
     <!-- Piwik -->
-    <script src="data:application/javascript;charset=utf-8;base64,dmFyIF9wYXEgPSBfcGFxIHx8IFtdOw0KX3BhcS5wdXNoKFsic2V0Q29va2llRG9tYWluIiwgIioub3BlbmJvb2twdWJsaXNoZXJzLmNvbSJdKTsNCl9wYXEucHVzaChbJ3RyYWNrUGFnZVZpZXcnXSk7DQpfcGFxLnB1c2goWydlbmFibGVMaW5rVHJhY2tpbmcnXSk7DQooZnVuY3Rpb24oKSB7DQogIHZhciB1PSIvL2FuYWx5dGljcy5vcGVuYm9va3B1Ymxpc2hlcnMuY29tLyI7DQogIF9wYXEucHVzaChbJ3NldFRyYWNrZXJVcmwnLCB1KydwaXdpay5waHAnXSk7DQogIF9wYXEucHVzaChbJ3NldFNpdGVJZCcsICcxJ10pOw0KICB2YXIgZD1kb2N1bWVudCwgZz1kLmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpLCBzPWQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ3NjcmlwdCcpWzBdOw0KICBnLnR5cGU9J2FwcGxpY2F0aW9uL2phdmFzY3JpcHQnOyBnLmFzeW5jPXRydWU7IGcuZGVmZXI9dHJ1ZTsgZy5zcmM9dSsncGl3aWsuanMnOyBzLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGcscyk7DQp9KSgpOw==">
+    <script src="https://cdn.openbookpublishers.com/js/analytics.js" type="application/javascript">
     </script>
-
-    ${mathjax}
 
   </head>
   <body>
@@ -58,11 +57,11 @@
       <div class="uk-navbar-left">
 
         <a class="uk-navbar-item uk-logo" href="https://www.openbookpublishers.com/">
-	  <img src="logo/OBP_logo_color.svg" id="OBP-logo" alt="OBP logo" />
+	  <img src="https://cdn.openbookpublishers.com/images/OBP-logo-v1.svg" id="OBP-logo" alt="OBP logo" />
 	</a>
 
 	<div class="uk-navbar-item">
-	  <img src="logo/OA_circle_and_text.svg" id="OA-logo" alt="OA logo" />
+	  <img src="https://cdn.openbookpublishers.com/images/OA-logo-v1.svg" id="OA-logo" alt="OA logo" />
         </div>
 
       </div>
@@ -133,6 +132,13 @@
 	      </span>
 	      Donate
 	    </a>
+	  </li>
+	  <li>
+            <a href="${privacy_policy_url}" target="_blank" title="Privacy Policy">
+              <span class="uk-margin-small-right" uk-icon="cog">
+              </span>
+              Privacy Policy
+            </a>
 	  </li>
 
 	  <hr/>
@@ -216,6 +222,17 @@
 	</div>
 
       </div>
+    </div>
+
+    <!-- This element is a replacement of the standard notification element
+         for XHTML compatility -->
+    <div class="uk-notification uk-notification-bottom-center uk-hidden" id="cookies-consent">
+      <div class="uk-notification-message">
+	<div>By using this website, you consent to the use of cookies in accordance with our
+    <a href="${privacy_policy_url}">Privacy Policy</a>.</div>
+	<a href="" class="uk-notification-close uk-icon uk-close" data-uk-close="" uk-toggle="target: #cookies-consent"></a>
+      </div>
+
     </div>
 
     <!-- Footer -->

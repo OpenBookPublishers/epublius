@@ -47,7 +47,8 @@ def main():
                 # Book data
                 **metadata.mathjax_support(mathjax_cdn_filepath),
                 **cover_filepath,
-                **TOC_filepath
+                **TOC_filepath,
+                **metadata.get_privacy_policy_url()
             }
 
             # Combine section_data with the page template
@@ -60,12 +61,6 @@ def main():
 
         # Duplicate TOC file to output_directory/main.html
         epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
-
-        # Copy the subfolders of ./src/includes/ to output_directory
-        epublius.copy_folders(os.path.abspath('./includes/'))
-
-        # Copy the subfolders of ./src/assets/uikit to output_directory
-        epublius.copy_folders(os.path.abspath('./assets/uikit/'))
 
         # Copy the subfolders of work_dir/ (such as images/ and fonts/)
         # to output_directory
