@@ -3,59 +3,23 @@
 import sys
 import json
 import os
-import requests
 import urllib.parse
 import argparse
+from thothlibrary import ThothClient
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
-def query_thoth(book_doi):
-    url = 'https://api.thoth.pub/graphql'
-    query = {"query": "{ workByDoi (doi: \"%s\") { \
-                           fullTitle \
-                           publications { \
-                              publicationType \
-                              locations(locationPlatform: OTHER){ \
-                                 fullTextUrl \
-                                 } \
-                              } \
-                           } \
-                        }" % book_doi}
-
-    # handle connection issues
-    try:
-        r = requests.post(url, json=query)
-        r.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
-
-    return json.loads(r.text)
-
+def query_thoth(doi_url):
+    thoth = ThothClient(version="0.6.0")
+    return thoth.query('workByDoi', {'doi': f'"{doi_url}"'})
+    
 def get_title(thoth_data):
-    # handle bad responses
-    try:
-        print(thoth_data)
-        title = thoth_data["data"]["workByDoi"]["fullTitle"]
-    except TypeError as err:
-        print('The graphql query did not produce a valid response.',
-              'thoth_data["data"]["workByDoi"]["fullTitle"] not found.',
-              'It is possible that a bad DOI was supplied.')
-        raise SystemExit(err)
-
-    return title
+    return thoth_data["fullTitle"]
 
 def get_html_pub_url(thoth_data):
-    try:
-        publications = thoth_data["data"]["workByDoi"]["publications"]
-    except TypeError as err:
-        print('The graphql query did not produce a valid response.',
-              'thoth_data["data"]["workByDoi"]["publications"] not found.')
-        raise SystemExit(err)
-
-    for publication in publications:
-        if publication['publicationType'] == 'HTML' \
-           and publication['locations'][0]['fullTextUrl']:
+    for publication in thoth_data["publications"]:
+        if publication['publicationType'] == 'HTML':
             url = publication['locations'][0]['fullTextUrl']
             break
     else:
@@ -71,15 +35,15 @@ def run():
     parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)')
     args = parser.parse_args()
     
-    book_doi = urllib.parse.urljoin('https://doi.org/', args.doi)
+    doi_url = urllib.parse.urljoin('https://doi.org/', args.doi)
 
-    thoth_data = query_thoth(book_doi)
+    thoth_data = query_thoth(doi_url)
 
     epublius_dir = os.getcwd()
 
     exe = "./main.py"
     args = [exe,
-            "-b", os.getenv('BOOK_URL', book_doi),
+            "-b", os.getenv('BOOK_URL', doi_url),
             "-f", args.epub_path,
             "-o", OUTDIR,
             "-n", get_title(thoth_data),

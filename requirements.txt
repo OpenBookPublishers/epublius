@@ -1,2 +1,2 @@
 beautifulsoup4==4.5.3
-requests==2.26.0
+thothlibrary==0.8.0
