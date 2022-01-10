@@ -35,15 +35,15 @@ def run():
     parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)')
     args = parser.parse_args()
     
-    book_doi = urllib.parse.urljoin('https://doi.org/', args.doi)
+    doi_url = urllib.parse.urljoin('https://doi.org/', args.doi)
 
-    thoth_data = query_thoth(book_doi)
+    thoth_data = query_thoth(doi_url)
 
     epublius_dir = os.getcwd()
 
     exe = "./main.py"
     args = [exe,
-            "-b", os.getenv('BOOK_URL', book_doi),
+            "-b", os.getenv('BOOK_URL', doi_url),
             "-f", args.epub_path,
             "-o", OUTDIR,
             "-n", get_title(thoth_data),
