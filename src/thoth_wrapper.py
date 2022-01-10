@@ -3,59 +3,23 @@
 import sys
 import json
 import os
-import requests
 import urllib.parse
 import argparse
+from thothlibrary import ThothClient
 
 OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
-def query_thoth(book_doi):
-    url = 'https://api.thoth.pub/graphql'
-    query = {"query": "{ workByDoi (doi: \"%s\") { \
-                           fullTitle \
-                           publications { \
-                              publicationType \
-                              locations(locationPlatform: OTHER){ \
-                                 fullTextUrl \
-                                 } \
-                              } \
-                           } \
-                        }" % book_doi}
-
-    # handle connection issues
-    try:
-        r = requests.post(url, json=query)
-        r.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
-
-    return json.loads(r.text)
-
+def query_thoth(doi_url):
+    thoth = ThothClient(version="0.6.0")
+    return thoth.query('workByDoi', {'doi': f'"{doi_url}"'})
+    
 def get_title(thoth_data):
-    # handle bad responses
-    try:
-        print(thoth_data)
-        title = thoth_data["data"]["workByDoi"]["fullTitle"]
-    except TypeError as err:
-        print('The graphql query did not produce a valid response.',
-              'thoth_data["data"]["workByDoi"]["fullTitle"] not found.',
-              'It is possible that a bad DOI was supplied.')
-        raise SystemExit(err)
-
-    return title
+    return thoth_data["fullTitle"]
 
 def get_html_pub_url(thoth_data):
-    try:
-        publications = thoth_data["data"]["workByDoi"]["publications"]
-    except TypeError as err:
-        print('The graphql query did not produce a valid response.',
-              'thoth_data["data"]["workByDoi"]["publications"] not found.')
-        raise SystemExit(err)
-
-    for publication in publications:
-        if publication['publicationType'] == 'HTML' \
-           and publication['locations'][0]['fullTextUrl']:
+    for publication in thoth_data["publications"]:
+        if publication['publicationType'] == 'HTML':
             url = publication['locations'][0]['fullTextUrl']
             break
     else:
