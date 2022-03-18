@@ -11,7 +11,7 @@ OUTDIR = os.getenv('OUTDIR', '../htmlreader_output')
 MATHJAX = os.getenv('MATHJAX', 'False')
 
 def query_thoth(doi_url):
-    thoth = ThothClient(version="0.6.0")
+    thoth = ThothClient(version='0.8.0')
     return thoth.query('workByDoi', {'doi': f'"{doi_url}"'})
     
 def get_title(thoth_data):
