@@ -100,7 +100,7 @@ class Metadata():
                                  self.contents[self.index])
 
         with open(file_path, 'r') as file:
-            soup = BeautifulSoup(file, 'html.parser')
+            soup = BeautifulSoup(file, features='xml')
 
         return soup
 
