@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-import shutil
 import tempfile
 from epublius.epublius import Epublius
 from epublius.metadata import Metadata
