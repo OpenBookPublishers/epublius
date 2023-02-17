@@ -1,2 +1,2 @@
 beautifulsoup4==4.5.3
-thothlibrary==0.11.0
+thothlibrary==0.17.0
