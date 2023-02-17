@@ -184,7 +184,7 @@ class Epublius:
             raise
 
         with open(opf_path, 'r') as opf_file:
-            soup = BeautifulSoup(opf_file, 'html.parser')
+            soup = BeautifulSoup(opf_file, features='xml')
 
             return soup
 
