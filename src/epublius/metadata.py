@@ -120,13 +120,8 @@ class Metadata():
            (title_node.string is not None):
             ch_title = title_node.string
         else:
-            # Strip extension from file name
-            basename = self.contents[self.index].split('.')[0]
-
-            # Replace hypens with spaces (if any)
+            basename = os.path.splitext(self.contents[self.index])[0]
             title_words = basename.replace('-', ' ')
-
-            # Create a titlecased version of title words
             ch_title = title_words.title()
 
         return html.escape(ch_title)
