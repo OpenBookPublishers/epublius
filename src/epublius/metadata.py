@@ -106,7 +106,7 @@ class Metadata():
 
     def get_chapter_title(self):
         '''
-        Retrieve chapter title based on the text of <h1> or
+        Retrieve chapter title based on the text of <title> or
         taking a guess from the file name
         (i.e. front-cover.xhtml -> "Front Cover")
 
@@ -114,16 +114,11 @@ class Metadata():
         the ch_title varible is returned.
         '''
 
-        h1 = self.soup.find_all('h1')
+        title_node = self.soup.title
 
-        if len(h1) == 1:
-            ch_title = self.soup.h1.get_text()
-
-        elif len(h1) > 1:
-            print("[WARNING] {} has multiple h1 tags"
-                  .format(self.contents[self.index]))
-            ch_title = h1.pop(0).get_text()
-
+        if (title_node is not None) and \
+           (title_node.string is not None):
+            ch_title = title_node.string
         else:
             # Strip extension from file name
             basename = self.contents[self.index].split('.')[0]
