@@ -19,16 +19,18 @@ def get_title(thoth_data):
 def get_html_pub_url(thoth_data):
     for publication in thoth_data["publications"]:
         if publication['publicationType'] == 'HTML':
-            try:
-                url = publication['locations'][0]['fullTextUrl']
-            except IndexError:
-                raise IndexError('HTML edition defined in Thoth but '
-                                 'location URL not specified. Please, '
-                                 'add it and re-run the process.')
+            locations = publication.get('locations', [])
             break
     else:
-        raise SystemExit('HTML edition data not found in Thoth.',
+        raise ValueError('HTML edition data not found in Thoth.',
                          'Please add it and re-run the process.')
+
+    try:
+        url = locations[0]['fullTextUrl']
+    except IndexError:
+        raise IndexError('HTML edition defined in Thoth but '
+                         'location URL not specified. Please, '
+                         'add it and re-run the process.')
 
     return url
 
