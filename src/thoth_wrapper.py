@@ -37,7 +37,7 @@ def get_html_pub_url(thoth_data):
 def run():
     parser = argparse.ArgumentParser(description='Thoth wrapper')
     parser.add_argument('epub_path', help='Path to epub file')
-    parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)')
+    parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)', required=True)
     args = parser.parse_args()
     
     doi_url = urllib.parse.urljoin('https://doi.org/', args.doi)
