@@ -126,6 +126,23 @@ class Metadata():
 
         return html.escape(ch_title)
 
+    def get_chapter_doi(self):
+        '''
+        Retrieve chapter DOI based on the text of <p class=doi>
+        (this contains both copyright statement and DOI link)
+        '''
+        # Not all chapters will have DOIs
+        doi = None
+
+        doi_node = self.soup.find('p', class_='doi')
+
+        if (doi_node is not None):
+            doi_link = doi_node.a
+            if (doi_link is not None) and (doi_link.string is not None):
+                doi = doi_link.string
+
+        return doi
+
     def get_css(self):
         '''
         Return a str with the CSS information of a file

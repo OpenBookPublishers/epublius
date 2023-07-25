@@ -5,6 +5,8 @@ import tempfile
 from epublius.epublius import Epublius
 from epublius.metadata import Metadata
 from epublius.output import Output
+from epublius.thoth import Thoth
+from thothlibrary import ThothError
 
 
 def main():
@@ -15,6 +17,11 @@ def main():
         # Create instances
         epublius = Epublius(work_dir)
         output = Output(os.path.abspath('assets/template.xhtml'))
+        thoth = Thoth()
+
+        # Warn if user requested to write URLs to Thoth but Thoth login failed
+        if epublius.argv.write_urls and not thoth.logged_in:
+            print('[WARNING] Thoth login failed; URLs will not be written')
 
         # Get book contents
         contents = epublius.get_contents()
@@ -57,6 +64,13 @@ def main():
             file_path = os.path.join(output_directory, section)
             output.write_file(processed_content, file_path)
 
+            if epublius.argv.write_urls and thoth.logged_in:
+                # Write chapter URL metadata to Thoth
+                try:
+                    thoth.write_urls(metadata, epublius.argv.doi)
+                except (KeyError, ThothError) as e:
+                    # Continue on error, but display warning
+                    print('[WARNING] Error writing URLs to Thoth for {}: {}'.format(section, e))
 
         # Duplicate TOC file to output_directory/main.html
         epublius.duplicate_contents(TOC_filepath.get('TOC_filepath'))
