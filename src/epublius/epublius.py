@@ -73,6 +73,10 @@ class Epublius:
         parser.add_argument('-p', '--privacy-policy',
                             help = 'Privacy policy URL')
 
+        parser.add_argument('-w', '--write-urls',
+                            help = 'Write HTML chapter URLs to Thoth',
+                            default = False)
+
         return parser.parse_args(argv)
 
     def unzip_epub(self, prefix):
