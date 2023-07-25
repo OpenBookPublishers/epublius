@@ -12,7 +12,7 @@ MATHJAX = os.getenv('MATHJAX', 'False')
 def query_thoth(doi_url):
     thoth = ThothClient()
     return thoth.query('workByDoi', {'doi': f'"{doi_url}"'})
-    
+
 def get_title(thoth_data):
     return thoth_data["fullTitle"]
 
@@ -39,7 +39,7 @@ def run():
     parser.add_argument('epub_path', help='Path to epub file')
     parser.add_argument('-d', '--doi', help='Work DOI (registered in Thoth)', required=True)
     args = parser.parse_args()
-    
+
     doi_url = urllib.parse.urljoin('https://doi.org/', args.doi)
 
     thoth_data = query_thoth(doi_url)
@@ -57,7 +57,8 @@ def run():
             "-t", os.path.join(epublius_dir, ""),
             "-d", args.doi,
             "-m", MATHJAX,
-            "-p", os.getenv('PRIVACYPOLICY_URL', '#')]
+            "-p", os.getenv('PRIVACYPOLICY_URL', '#'),
+            "-w", 'True']
 
     os.execvp(sys.executable, [exe] + args)
 

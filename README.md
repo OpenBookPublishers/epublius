@@ -20,8 +20,9 @@ The entry point is `.src/main.py`, which can be called with the following argume
 | `-u`      | URL path of this book                                                     |
 | `-k`      | Copyright file                                                            |
 | `-a`      | Donation link                                                             |
-| `-m`      | MathJax support                                                             |
-| `-p`      | Privacy policy URL                                                             |
+| `-m`      | MathJax support                                                           |
+| `-p`      | Privacy policy URL                                                        |
+| `-w`      | Write chapter URLs to Thoth (True/False)                                  |
 
 
 ## Thoth Wrapper (Optional)
@@ -38,12 +39,15 @@ docker run --rm \
            -v /path/to/output:/ebook_automation/output \
            -e MATHJAX=False \
            -e PRIVACYPOLICY_URL=https://example.org \
+           -e THOTH_EMAIL=email@example.com \
+           -e THOTH_PWD=password \
            openbookpublishers/epublius \
 	   thoth_wrapper.py /ebook_automation/epub_file.epub \
                             --doi 10.11647/obp.0275
 ```
 
 The environment variable MATHJAX enables or disable MathJax support
+The environment variables THOTH_EMAIL and THOTH_PWD allow use of the `--write-urls` option by providing Thoth credentials
 
 ## Contributing
 
