@@ -58,17 +58,17 @@ class Metadata():
 
     def get_book_url(self):
         '''
-        Compose the url of the current (web) page, i.e.:
-        https://www.openbookpublishers.com/htmlreader/ \
-        978-1-78374-791-7/*
+        Compose the url of the current (web) page, e.g.:
+        https://books.openbookpublishers.com/10.11647/ \
+        obp.9999/*
         '''
         return self.args.url + '*'
 
     def get_page_url(self):
         '''
-        Compose the url of the current (web) page, i.e.:
-        https://www.openbookpublishers.com/htmlreader/ \
-        978-1-78374-791-7/ch1.xhtml
+        Compose the url of the current (web) page, e.g.:
+        https://books.openbookpublishers.com/10.11647/ \
+        obp.9999/ch1.xhtml
         '''
         url = urllib.parse.urljoin(self.args.url,
                                    self.contents[self.index])
