@@ -32,7 +32,11 @@ def get_html_pub_url(thoth_data):
                          'location URL not specified. Please, '
                          'add it and re-run the process.')
 
-    return url
+    # Add trailing slash if not present - needed for correct URL concatenation
+    if url.endswith('/'):
+        return url
+    else:
+        return url + '/'
 
 def run():
     parser = argparse.ArgumentParser(description='Thoth wrapper')
