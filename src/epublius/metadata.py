@@ -137,7 +137,9 @@ class Metadata():
         doi_node = self.soup.find('p', class_='doi')
 
         if (doi_node is not None):
-            doi_link = doi_node.a
+            # In the case where multiple <a> elements are present,
+            # the one we want is the one with the href attribute
+            doi_link = doi_node.find('a', href=True)
             if (doi_link is not None) and (doi_link.string is not None):
                 doi = doi_link.string
 
