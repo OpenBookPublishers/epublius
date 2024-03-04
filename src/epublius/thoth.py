@@ -64,7 +64,7 @@ class Thoth:
                             book_doi=book_doi, chapter_doi=chapter_doi),
                         "fullTextUrl":      urllib.parse.unquote_plus(
                             metadata.get_page_url()),
-                        "locationPlatform": "OTHER",
+                        "locationPlatform": "PUBLISHER_WEBSITE",
                         "canonical":        "true"}
             self.client.create_location(location)
 
