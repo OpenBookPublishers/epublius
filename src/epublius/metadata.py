@@ -134,12 +134,9 @@ class Metadata():
         # Not all chapters will have DOIs
         doi = None
 
-        doi_node = self.soup.find('p', class_='doi')
-
-        if (doi_node is None):
-            # Class may be differently named if an override has been implemented
-            # (e.g. `<p class="doi ParaOverride-9">`)
-            doi_node = self.soup.find('p', class_=lambda L: L and L.startswith('doi'))
+        # Class string may not exactly match "doi" if an override has been implemented
+        # (e.g. `<p class="doi ParaOverride-9">`)
+        doi_node = self.soup.find('p', class_=lambda L: L and 'doi' in L.split())
 
         if (doi_node is not None):
             # In the case where multiple <a> elements are present,
