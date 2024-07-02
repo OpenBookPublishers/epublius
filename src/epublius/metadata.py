@@ -128,13 +128,15 @@ class Metadata():
 
     def get_chapter_doi(self):
         '''
-        Retrieve chapter DOI based on the text of <p class=doi>
+        Retrieve chapter DOI based on the text of <p class="doi">
         (this contains both copyright statement and DOI link)
         '''
         # Not all chapters will have DOIs
         doi = None
 
-        doi_node = self.soup.find('p', class_='doi')
+        # Class string may not exactly match "doi" if an override has been implemented
+        # (e.g. `<p class="doi ParaOverride-9">`)
+        doi_node = self.soup.find('p', class_=lambda L: L and 'doi' in L.split())
 
         if (doi_node is not None):
             # In the case where multiple <a> elements are present,
