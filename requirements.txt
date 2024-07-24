@@ -1,3 +1,3 @@
 beautifulsoup4==4.11.2
-thothlibrary==0.17.0
+thothlibrary==0.26.0
 lxml==4.9.2
