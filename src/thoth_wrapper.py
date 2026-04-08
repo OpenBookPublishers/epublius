@@ -11,23 +11,38 @@ MATHJAX = os.getenv('MATHJAX', 'False')
 
 def query_thoth(doi_url):
     thoth = ThothClient()
-    return thoth.query('workByDoi', {'doi': f'"{doi_url}"'})
+    return thoth.work_by_doi(doi=doi_url)
 
-def get_title(thoth_data):
-    return thoth_data["fullTitle"]
+def get_title(work):
+    titles = getattr(work, "titles", []) or []
 
-def get_html_pub_url(thoth_data):
-    for publication in thoth_data["publications"]:
-        if publication['publicationType'] == 'HTML':
-            locations = publication.get('locations', [])
+    for title in titles:
+        if getattr(title, "canonical", False):
+            return getattr(title, "fullTitle", getattr(title, "title", None))
+
+    if titles:
+        title = titles[0]
+        return getattr(title, "fullTitle", getattr(title, "title", None))
+
+    full_title = getattr(work, "fullTitle", None)
+    if full_title is not None:
+        return full_title
+
+    raise ValueError('Title data not found in Thoth.',
+                     'Please add it and re-run the process.')
+
+def get_html_pub_url(work):
+    for publication in getattr(work, "publications", []):
+        if getattr(publication, 'publicationType', None) == 'HTML':
+            locations = getattr(publication, 'locations', [])
             break
     else:
         raise ValueError('HTML edition data not found in Thoth.',
                          'Please add it and re-run the process.')
 
     try:
-        url = locations[0]['fullTextUrl']
-    except IndexError:
+        url = locations[0].fullTextUrl
+    except (AttributeError, IndexError):
         raise IndexError('HTML edition defined in Thoth but '
                          'location URL not specified. Please, '
                          'add it and re-run the process.')
@@ -46,7 +61,7 @@ def run():
 
     doi_url = urllib.parse.urljoin('https://doi.org/', args.doi)
 
-    thoth_data = query_thoth(doi_url)
+    work = query_thoth(doi_url)
 
     epublius_dir = os.getcwd()
 
@@ -55,9 +70,9 @@ def run():
             "-b", os.getenv('BOOK_URL', doi_url),
             "-f", args.epub_path,
             "-o", OUTDIR,
-            "-n", get_title(thoth_data),
+            "-n", get_title(work),
             "-e", os.path.join(epublius_dir, ""),
-            "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(thoth_data)),
+            "-u", os.getenv('HTMLREADER_URL', get_html_pub_url(work)),
             "-t", os.path.join(epublius_dir, ""),
             "-d", args.doi,
             "-m", MATHJAX,
