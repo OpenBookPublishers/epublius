@@ -15,21 +15,13 @@ class Thoth:
         self.logged_in = self.login()
 
     def login(self):
-        username = getenv('THOTH_EMAIL')
-        password = getenv('THOTH_PWD')
-        if username is None:
-            print('[WARNING] No Thoth username provided '
-                '(THOTH_EMAIL environment variable not set)')
+        token = getenv('THOTH_PAT')
+        if not token:
+            print('[WARNING] No Thoth personal access token provided '
+                  '(THOTH_PAT environment variable not set)')
             return False
-        if password is None:
-            print('[WARNING] No Thoth password provided '
-                '(THOTH_PWD environment variable not set)')
-            return False
-        try:
-            self.client.login(username, password)
-            return True
-        except:
-            return False
+        self.client.set_token(token)
+        return True
 
     def write_urls(self, metadata, book_doi):
         '''

@@ -39,15 +39,14 @@ docker run --rm \
            -v /path/to/output:/ebook_automation/output \
            -e MATHJAX=False \
            -e PRIVACYPOLICY_URL=https://example.org \
-           -e THOTH_EMAIL=email@example.com \
-           -e THOTH_PWD=password \
+           -e THOTH_PAT=your-thoth-pat \
            openbookpublishers/epublius \
 	   thoth_wrapper.py /ebook_automation/epub_file.epub \
                             --doi 10.11647/obp.0275
 ```
 
 The environment variable MATHJAX enables or disable MathJax support
-The environment variables THOTH_EMAIL and THOTH_PWD allow use of the `--write-urls` option by providing Thoth credentials
+The environment variable THOTH_PAT allows use of the `--write-urls` option by providing a Thoth personal access token
 
 ## Contributing
 
