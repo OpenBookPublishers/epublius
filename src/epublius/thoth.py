@@ -32,7 +32,7 @@ class Thoth:
 
         # Skip chapters that don't have a DOI
         if chapter_doi_full is not None:
-            work_id = self.client.work_by_doi(chapter_doi_full).workId
+            work_id = self.client.work_by_doi(doi=chapter_doi_full).workId
             chapter_doi = chapter_doi_full.split('doi.org/')[-1].lower()
             landing_page_root = (
                 'https://www.openbookpublishers.com/books/'
